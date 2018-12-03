@@ -1,0 +1,10 @@
+{
+    "name": "basic-app/core",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BasicApp\\Filters\\": "Filters\\",
+            "BasicApp\\Components\\": "Components\\"
+        }
+    }
+}
