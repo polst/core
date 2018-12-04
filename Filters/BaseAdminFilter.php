@@ -5,6 +5,7 @@ namespace BasicApp\Filters;
 use Exception;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use Config\Services;
 
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
@@ -24,8 +25,10 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
     	{
     		return;
     	}
-    
-    	return redirect(site_url('admin/login'));
+
+    	$url = site_url('admin/login');
+
+    	return Services::response()->redirect($url);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response)
