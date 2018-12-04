@@ -5,6 +5,7 @@
         "psr-4": {
             "BasicApp\\Filters\\": "Filters\\",
             "BasicApp\\Components\\": "Components\\",
+            "BasicApp\\Exceptions\\": "Exceptions\\",
             "BasicApp\\Views\\": "Views\\"
         }
     }
