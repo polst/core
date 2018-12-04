@@ -3,11 +3,13 @@
 namespace BasicApp\Filters;
 
 use Exception;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
 
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
-    public function before(\CodeIgniter\HTTP\RequestInterface; $request)
+    public function before(RequestInterface $request)
     {
     	if ($request->uri->getPath() == 'admin/login')
     	{
@@ -26,7 +28,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
     	return redirect(site_url('admin/login'));
     }
 
-    public function after(\CodeIgniter\HTTP\RequestInterface; $request, \CodeIgniter\HTTP\ResponseInterface $response)
+    public function after(RequestInterface $request, ResponseInterface $response)
     {
         // Do something here
     }
