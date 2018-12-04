@@ -2,6 +2,6 @@
 
 namespace BasicApp\Exceptions;
 
-class PageNotFoundException extends BasicPageNotFoundException
+class PageNotFoundException extends BasePageNotFoundException
 {
 }
