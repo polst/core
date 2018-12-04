@@ -4,7 +4,8 @@
     "autoload": {
         "psr-4": {
             "BasicApp\\Filters\\": "Filters\\",
-            "BasicApp\\Components\\": "Components\\"
+            "BasicApp\\Components\\": "Components\\",
+            "BasicApp\\Views\\": "Views\\"
         }
     }
 }
