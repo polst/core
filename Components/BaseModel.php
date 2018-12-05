@@ -10,9 +10,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return [];
 	}
 
-	public function errors()
+	public function errors(bool $forceDB = false)
 	{
-		$errors = parent::errors();
+		$errors = parent::errors($forceDB);
 
 		foreach($errors as $key => $value)
 		{
