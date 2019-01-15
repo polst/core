@@ -3,6 +3,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
+			"BasicApp\\Core\\" : "",
             "BasicApp\\Filters\\": "Filters\\",
             "BasicApp\\Components\\": "Components\\",
             "BasicApp\\Exceptions\\": "Exceptions\\",
