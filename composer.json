@@ -4,8 +4,6 @@
     "autoload": {
         "psr-4": {
 			"BasicApp\\" : "",
-			"BasicApp\\Views\\Pager\\": "Views\\Pager\\",
-			"BasicApp\\Views\\": "Views\\",
             "BasicApp\\Filters\\": "Filters\\",
             "BasicApp\\Components\\": "Components\\",
             "BasicApp\\Exceptions\\": "Exceptions\\"
