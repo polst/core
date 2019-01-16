@@ -32,16 +32,6 @@
  */
 namespace BasicApp;
 
-abstract class Widget extends Component
+class Controller extends BaseController
 {
-
-	abstract public static function render();
-
-	public static function widget($params = [])
-	{
-		$widget = static::factory($params);
-
-		return $widget->render();
-	}
-
 }

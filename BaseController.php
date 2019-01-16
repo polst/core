@@ -32,16 +32,21 @@
  */
 namespace BasicApp;
 
-abstract class Widget extends Component
+abstract class BaseController extends \CodeIgniter\Controller
 {
 
-	abstract public static function render();
+	protected $layout;
 
-	public static function widget($params = [])
+	public function render(string $view, array $params = [])
 	{
-		$widget = static::factory($params);
+		$content = view($view, $params);
 
-		return $widget->render();
+		if ($this->layout)
+		{
+			return view($this->layout, ['content' => $content]);
+		}
+
+		return $content;
 	}
 
 }
