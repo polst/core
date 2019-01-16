@@ -41,7 +41,7 @@ class Component
 
 		$return = new $class;
 
-		foreach($key => $value)
+		foreach($params as $key => $value)
 		{
 			$return->$key = $value;
 		}
