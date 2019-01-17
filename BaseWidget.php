@@ -32,7 +32,7 @@
  */
 namespace BasicApp;
 
-abstract class Widget extends Component
+abstract class BaseWidget extends Component
 {
 
 	abstract public static function render();
