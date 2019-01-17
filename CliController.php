@@ -32,6 +32,6 @@
  */
 namespace BasicApp;
 
-abstract class Widget extends BaseWidget
+abstract class CliController extends BaseCliController
 {
 }

@@ -35,7 +35,7 @@ namespace BasicApp;
 abstract class BaseWidget extends Component
 {
 
-	abstract public static function render();
+	abstract public function render();
 
 	public static function widget($params = [])
 	{
