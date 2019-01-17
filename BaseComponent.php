@@ -32,7 +32,7 @@
  */
 namespace BasicApp;
 
-class Component
+class BaseComponent
 {
 
 	public static function factory($params = [])
