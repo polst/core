@@ -32,6 +32,7 @@
  */
 namespace BasicApp;
 
-class Widget extends BaseWidget
+abstract class Widget extends BaseWidget
 {
+
 }

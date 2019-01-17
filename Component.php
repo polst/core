@@ -32,6 +32,6 @@
  */
 namespace BasicApp;
 
-class Component extends BaseComponent
+abstract class Component extends BaseComponent
 {
 }
