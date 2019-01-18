@@ -39,7 +39,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
-		parent::__construct();
+		//parent::__construct();
 	}
 
 	public function render(string $view, array $params = [])
