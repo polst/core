@@ -37,6 +37,11 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	protected $layout;
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 	public function render(string $view, array $params = [])
 	{
 		$content = view($view, $params);
