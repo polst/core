@@ -44,7 +44,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function render(string $view, array $params = [])
 	{
-		$content = view($view, $params);
+		$content = view($view, $params, ['saveData' => true]);
 
 		if ($this->layout)
 		{
