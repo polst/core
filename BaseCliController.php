@@ -11,6 +11,8 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 abstract class BaseCliController extends \CodeIgniter\Controller
 {
 
+	public $db;
+
 	public function __construct()
 	{
 		$is_console = PHP_SAPI == 'cli' || (!isset($_SERVER['DOCUMENT_ROOT']) && !isset($_SERVER['REQUEST_URI']));
@@ -19,6 +21,8 @@ abstract class BaseCliController extends \CodeIgniter\Controller
 		{
 			throw new PageNotFoundException;
 		}
+
+		$this->db = db_connect();
 	}
 
 }
