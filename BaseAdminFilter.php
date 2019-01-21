@@ -28,9 +28,9 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
     	return false;
 	}
 
-	protected function getUser($id)
+	protected function getUser($userId)
 	{
-		return (new UserModel)->find($user_id);
+		return (new UserModel)->find($userId);
 	}
 
     public function before(RequestInterface $request)
