@@ -11,7 +11,9 @@ use CodeIgniter\Events\Events;
 abstract class BaseAdminController extends Controller
 {
 
-	protected $layout = 'Admin\Views\layouts\main';
+    protected $layoutPath = 'App\Views\admin\layouts';
+
+	protected $layout = 'main';
 
 	public function __construct()
 	{
