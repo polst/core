@@ -9,6 +9,16 @@ namespace BasicApp;
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
+	public function getPrimaryKey()
+	{
+		return $this->primaryKey;
+	}
+
+	public function getReturnType()
+	{
+		return $this->returnType;
+	}
+
 	public static function fieldLabels()
 	{
 		return [];
