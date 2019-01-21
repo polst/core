@@ -9,7 +9,7 @@ namespace BasicApp;
 abstract class BaseUserModel extends Model
 {
 
-	protected $_currentUser;
+	protected static $_currentUser;
 
 	public static function userModelClass()
 	{
