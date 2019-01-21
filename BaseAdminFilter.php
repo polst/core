@@ -1,59 +1,35 @@
 <?php
-
+/**
+ * @package Basic App Core
+ * @license MIT License
+ * @link    http://basic-app.com
+ */
 namespace BasicApp;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use App\Models\UserModel;
 use CodeIgniter\Security\Exceptions\SecurityException;
 
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
-	protected $loginUrl = 'admin/login';
-
-	protected function currentUserId()
-	{
-		return service('session')->get('user_id');
-	}
-
-	protected function checkAccess($user, $uri = false)
-	{
-    	if ($user->user_admin)
-    	{
-    		return true;
-    	}
-
-    	return false;
-	}
-
-	protected function getUser($userId)
-	{
-		return (new UserModel)->find($userId);
-	}
-
     public function before(RequestInterface $request)
     {
-    	$uri = $request->uri->getPath();
+    	$userModelClass = UserModel::userModelClass();
 
-    	if ($uri == $this->loginUrl)
+    	$currentUrl = $request->uri->getPath();
+
+    	if ($currentUrl == $class::loginUrl())
     	{
     		return;
     	}
 
-    	$user = null;
-
-		$user_id = $this->currentUserId();
-
-		if ($user_id)
-		{
-			$user = $this->getUser($user_id);
-		}
+    	$user = $class::currentUser();
 
 		if ($user)
 		{
-			if (static::checkAccess($user, $uri))
+			if ($class::checkAccess($user, $uri))
 			{
 				return;
 			}
@@ -63,7 +39,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 
 		helper(['url']);
 
-    	$url = site_url($this->loginUrl);
+    	$url = site_url(static::loginUrl());
 
     	return Services::response()->redirect($url);
     }

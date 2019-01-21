@@ -6,6 +6,6 @@
  */
 namespace BasicApp;
 
-abstract class BaseEntity extends \CodeIgniter\Entity
+abstract class UserModel extends BaseUserModel
 {
 }

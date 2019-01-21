@@ -6,6 +6,6 @@
  */
 namespace BasicApp;
 
-abstract class BaseEntity extends \CodeIgniter\Entity
+class PageNotFoundException extends BasePageNotFoundException
 {
 }
