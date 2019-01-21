@@ -7,9 +7,12 @@
 namespace BasicApp;
 
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Config\Database;
 
 abstract class BaseCliController extends \CodeIgniter\Controller
 {
+
+	public $db;
 
 	public function __construct()
 	{
@@ -19,6 +22,8 @@ abstract class BaseCliController extends \CodeIgniter\Controller
 		{
 			throw new PageNotFoundException;
 		}
+
+		$this->db = Database::connect();
 	}
 
 }
