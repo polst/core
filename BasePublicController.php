@@ -11,7 +11,7 @@ use CodeIgniter\Events\Events;
 abstract class BasePublicController extends Controller
 {
 
-	protected $layout = 'App\Views\layouts\main';
+	protected $layout = 'main';
 
 	public function __construct()
 	{
