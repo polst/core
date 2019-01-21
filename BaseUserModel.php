@@ -45,7 +45,7 @@ abstract class BaseUserModel extends Model
 		return static::$_currentUser;
 	}
 
-	protected static function checkAccess($user, $uri = false)
+	public static function checkAccess($user, $uri = false)
 	{
     	if ($user->user_admin)
     	{
