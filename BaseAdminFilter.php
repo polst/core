@@ -16,7 +16,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 
     public function before(RequestInterface $request)
     {
-    	$userModelClass = UserModel::userModelClass();
+    	$class = UserModel::userModelClass();
 
     	$currentUrl = $request->uri->getPath();
 
