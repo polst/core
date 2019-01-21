@@ -11,6 +11,11 @@ abstract class BaseUserModel extends Model
 
 	protected static $_currentUser;
 
+	public static function loginUrl()
+	{
+		return 'admin/login';		
+	}
+
 	public static function userModelClass()
 	{
 		return 'App\Models\UserModel';
@@ -48,11 +53,6 @@ abstract class BaseUserModel extends Model
     	}
 
     	return false;
-	}
-
-	protected static function loginUrl()
-	{
-		return 'admin/login';		
 	}
 
 }
