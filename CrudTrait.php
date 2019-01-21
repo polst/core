@@ -156,24 +156,6 @@ trait CrudTrait
 		]);
 	}
 
-
-	public static function createEntity()
-	{
-		if ($this->returnType == 'array')
-		{
-			$return = [];
-		}
-		else
-		{
-			$modelClass = $this->returnType;
-
-			$return = new $modelClass;
-		}
-
-		return $return;
-	}
-
-
 	protected function createEntity($parentId = false)
 	{
 		$modelClass = $this->getModelClass();
