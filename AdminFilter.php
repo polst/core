@@ -1,6 +1,6 @@
 <?php
 
-namespace BasicApp\Filters;
+namespace BasicApp;
 
 class AdminFilter extends BaseAdminFilter
 {

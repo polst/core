@@ -1,30 +1,45 @@
 <?php
 
-namespace BasicApp\Filters;
+namespace BasicApp;
 
-use Exception;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use App\Models\UserModel;
+use CodeIgniter\Security\Exceptions\SecurityException;
 
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
     public function before(RequestInterface $request)
     {
-    	if ($request->uri->getPath() == 'admin/login')
+    	$uri = $request->uri->getPath();
+
+    	if ($uri == 'admin/login')
     	{
     		return;
     	}
 
-    	$service = service('user');
+    	$user = null;
 
-    	$user = $service->getUser();
+		$user_id = service('session')->get('user_id');
 
-    	if ($user && $user->user_admin)
-    	{
-    		return;
-    	}
+		if ($user_id)
+		{
+			$user = (new UserModel)->find($user_id);
+		}
+
+		if ($user)
+		{
+	    	if ($user->user_admin)
+	    	{
+	    		return;
+	    	}
+
+			throw SecurityException::forDisallowedAction();
+		}
+
+		helper(['url']);
 
     	$url = site_url('admin/login');
 
