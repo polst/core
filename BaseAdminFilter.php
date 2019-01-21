@@ -39,7 +39,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 
 		helper(['url']);
 
-    	$url = site_url(static::loginUrl());
+    	$url = site_url($class::loginUrl());
 
     	return Services::response()->redirect($url);
     }
