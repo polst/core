@@ -290,9 +290,11 @@ trait CrudTrait
 
 		$this->beforeFind($query);
 
-		if ($this->perPage)
+		$perPage = $this->getPerPage();
+
+		if ($perPage)
 		{
-			$elements = $query->paginate($this->perPage);
+			$elements = $query->paginate($perPage);
 		}
 		else
 		{
