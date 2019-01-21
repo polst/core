@@ -17,7 +17,7 @@ abstract class BasePublicController extends Controller
 	{
 		parent::__construct();
 
-		Events::trigger('public_controller_construct');
+		Events::trigger('public_controller_constructor');
 	}
 
 }

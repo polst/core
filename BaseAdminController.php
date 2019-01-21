@@ -19,7 +19,7 @@ abstract class BaseAdminController extends Controller
 	{
 		parent::__construct();
 
-		Events::trigger('admin_controller_construct');
+		Events::trigger('admin_controller_constructor');
 	}
 
 }
