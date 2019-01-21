@@ -29,7 +29,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 
 		if ($user)
 		{
-			if ($class::checkAccess($user, $uri))
+			if ($class::checkAccess($user, $currentUrl))
 			{
 				return;
 			}
