@@ -11,6 +11,10 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	protected $layout;
 
+	protected $viewPath = 'App\Views';
+
+	protected $layoutPath = 'App\Views\layouts';
+
 	public function __construct()
 	{
 		//parent::__construct();
@@ -18,11 +22,11 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function render(string $view, array $params = [])
 	{
-		$content = view($view, $params, ['saveData' => true]);
+		$content = view($this->viewPath . '\\' . $view, $params, ['saveData' => true]);
 
 		if ($this->layout)
 		{
-			return view($this->layout, ['content' => $content]);
+			return view($this->layoutPath . '\\' . $this->layout, ['content' => $content]);
 		}
 
 		return $content;
