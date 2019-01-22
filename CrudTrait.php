@@ -113,7 +113,7 @@ trait CrudTrait
 		{
 			foreach($errors as $key => $value)
 			{
-				$errors[$key] = strtr($errors[$key], $query->fieldLabels());
+				$errors[$key] = strtr($errors[$key], $query->getFieldLabels());
 			}
 		}
 	

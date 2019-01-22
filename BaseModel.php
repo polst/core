@@ -32,13 +32,16 @@ abstract class BaseModel extends \CodeIgniter\Model
 	{
 		$errors = parent::errors($forceDB);
 
-		$labels = $this->getFieldLabels();
-
-		foreach($errors as $key => $value)
+		if ($errors)
 		{
-			$errors[$key] = strtr($errors[$key], $labels);
-		}
+			$labels = $this->getFieldLabels();
 
+			foreach($errors as $key => $value)
+			{
+				$errors[$key] = strtr($errors[$key], $labels);
+			}	
+		}
+		
 		return $errors;
 	}
 
