@@ -109,7 +109,7 @@ trait CrudTrait
 
 		$errors = $query->errors();
 
-		if ($errors && method_exists($query, 'fieldLabels'))
+		if ($errors && method_exists($query, 'getFieldLabels'))
 		{
 			foreach($errors as $key => $value)
 			{

@@ -9,6 +9,8 @@ namespace BasicApp;
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
+	protected $fieldLabels = [];
+
 	public function getPrimaryKey()
 	{
 		return $this->primaryKey;
@@ -19,14 +21,14 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return $this->returnType;
 	}
 
-	public static function fieldLabels()
+	public function getFieldLabels()
 	{
-		return [];
+		return $this->fieldLabels;
 	}
 
-	public function getFieldLabel($field, $default = null)
+	public function fieldLabel($field, $default = null)
 	{
-		$labels = static::fieldLabels();
+		$labels = $this->getFieldLabels();
 
 		if (array_key_exists($field, $labels))
 		{
@@ -40,7 +42,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 	{
 		$errors = parent::errors($forceDB);
 
-		$labels = static::fieldLabels();
+		$labels = $this->getFieldLabels();
 
 		foreach($errors as $key => $value)
 		{

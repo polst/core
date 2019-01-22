@@ -8,4 +8,28 @@ namespace BasicApp;
 
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
+
+    protected $modelClass;
+
+    protected $_fieldLabels;
+
+    public function getFieldLabels()
+    {
+        if ($this->_fieldLabels === null)
+        {
+            $modelClass = $this->getModelClass();
+
+            $model = new $modelClass;
+
+            $this->_fieldLabels = $model->getFieldLabels();
+        }
+
+        return $this->_fieldLabels;
+    }
+
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
+
 }
