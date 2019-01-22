@@ -9,6 +9,8 @@ namespace BasicApp;
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
+	use FieldLabelTrait;
+
 	protected $fieldLabels = [];
 
 	public function getPrimaryKey()
@@ -24,18 +26,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 	public function getFieldLabels()
 	{
 		return $this->fieldLabels;
-	}
-
-	public function fieldLabel($field, $default = null)
-	{
-		$labels = $this->getFieldLabels();
-
-		if (array_key_exists($field, $labels))
-		{
-			return $labels[$field];
-		}
-
-		return $default;
 	}
 
 	public function errors(bool $forceDB = false)

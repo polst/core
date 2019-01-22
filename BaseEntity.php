@@ -9,6 +9,8 @@ namespace BasicApp;
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
+    use FieldLabelTrait;
+
     protected $modelClass;
 
     protected $_fieldLabels;
@@ -25,18 +27,6 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         }
 
         return $this->_fieldLabels;
-    }
-
-    public function fieldLabel($field, $default = null)
-    {
-        $labels = $this->getFieldLabels();
-
-        if (array_key_exists($field, $labels))
-        {
-            return $labels[$field];
-        }
-
-        return $default;
     }
 
     public function getModelClass()
