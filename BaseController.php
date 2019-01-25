@@ -21,7 +21,16 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function render(string $view, array $params = [])
 	{
-		$content = view($this->viewPath . '/' . $view, $params, ['saveData' => true]);
+        $viewPath = $this->viewPath;
+
+        $customView = APPPATH . str_replace('\\', '/', $viewPath) . '/' . $view . '.php';
+
+        if (is_file($customView))
+        {
+            $viewPath = 'App\\' . $viewPath;
+        }
+
+		$content = view($viewPath . '/' . $view, $params, ['saveData' => true]);
 
 		if ($this->layout)
 		{
