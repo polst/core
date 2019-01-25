@@ -9,8 +9,6 @@ namespace BasicApp;
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
-    use FieldLabelTrait;
-
     protected $modelClass;
 
     protected $_fieldLabels;
