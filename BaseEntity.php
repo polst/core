@@ -15,6 +15,18 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
     protected $_fieldLabels;
 
+    public function fieldLabel($field, $default = null)
+    {
+        $labels = $this->getFieldLabels();
+
+        if (array_key_exists($field, $labels))
+        {
+            return $labels[$field];
+        }
+
+        return $default;
+    }
+
     public function getFieldLabels()
     {
         if ($this->_fieldLabels === null)
@@ -23,7 +35,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
             $model = new $modelClass;
 
-            $this->_fieldLabels = $model->getFieldLabels();
+            $this->_fieldLabels = $model::getFieldLabels();
         }
 
         return $this->_fieldLabels;
