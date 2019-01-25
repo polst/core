@@ -21,7 +21,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return $this->returnType;
 	}
 
-	public function getFieldLabels()
+	public static function getFieldLabels()
 	{
 		return static::$fieldLabels;
 	}
