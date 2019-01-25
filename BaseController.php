@@ -17,16 +17,15 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
-		//parent::__construct();
 	}
 
 	public function render(string $view, array $params = [])
 	{
-		$content = view($this->viewPath . '\\' . $view, $params, ['saveData' => true]);
+		$content = view($this->viewPath . '/' . $view, $params, ['saveData' => true]);
 
 		if ($this->layout)
 		{
-			return view($this->layoutPath . '\\' . $this->layout, ['content' => $content]);
+			return view($this->layoutPath . '/' . $this->layout, ['content' => $content]);
 		}
 
 		return $content;
