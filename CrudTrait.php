@@ -109,14 +109,6 @@ trait CrudTrait
 
 		$errors = $query->errors();
 
-		if ($errors && method_exists($query, 'getFieldLabels'))
-		{
-			foreach($errors as $key => $value)
-			{
-				$errors[$key] = strtr($errors[$key], $query->getFieldLabels());
-			}
-		}
-	
 		return $errors;
 	}
 
@@ -227,13 +219,11 @@ trait CrudTrait
 
 		if ($this->request->getPost())
 		{
-			helper(['get_protected_value']);
-
-			$primaryKey = get_protected_value($query, 'primaryKey');
+            $primaryKey = $model->getPrimaryKey();
 
 			if (!$query->delete($model->{$primaryKey}))
 			{
-				throw new Exception('Record not deleted.');
+				throw new Exception('Record is not deleted.');
 			}
 		}
 
