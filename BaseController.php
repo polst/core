@@ -11,9 +11,9 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	protected $layout;
 
-	protected $viewPath = 'App\Views';
+	protected $viewPath = ''; // App\Views
 
-	protected $layoutPath = 'App\Views\layouts';
+	protected $layoutPath = ''; // App\Views
 
 	public function __construct()
 	{
@@ -23,18 +23,23 @@ abstract class BaseController extends \CodeIgniter\Controller
 	{
         $viewPath = $this->viewPath;
 
-        $customView = APPPATH . str_replace('\\', '/', $viewPath) . '/' . $view . '.php';
-
-        if (is_file($customView))
+        if ($viewPath)
         {
-            $viewPath = 'App\\' . $viewPath;
+            $viewPath .= '/';
         }
 
-		$content = view($viewPath . '/' . $view, $params, ['saveData' => true]);
+		$content = app_view($viewPath . $view, $params, ['saveData' => true]);
+
+        $layoutPath = $this->layoutPath;
+
+        if ($layoutPath)
+        {
+            $layoutPath .= '/';
+        }
 
 		if ($this->layout)
 		{
-			return view($this->layoutPath . '/' . $this->layout, ['content' => $content]);
+			return view($layoutPath . $this->layout, ['content' => $content]);
 		}
 
 		return $content;
