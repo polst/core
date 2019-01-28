@@ -6,6 +6,8 @@
  */
 namespace BasicApp;
 
+use Exception;
+
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
@@ -53,6 +55,57 @@ abstract class BaseModel extends \CodeIgniter\Model
 		}
 		
 		return $errors;
+	}
+
+	public static function getEntity(array $where, bool $create = false, array $params = [])
+	{
+		$class = static::class;
+
+		$model = new $class;
+
+		$row = $model->where($where)->first();
+
+		if ($row)
+		{
+			return $row;
+		}
+
+		if (! $create)
+		{
+			return null;
+		}
+
+		$builder = $model->builder();
+
+		foreach ($where as $key => $value)
+		{
+			$params[$key] = $value;
+		}
+
+		$success = $builder->replace($params);
+
+		if (!$success)
+		{
+			throw new Exception('Replace failed.');
+		}
+
+		$id = $model->db->insertID();
+
+		if (!$id)
+		{
+			throw new Exception('Created entity ID is empty.');
+		}
+
+		$model = new $class;
+
+		$row = $model->where($model->primaryKey, $id)->first();
+
+		if (!$row)
+		{
+			throw new Exception('Created entity not found.');
+		}
+
+		return $row;
 	}
 
 }
