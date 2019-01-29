@@ -99,13 +99,11 @@ abstract class BaseModel extends \CodeIgniter\Model
 			$params[$key] = $value;
 		}
 
-		$builder = $model->builder();
+		$model->protect(false);
 
-		$builder->protect(false);
+		$b = $model->insert($params);
 
-		$b = $builder->insert($params);
-
-		$builder->protect(true);
+		$model->protect(true);
 
 		if (!$b)
 		{
