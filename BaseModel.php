@@ -57,6 +57,25 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return $errors;
 	}
 
+	public static function createEntity(array $params = [])
+	{
+		if ($this->returnType === 'array')
+		{
+			return $params;
+		}
+
+		$returnType = $this->returnType;
+
+		$model = new $returnType;
+
+		foreach($params as $key => $value)
+		{
+			$model->$key = $value;
+		}
+
+		return $model;
+	}
+
 	public static function getEntity(array $where, bool $create = false, array $params = [])
 	{
 		$class = static::class;
@@ -70,39 +89,34 @@ abstract class BaseModel extends \CodeIgniter\Model
 			return $row;
 		}
 
-		if (! $create)
+		if (!$create)
 		{
 			return null;
 		}
-
-		$builder = $model->builder();
 
 		foreach ($where as $key => $value)
 		{
 			$params[$key] = $value;
 		}
 
-		$success = $builder->replace($params);
+		$builder = $model->builder();
 
-		if (!$success)
+		$builder->protect(false);
+
+		$b = $builder->insert($params);
+
+		$builder->protect(true);
+
+		if (!$b)
 		{
-			throw new Exception('Replace failed.');
+			// nothing to do
 		}
 
-		$id = $model->db->insertID();
-
-		if (!$id)
-		{
-			throw new Exception('Created entity ID is empty.');
-		}
-
-		$model = new $class;
-
-		$row = $model->where($model->primaryKey, $id)->first();
+		$row = $model->where($where)->first();
 
 		if (!$row)
 		{
-			throw new Exception('Created entity not found.');
+			throw new Exception('Entity not found.');
 		}
 
 		return $row;
