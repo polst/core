@@ -14,22 +14,29 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
+	public static function adminModelClass()
+	{
+		return BasicApp\Admin\Models\AdminModel::class;
+	}
+
     public function before(RequestInterface $request)
     {
-    	$class = UserModel::userModelClass();
+    	$class = static::adminModelClass();
 
     	$currentUrl = $request->uri->getPath();
 
-    	if ($currentUrl == $class::loginUrl())
+    	$loginUrl = $class::adminLoginUrl();
+
+    	if ($currentUrl == $loginUrl)
     	{
     		return;
     	}
 
-    	$user = $class::currentUser();
+    	$user = $class::currentAdmin();
 
 		if ($user)
 		{
-			if ($class::checkAccess($user, $currentUrl))
+			if ($class::checkAdminAccess($user, $currentUrl))
 			{
 				return;
 			}
@@ -39,7 +46,7 @@ abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 
 		helper(['url']);
 
-    	$url = site_url($class::loginUrl());
+    	$url = site_url($loginUrl);
 
     	return Services::response()->redirect($url);
     }
