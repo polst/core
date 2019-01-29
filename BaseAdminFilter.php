@@ -10,13 +10,14 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
 use CodeIgniter\Security\Exceptions\SecurityException;
+use BasicApp\Admin\Models\AdminModel;
 
 abstract class BaseAdminFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
 	public static function adminModelClass()
 	{
-		return BasicApp\Admin\Models\AdminModel::class;
+		return AdminModel::class;
 	}
 
     public function before(RequestInterface $request)
