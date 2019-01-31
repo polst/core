@@ -4,7 +4,7 @@
  * @license MIT License
  * @link    http://basic-app.com
  */
-namespace BasicApp;
+namespace BasicApp\Core;
 
 use Exception;
 

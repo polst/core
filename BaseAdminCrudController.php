@@ -1,6 +1,6 @@
 <?php
 
-namespace BasicApp;
+namespace BasicApp\Core;
 
 class BaseAdminCrudController extends AdminController
 {
