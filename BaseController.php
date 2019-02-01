@@ -11,7 +11,7 @@ use CodeIgniter\Security\Exceptions\SecurityException;
 abstract class BaseController extends \CodeIgniter\Controller
 {
 
-    const LOGGED_ROLE = '*';
+    const LOGGED_ROLE = '@';
 
     protected $authClass;
 
@@ -19,9 +19,9 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	protected $layout;
 
-	protected $viewPath = ''; // App\Views
+	protected $viewPath = '';
 
-	protected $layoutPath = ''; // App\Views
+	protected $layoutPath = '';
 
 	public function __construct()
 	{
