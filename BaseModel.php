@@ -37,6 +37,11 @@ abstract class BaseModel extends \CodeIgniter\Model
             return $labels[$field];
         }
 
+        if ($default === null)
+        {
+        	return $field;
+        }
+
         return $default;
     }
 
