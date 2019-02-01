@@ -11,9 +11,9 @@ interface BaseAuthInterface
 
     public static function userHasPermission($user, string $permission);
 
-    public static function loginUrl();
+    public static function getLoginUrl();
 
-    public static function logoutUrl();
+    public static function getLogoutUrl();
 
     public static function getCurrentUserId();
 
