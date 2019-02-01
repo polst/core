@@ -11,6 +11,8 @@ use Exception;
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
+    use FactoryTrait;
+
 	protected static $fieldLabels = [];
 
 	public function getPrimaryKey()

@@ -9,6 +9,8 @@ namespace BasicApp\Core;
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
+    use FactoryTrait;
+
     protected $modelClass;
 
     public function getModelClass()
