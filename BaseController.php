@@ -60,7 +60,7 @@ abstract class BaseController extends \CodeIgniter\Controller
                     return;
                 }
 
-                if ($user->hasPermission($role))
+                if ($authClass::userHasPermission($user, $role))
                 {
                     return;
                 }
