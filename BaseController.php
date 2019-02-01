@@ -25,7 +25,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
-        $this->checkAccess();
+        $this->checkAccess(true);
 	}
 
     public static function getAuthClass()
@@ -38,36 +38,48 @@ abstract class BaseController extends \CodeIgniter\Controller
         return static::$roles;
     }
 
-    public function checkAccess()
+    public static function checkAccess(bool $throwExceptions = false)
     {
         $roles = static::getRoles();
 
-        if ($roles)
+        if (count($roles) == 0)
         {
-            $authClass = static::getAuthClass();
+            return true; // Allowed for all
+        }
 
-            $user = $authClass::getCurrentUser();
+        $authClass = static::getAuthClass();
 
-            if (!$user)
+        $user = $authClass::getCurrentUser();
+
+        if (!$user)
+        {
+            if ($throwExceptions)
             {
-                return redirect()->to($authClass::loginUrl());
+                throw SecurityException::forDisallowedAction();
             }
 
-            foreach($roles as $role)
-            {
-                if ($role == static::LOGGED_ROLE)
-                {
-                    return;
-                }
+            return false; // Current user is guest
+        }
 
-                if ($authClass::userHasPermission($user, $role))
-                {
-                    return;
-                }
+        foreach($roles as $role)
+        {
+            if ($role == static::LOGGED_ROLE)
+            {
+                return true;
             }
 
+            if ($authClass::userHasPermission($user, $role))
+            {
+                return true;
+            }
+        }
+
+        if ($throwExceptions)
+        {
             throw SecurityException::forDisallowedAction();
         }
+
+        return false;
     }
 
 	public function render(string $view, array $params = [])
