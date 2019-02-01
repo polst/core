@@ -9,6 +9,12 @@ namespace BasicApp\Core;
 interface BaseAuthInterface
 {
 
+    public static function hasPermission(string $name);
+
+    public static function loginUrl();
+
+    public static function logoutUrl();
+
     public static function getCurrentUserId();
 
     public static function getCurrentUser();

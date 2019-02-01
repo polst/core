@@ -6,8 +6,16 @@
  */
 namespace BasicApp\Core;
 
+use CodeIgniter\Security\Exceptions\SecurityException;
+
 abstract class BaseController extends \CodeIgniter\Controller
 {
+
+    const LOGGED_ROLE = '*';
+
+    protected $authClass;
+
+    protected $roles = [];
 
 	protected $layout;
 
@@ -17,7 +25,38 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
+        $this->checkAccess($this->roles);
 	}
+
+    public function checkAccess(array $roles)
+    {
+        if ($roles)
+        {
+            $authClass = $this->getAuthClass();
+
+            $user = $authClass::getCurrentUser();
+
+            if (!$user)
+            {
+                return redirect()->to($authClass::loginUrl());
+            }
+
+            foreach($roles as $role)
+            {
+                if ($role == static::LOGGED_ROLE)
+                {
+                    return;
+                }
+
+                if ($user->hasPermission($role))
+                {
+                    return;
+                }
+            }
+
+            throw SecurityException::forDisallowedAction();
+        }
+    }
 
 	public function render(string $view, array $params = [])
 	{
@@ -39,7 +78,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 		if ($this->layout)
 		{
-			return view($layoutPath . $this->layout, ['content' => $content]);
+			return app_view($layoutPath . $this->layout, ['content' => $content]);
 		}
 
 		return $content;
