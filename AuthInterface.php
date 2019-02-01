@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class CliController extends BaseCliController
+interface AuthInterface extends BaseAuthInterface
 {
 }
