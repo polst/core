@@ -11,37 +11,23 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
     protected $modelClass;
 
-    protected $_fieldLabels;
+    public function getModelClass()
+    {
+        return $this->modelClass;
+    }
 
     public function fieldLabel($field, $default = null)
     {
-        $labels = $this->getFieldLabels();
+    	 $modelClass = $this->getModelClass();
 
-        if (array_key_exists($field, $labels))
-        {
-            return $labels[$field];
-        }
-
-        return $default;
+    	 return $modelClass::fieldLabel($field, $default);
     }
 
     public function getFieldLabels()
     {
-        if ($this->_fieldLabels === null)
-        {
-            $modelClass = $this->getModelClass();
+    	$modelClass = $this->getModelClass();
 
-            $model = new $modelClass;
-
-            $this->_fieldLabels = $model::getFieldLabels();
-        }
-
-        return $this->_fieldLabels;
-    }
-
-    public function getModelClass()
-    {
-        return $this->modelClass;
+        return $model::getFieldLabels();
     }
 
 }
