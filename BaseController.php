@@ -13,9 +13,9 @@ abstract class BaseController extends \CodeIgniter\Controller
 
     const LOGGED_ROLE = '*';
 
-    protected $authClass;
+    protected static $authClass;
 
-    protected $roles = [];
+    protected static $roles = [];
 
 	protected $layout;
 
@@ -25,14 +25,26 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
-        $this->checkAccess($this->roles);
+        $this->checkAccess();
 	}
 
-    public function checkAccess(array $roles)
+    public static function getAuthClass()
     {
+        return static::$authClass;
+    }
+
+    public static function getRoles()
+    {
+        return static::$roles;
+    }
+
+    public function checkAccess()
+    {
+        $roles = static::getRoles();
+
         if ($roles)
         {
-            $authClass = $this->getAuthClass();
+            $authClass = static::getAuthClass();
 
             $user = $authClass::getCurrentUser();
 
