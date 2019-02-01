@@ -35,7 +35,7 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
 
     	$user = $class::getCurrentUser();
 
-		if ($user)
+		if (!$user)
 		{
 			throw SecurityException::forDisallowedAction();
 		}
