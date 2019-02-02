@@ -32,4 +32,20 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         return $model::getFieldLabels();
     }
 
+    public function getPrimaryKey()
+    {
+        $modelClass = $this->getModelClass();
+
+        $model = $modelClass::factory();
+
+        $primaryKey = $model->getPrimaryKey();        
+
+        if (property_exists($this, $primaryKey))
+        {
+            return $this->$primaryKey;
+        }
+
+        return null;
+    }
+
 }
