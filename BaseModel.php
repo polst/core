@@ -179,7 +179,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $config = $class::beforeInsert($config);
@@ -202,7 +202,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $class::afterInsert($config);
@@ -221,7 +221,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $config = $class::beforeUpdate($config);
@@ -244,7 +244,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $class::afterUpdate($config);
@@ -261,7 +261,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $class::beforeDelete($config);
@@ -278,7 +278,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $class::afterDelete($config);
