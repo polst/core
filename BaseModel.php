@@ -156,7 +156,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             foreach($params as $key => $value)
             {
-                $config[$key] => $value;
+                $config[$key] = $value;
             }
 
             $config = $class::afterFind($config);
