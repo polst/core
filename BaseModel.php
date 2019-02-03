@@ -301,7 +301,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function validate($data) : bool
     {
-        // get validation rules
+        // save validation rules
 
         $validationRules = $this->validationRules;
 
