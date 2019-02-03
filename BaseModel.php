@@ -13,6 +13,20 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use FactoryTrait;
 
+    protected $beforeInsert = ['beforeInsert'];
+
+    protected $afterInsert = ['afterInsert'];
+
+    protected $beforeUpdate = ['beforeUpdate'];
+
+    protected $afterUpdate = ['afterUpdate'];
+
+    protected $afterFind = ['afterFind']; 
+
+    protected $beforeDelete = ['beforeDelete'];
+
+    protected $afterDelete = ['afterDelete'];
+
 	protected static $fieldLabels = [];
 
 	public function getPrimaryKey()
@@ -126,5 +140,37 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 		return $row;
 	}
+
+    protected function beforeInsert($data)
+    {
+        return $data;
+    }
+
+    protected function afterInsert($data, $result)
+    {
+    }
+
+    protected function beforeUpdate($id, $data)
+    {
+        return $data;
+    }
+
+    protected function afterUpdate($id, $data, $result)
+    {
+    }
+
+    protected function afterFind($id, $row)
+    {
+        return $row;
+    }
+
+    protected function beforeDelete($id, $purge)
+    {
+        return $data;
+    }
+
+    protected function afterDelete($id, $purge, $result, $data)
+    {
+    }
 
 }
