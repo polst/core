@@ -141,35 +141,140 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return $row;
 	}
 
-    protected function beforeInsert(array $params)
+    public function getBehaviors()
     {
+        return [];
+    }
+
+    public function afterFind(array $params) : array
+    {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $config = $class::afterFind($config);
+
+            $params['data'] = $config['data'];
+        }
+
+        return $params;    
+    }
+
+    public function beforeInsert(array $params) : array
+    {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $config = $class::beforeInsert($config);
+
+            $params['data'] = $config['data'];
+        }
+
         return $params;
     }
 
-    protected function afterInsert(array $params)
+    public function afterInsert($model, $field, $path)
     {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $class::afterInsert($config);
+        }
     }
 
-    protected function beforeUpdate(array $params)
+    public function beforeUpdate(array $params) : array
     {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $config = $class::beforeUpdate($config);
+
+            $params['data'] = $config['data'];
+        }
+
         return $params;
     }
 
-    protected function afterUpdate(array $params)
+    public function afterUpdate(array $params)
     {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $class::afterUpdate($config);
+        }
     }
 
-    protected function afterFind(array $params)
+    public function beforeDelete(array $params)
     {
-        return $params;
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $class::beforeDelete($config);
+        }
     }
 
-    protected function beforeDelete(array $params)
+    public function afterDelete(array $params)
     {
-    }
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
 
-    protected function afterDelete(array $params)
-    {
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] => $value;
+            }
+
+            $class::afterDelete($config);
+        }
     }
 
 }
