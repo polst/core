@@ -169,6 +169,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function beforeInsert(array $params) : array
     {
+        $params = $this->beforeSave($params);
+
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -188,8 +190,10 @@ abstract class BaseModel extends \CodeIgniter\Model
         return $params;
     }
 
-    public function afterInsert($model, $field, $path)
+    public function afterInsert(array $params)
     {
+        $this->afterSave($params);
+
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -207,6 +211,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function beforeUpdate(array $params) : array
     {
+        $params = $this->beforeSave($params);
+
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -228,6 +234,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function afterUpdate(array $params)
     {
+        $this->afterSave($params);
+
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -275,6 +283,43 @@ abstract class BaseModel extends \CodeIgniter\Model
 
             $class::afterDelete($config);
         }
+    }
+
+    public function beforeSave(array $params) : array
+    {
+        return $params;
+    }
+
+    public function afterSave(array $params)
+    {
+    }
+
+    public function prepareValidationRules(array $validationRules, $data) : array
+    {
+        return $validationRules;
+    }
+
+    public function validate($data) : bool
+    {
+        // get validation rules
+
+        $validationRules = $this->validationRules;
+
+        // prepare validation rules
+
+        $this->validationRules = $this->prepareValidationRules($validationRules, $data);
+
+        // validate
+
+        $result = parent::validate($data);
+
+        // restore validation rules
+
+        $this->validationRules = $validationRules;
+
+        // return result
+
+        return $result;
     }
 
 }
