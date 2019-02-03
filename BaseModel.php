@@ -285,12 +285,12 @@ abstract class BaseModel extends \CodeIgniter\Model
         }
     }
 
-    public function beforeSave(array $params) : array
+    protected function beforeSave(array $params) : array
     {
         return $params;
     }
 
-    public function afterSave(array $params)
+    protected function afterSave(array $params)
     {
     }
 
