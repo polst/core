@@ -141,35 +141,34 @@ abstract class BaseModel extends \CodeIgniter\Model
 		return $row;
 	}
 
-    protected function beforeInsert($data)
+    protected function beforeInsert(array $event)
     {
-        return $data;
+        return $event['data'];
     }
 
-    protected function afterInsert($data, $result)
-    {
-    }
-
-    protected function beforeUpdate($id, $data)
-    {
-        return $data;
-    }
-
-    protected function afterUpdate($id, $data, $result)
+    protected function afterInsert(array $event)
     {
     }
 
-    protected function afterFind($id, $row)
+    protected function beforeUpdate(array $event)
     {
-        return $row;
+        return $event['data'];
     }
 
-    protected function beforeDelete($id, $purge)
+    protected function afterUpdate(array $event)
     {
-        return $data;
     }
 
-    protected function afterDelete($id, $purge, $result, $data)
+    protected function afterFind(array $event)
+    {
+        return $event['data'];
+    }
+
+    protected function beforeDelete(array $event)
+    {
+    }
+
+    protected function afterDelete(array $event)
     {
     }
 
