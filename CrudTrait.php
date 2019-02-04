@@ -239,11 +239,11 @@ trait CrudTrait
 		return $query;
 	}
 
-	protected function find($id)
+	protected function find(int $id)
 	{
 		if (!$id)
 		{
-			$id = $this->request->getGet('id');
+            throw new PageNotFoundException;
 		}
 
 		$query = $this->createQuery();
