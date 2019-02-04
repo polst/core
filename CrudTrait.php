@@ -8,7 +8,6 @@ namespace BasicApp\Core;
 
 use Config\Services;
 use Exception;
-use PageNotFoundException;
 
 trait CrudTrait
 {
