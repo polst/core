@@ -13,6 +13,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use FactoryTrait;
 
+    protected $afterFind = ['afterFind']; 
+
     protected $beforeInsert = ['beforeInsert'];
 
     protected $afterInsert = ['afterInsert'];
@@ -21,11 +23,15 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $afterUpdate = ['afterUpdate'];
 
-    protected $afterFind = ['afterFind']; 
-
     protected $beforeDelete = ['beforeDelete'];
 
     protected $afterDelete = ['afterDelete'];
+
+    protected $beforeSave = ['beforeSave'];
+
+    protected $afterSave = ['afterSave'];
+
+    protected $prepareValidationRules = ['prepareValidationRules'];
 
 	protected static $fieldLabels = [];
 
@@ -122,11 +128,11 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 		$model->protect(false);
 
-		$b = $model->insert($params);
+		$result = $model->insert($params);
 
 		$model->protect(true);
 
-		if (!$b)
+		if (!$result)
 		{
 			// nothing to do
 		}
@@ -192,8 +198,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function afterInsert(array $params)
     {
-        $this->afterSave($params);
-
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -211,8 +215,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function beforeUpdate(array $params) : array
     {
-        $params = $this->beforeSave($params);
-
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -287,16 +289,59 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected function beforeSave(array $params) : array
     {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] = $value;
+            }
+
+            $class::beforeSave($config);
+        }
+
         return $params;
     }
 
-    protected function afterSave(array $params)
+    protected function afterSave(array $params) : array
     {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] = $value;
+            }
+
+            $class::afterSave($config);
+        }
+
+        return $params;
     }
 
-    public function prepareValidationRules(array $validationRules, $data) : array
+    public function prepareValidationRules(array $params) : array
     {
-        return $validationRules;
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] = $value;
+            }
+
+            $config = $class::prepareValidationRules($config);
+        }
+
+        return $params;
     }
 
     public function validate($data) : bool
@@ -307,7 +352,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         // prepare validation rules
 
-        $this->validationRules = $this->prepareValidationRules($validationRules, $data);
+        $params = $this->trigger('prepareValidationRules', ['data' => $data, 'validationRules' => $validationRules]);
+
+        $this->validationRules = $params['validationRules'];
 
         // validate
 
@@ -321,5 +368,20 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         return $result;
     }
+
+    public function save($data)
+    {
+        $params = $this->trigger('beforeSave', ['data' => $data]);
+
+        $data = $params['data'];
+
+        $result = parent::save($data);
+
+        $params = $this->trigger('afterSave', ['data' => $data, 'result' => $result]);
+
+        $result = $params['result'];
+
+        return $result;
+    }    
 
 }
