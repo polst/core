@@ -352,9 +352,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         // prepare validation rules
 
-        $params = $this->trigger('prepareValidationRules', ['data' => $data, 'validationRules' => $validationRules]);
+        $params = $this->trigger('prepareValidationRules', ['data' => $data, 'rules' => $validationRules]);
 
-        $this->validationRules = $params['validationRules'];
+        $this->validationRules = $params['rules'];
 
         // validate
 
