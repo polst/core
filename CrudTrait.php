@@ -111,11 +111,11 @@ trait CrudTrait
 		return $errors;
 	}
 
-	public function update($id = false)
+	public function update()
 	{
 		$errors = [];
 
-		$model = $this->find($id);
+		$model = $this->find();
 
 		$post = $this->request->getPost();
 
@@ -210,11 +210,11 @@ trait CrudTrait
 		]);
 	}
 
-	public function delete($id = false)
+	public function delete()
 	{
 		$query = $this->createQuery();
 
-		$model = $this->find($id);
+		$model = $this->find();
 
 		if ($this->request->getPost())
 		{
@@ -238,8 +238,10 @@ trait CrudTrait
 		return $query;
 	}
 
-	protected function find(int $id)
+	protected function find()
 	{
+        $id = $this->request->getGet('id');
+
 		if (!$id)
 		{
             throw new PageNotFoundException;
