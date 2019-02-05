@@ -185,7 +185,19 @@ trait CrudTrait
 	{
 		$errors = [];
 
-		$parentId = $this->request->getGet('parentId');
+        $parentField = $this->getParentField();
+
+        $parentId = null;
+
+        if ($parentField)
+        {
+            $parentId = $this->request->getGet('parentId');
+
+            if (!$parentId)
+            {
+                throw new PageNotFoundException;
+            }
+        }
 		
 		$model = $this->createEntity($parentId);
 		
