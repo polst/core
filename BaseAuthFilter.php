@@ -9,7 +9,6 @@ namespace BasicApp\Core;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use CodeIgniter\Security\Exceptions\SecurityException;
 use BasicApp\User\Models\UserModel;
 
 abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface

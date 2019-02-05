@@ -225,6 +225,10 @@ trait CrudTrait
 				throw new Exception('Record is not deleted.');
 			}
 		}
+        else
+        {
+            throw new PageNotFoundException;
+        }
 
 		return $this->redirectBack($this->returnUrl);
 	}
