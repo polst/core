@@ -271,12 +271,21 @@ trait CrudTrait
 	{
 		$query = $this->createQuery();
 
-		$parentId = $this->request->getGet('parentId');
+        $parentField = $this->getParentField();
 
-		if ($parentId)
-		{
-			$query->where($this->getParentField(), $parentId);
-		}
+        $parentId = null;
+
+        if ($parentField)
+        {
+            $parentId = $this->request->getGet('parentId');
+
+            if (!$parentId)
+            {
+                throw new PageNotFoundException;
+            }
+
+            $query->where($parentField, $parentId);
+        }
 
 		if ($this->getOrderBy())
 		{
