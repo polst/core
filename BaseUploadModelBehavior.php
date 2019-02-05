@@ -109,11 +109,19 @@ abstract class BaseUploadModelBehavior extends ModelBehavior implements ModelBeh
 
         $field = $params['field'];
 
-        $model = $modelClass::find($id);
+        $models = $modelClass::factory()->find($id);
 
-        if ($model->$field)
+        if (count($models) > 1)
         {
-            static::$oldFiles[$field] = $model->$field;
+            throw new Exception('Deleting multiple objects is not supported.');
+        }
+
+        foreach($models as $model)
+        {
+            if ($model->$field)
+            {
+                static::$oldFiles[$field] = $model->$field;
+            }
         }
     }
 
