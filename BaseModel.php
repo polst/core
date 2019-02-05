@@ -175,8 +175,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function beforeInsert(array $params) : array
     {
-        $params = $this->beforeSave($params);
-
         foreach($this->getBehaviors() as $config)
         {
             $class = $config['class'];
@@ -300,7 +298,9 @@ abstract class BaseModel extends \CodeIgniter\Model
                 $config[$key] = $value;
             }
 
-            $class::beforeSave($config);
+            $config = $class::beforeSave($config);
+
+            $params['data'] = $config['data'];
         }
 
         return $params;
@@ -319,7 +319,11 @@ abstract class BaseModel extends \CodeIgniter\Model
                 $config[$key] = $value;
             }
 
-            $class::afterSave($config);
+            $config = $class::afterSave($config);
+
+            $params['data'] = $config['data'];
+
+            $params['result'] = $config['result'];
         }
 
         return $params;
