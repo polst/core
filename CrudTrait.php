@@ -220,7 +220,7 @@ trait CrudTrait
 		{
             $primaryKey = $model->getPrimaryKey();
 
-			if (!$query->delete($model->{$primaryKey}))
+			if (!$query->delete($primaryKey))
 			{
 				throw new Exception('Record is not deleted.');
 			}
