@@ -40,7 +40,7 @@ abstract class BaseModelBehavior implements ModelBehaviorInterface
     {
     }
 
-    public static function prepareValidationRules(array $params) : array
+    public static function getValidationRules(array $params) : array
     {
         return $params;
     }

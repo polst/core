@@ -27,6 +27,6 @@ interface BaseModelBehaviorInterface
 
     static function afterSave(array $params) : array;
 
-    static function prepareValidationRules(array $params) : array;
+    static function getValidationRules(array $params) : array;
     
 }

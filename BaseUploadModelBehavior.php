@@ -98,7 +98,6 @@ abstract class BaseUploadModelBehavior extends ModelBehavior implements ModelBeh
         return $params;
     }
 
-
     public static function beforeDelete(array $params)
     {
         $id = $params['id'];
