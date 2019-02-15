@@ -31,7 +31,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $afterSave = ['afterSave'];
 
-    protected $prepareValidationRules = ['prepareValidationRules'];
+    protected $beforeValidate = ['beforeValidate'];
+
+    protected $afterValidate = ['afterValidate'];
 
 	protected static $fieldLabels = [];
 
@@ -329,7 +331,7 @@ abstract class BaseModel extends \CodeIgniter\Model
         return $params;
     }
 
-    public function prepareValidationRules(array $params) : array
+    protected function beforeValidate(array $params) : array
     {
         foreach($this->getBehaviors() as $config)
         {
@@ -342,11 +344,38 @@ abstract class BaseModel extends \CodeIgniter\Model
                 $config[$key] = $value;
             }
 
-            $config = $class::prepareValidationRules($config);
+            $config = $class::beforeValidate($config);
+
+            $params['data'] = $config['data'];
+
+            $params['validationRules'] = $config['validationRules'];
         }
 
         return $params;
     }
+
+    protected function afterValidate(array $params) : array
+    {
+        foreach($this->getBehaviors() as $config)
+        {
+            $class = $config['class'];
+
+            unset($config['class']);
+
+            foreach($params as $key => $value)
+            {
+                $config[$key] = $value;
+            }
+
+            $config = $class::afterValidate($config);
+
+            $params['data'] = $config['data'];
+
+            $params['result'] = $config['result'];
+        }
+
+        return $params;
+    }    
 
     public function validate($data) : bool
     {
@@ -354,15 +383,27 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         $validationRules = $this->validationRules;
 
-        // prepare validation rules
+        // prepare validation rules and data
 
-        $params = $this->trigger('prepareValidationRules', ['data' => $data, 'rules' => $validationRules]);
+        $params = $this->trigger('beforeValidate', [
+            'validationRules' => $validationRules,
+            'data' => $data
+        ]);
 
-        $this->validationRules = $params['rules'];
+        $this->validationRules = $params['validationRules'];
+
+        $data = $params['data'];
 
         // validate
 
         $result = parent::validate($data);
+
+        // call validate behavior
+
+        $params = $this->trigger('afterValidate', [
+            'data' => $data,
+            'result' => $result
+        ]);
 
         // restore validation rules
 
@@ -370,7 +411,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         // return result
 
-        return $result;
+        return $params['result'];
     }
 
     public function save($data)
