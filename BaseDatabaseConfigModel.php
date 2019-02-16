@@ -8,7 +8,7 @@ namespace BasicApp\Core;
 
 use Config\Database;
 
-abstract class DatabaseConfigModel extends \BasicApp\Core\Model
+abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
 {
 
     protected $table = 'configs';

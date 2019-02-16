@@ -8,7 +8,7 @@ namespace BasicApp\Core;
 
 use CodeIgniter\Config\BaseConfig;
 
-abstract class DatabaseConfig extends BaseConfig
+abstract class BaseDatabaseConfig extends BaseConfig
 {
 
     public function __construct()
