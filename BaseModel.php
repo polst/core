@@ -88,12 +88,16 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 	public static function createEntity(array $params = [])
 	{
-		if ($this->returnType === 'array')
+        $model = static::factory();
+
+		if ($model->returnType === 'array')
 		{
 			return $params;
 		}
 
-		$returnType = $this->returnType;
+        // create object
+
+		$returnType = $model->returnType;
 
 		$model = new $returnType;
 
