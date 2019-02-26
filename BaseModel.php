@@ -15,7 +15,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use ModelTranslationsTrait;
 
-    use ModelsFieldLabelsTrait;
+    use ModelFieldLabelsTrait;
 
     protected $afterFind = ['afterFind']; 
 
