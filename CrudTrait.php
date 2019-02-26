@@ -83,21 +83,21 @@ trait CrudTrait
     	return Services::response()->redirect($returnUrl);
 	}
 
-	protected function fill($model, $values)
+	protected function fillEntity($entity, array $values)
 	{
-		if (is_array($model))
+		if (is_array($entity))
 		{
 			foreach($values as $key => $value)
 			{
-				$model[$key] = $value;
+				$entity[$key] = $value;
 			}
 		}
 		else
 		{
-			$model->fill($values);
+			$entity->fill($values);
 		}
 
-		return $model;
+		return $entity;
 	}
 
 	protected function save($model)
@@ -121,7 +121,7 @@ trait CrudTrait
 
 		if ($post)
 		{
-			$this->fill($model, $post);
+			$this->fillEntity($model, $post);
 
 			$errors = $this->save($model);
 
@@ -140,7 +140,7 @@ trait CrudTrait
 			$parentId = $model->{$parentField};
 		}
 
-		return $this->render($this->getUpdateView(), [
+		return $this->renderUpdate([
 			'errors' => $errors,
 			'model' => $model,
 			'parentId' => $parentId
@@ -205,7 +205,7 @@ trait CrudTrait
 
 		if ($post)
 		{
-			$this->fill($model, $post);
+			$this->fillEntity($model, $post);
 
 			$errors = $this->save($model);
 
@@ -215,7 +215,7 @@ trait CrudTrait
 			}
 		}
 
-		return $this->render($this->getCreateView(), [
+		return $this->renderCreate([
 			'model' => $model,
 			'errors' => $errors,
 			'parentId' => $parentId
@@ -317,11 +317,26 @@ trait CrudTrait
 			$elements = $query->findAll();
 		} 
 
-		return $this->render($this->getIndexView(), [
+		return $this->renderIndex([
 			'elements' => $elements,
 			'pager' => $query->pager,
 			'parentId' => $parentId
 		]);
 	}
+
+    protected function renderIndex(array $params = [])
+    {
+        return $this->render($this->getIndexView(), $params);
+    }
+
+    protected function renderCreate(array $params = [])
+    {
+        return $this->render($this->getCreateView(), $params);
+    }
+
+    protected function renderUpdate(array $params = [])
+    {
+        return $this->render($this->getUpdateView(), $params);
+    }    
 
 }
