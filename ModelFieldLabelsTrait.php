@@ -16,7 +16,7 @@ trait ModelFieldLabelsTrait
         return static::$translateFieldLabels;
     }
 
-    public static function getFieldLabels() : array
+    public static function getFieldLabels()
     {
         $return = static::$fieldLabels;
 
@@ -28,7 +28,7 @@ trait ModelFieldLabelsTrait
         return $return;
     }
 
-    public static function fieldLabel($field, $default = null) : string
+    public static function fieldLabel($field, $default = null)
     {
         $labels = static::getFieldLabels();
 

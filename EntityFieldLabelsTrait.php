@@ -11,7 +11,7 @@ use Exception;
 trait EntityFieldLabelsTrait
 {
 
-    public function fieldLabel($field, $default = null) : string
+    public function fieldLabel($field, $default = null)
     {
         $modelClass = $this->getModelClass();
 
