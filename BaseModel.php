@@ -13,6 +13,10 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use FactoryTrait;
 
+    use ModelTranslationsTrait;
+
+    use ModelsFieldLabelsTrait;
+
     protected $afterFind = ['afterFind']; 
 
     protected $beforeInsert = ['beforeInsert'];
@@ -37,6 +41,10 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 	protected static $fieldLabels = [];
 
+    protected static $translateFieldLabels = false;
+
+    protected static $translationsCategory;
+
 	public function getPrimaryKey()
 	{
 		return $this->primaryKey;
@@ -46,28 +54,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 	{
 		return $this->returnType;
 	}
-
-	public static function getFieldLabels()
-	{
-		return static::$fieldLabels;
-	}
-
-    public static function fieldLabel($field, $default = null)
-    {
-        $labels = static::getFieldLabels();
-
-        if (array_key_exists($field, $labels))
-        {
-            return $labels[$field];
-        }
-
-        if ($default === null)
-        {
-        	return $field;
-        }
-
-        return $default;
-    }
 
 	public function errors(bool $forceDB = false)
 	{
