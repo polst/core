@@ -27,9 +27,9 @@ trait CrudTrait
 		throw new Exception('Property "' . $name . '" not defined.');
 	}
 
-    protected function getSearchModelClass()
+    protected function getSearchModelClass($default = null)
     {
-        return $this->_getProperty('searchModelClass');
+        return $this->_getProperty('searchModelClass', $default);
     }
 
 	protected function getModelClass()
@@ -288,7 +288,7 @@ trait CrudTrait
 	{
 		$query = $this->createQuery();
 
-        $searchModelClass = $this->getSearchModelClass();
+        $searchModelClass = $this->getSearchModelClass(false);
 
         if ($searchModelClass)
         {
