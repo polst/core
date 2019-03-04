@@ -27,6 +27,11 @@ trait CrudTrait
 		throw new Exception('Property "' . $name . '" not defined.');
 	}
 
+    protected function getSearchModelClass()
+    {
+        return $this->_getProperty('searchModelClass');
+    }
+
 	protected function getModelClass()
 	{
 		return $this->_getProperty('modelClass');
@@ -283,6 +288,25 @@ trait CrudTrait
 	{
 		$query = $this->createQuery();
 
+        $searchModelClass = $this->getSearchModelClass();
+
+        if ($searchModelClass)
+        {
+            $searchModel = $searchModelClass::factory();
+
+            $search = $searchModel->createEntity();
+
+            $search->fill($this->request->getGet());
+
+            $searchModel::applyToQuery($search, $query);
+        }
+        else
+        {
+            $searchModel = null;
+
+            $search = null;
+        }
+
         $parentField = $this->getParentField();
 
         $parentId = null;
@@ -320,7 +344,9 @@ trait CrudTrait
 		return $this->renderIndex([
 			'elements' => $elements,
 			'pager' => $query->pager,
-			'parentId' => $parentId
+			'parentId' => $parentId,
+            'searchModel' => $searchModel,
+            'search' => $search
 		]);
 	}
 
