@@ -154,36 +154,18 @@ trait CrudTrait
 
 	protected function createEntity($parentId = false)
 	{
-		$modelClass = $this->getModelClass();
-
-		$model = new $modelClass;
+		$params = [];
 
 		$parentField = $this->getParentField();
 
-		$returnType = $model->getReturnType();
-
-		if ($returnType === 'array')
-		{
-			$return = [];
-		}
-		else
-		{
-			$return = new $returnType;
-		}
-
 		if ($parentField && $parentId)
 		{
-			if (is_array($return))
-			{
-				$return[$parentField] = $parentId;
-			}
-			else
-			{
-				$return->{$this->parentField} = $parentId;
-			}
+			$params[$parentField] = $parentId;
 		}
 
-		return $return;
+		$modelClass = $this->getModelClass();		
+
+		return $modelClass::createEntity($params);
 	}
 
 	public function create()
