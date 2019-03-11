@@ -209,6 +209,25 @@ trait CrudTrait
 		]);
 	}
 
+	protected function entityPrimaryKey($entity)
+	{
+		if ($entity instanceof Entity)
+		{
+			return $entity->getPrimaryKey();
+		}
+
+		$query = $this->createQuery();
+
+		if (($query instanceof Model) && ($query->getReturnType() == 'array'))
+		{
+			$key = $query->getPrimaryKey();
+			
+			return $entity[$key];
+		}
+
+		throw new Exception('Unknown primary key.');
+	}
+
 	public function delete()
 	{
 		$query = $this->createQuery();
@@ -217,7 +236,7 @@ trait CrudTrait
 
 		if ($this->request->getPost())
 		{
-            $primaryKey = $model->getPrimaryKey();
+			$primaryKey = $this->entityPrimaryKey($model);
 
 			if (!$query->delete($primaryKey))
 			{
