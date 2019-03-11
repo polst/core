@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class AdminCrudController extends BaseAdminCrudController
+abstract class AdminCrudController extends BaseAdminCrudController implements ControllerModelInterface
 {
 }
