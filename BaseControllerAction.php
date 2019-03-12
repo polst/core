@@ -159,7 +159,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
         throw new Exception('Unknown primary key.');
     }
 
-    protected function entityParentKey($row)
+    protected function entityParentKey($row, bool $throwException = false)
     {
         $parentKey = $this->parentKey;
 
@@ -175,8 +175,13 @@ abstract class BaseControllerAction implements ControllerActionInterface
             return $row->{$parentKey};
         }
 
-        throw new Exception('Unknown parent key.');
-    }    
+        if ($throwException)
+        {
+            throw new Exception('Unknown parent key.');
+        }
+
+        return null;
+    }
 
     protected function createEntity(array $options = [])
     {
