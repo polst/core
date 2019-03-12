@@ -82,7 +82,7 @@ abstract class BaseController extends \CodeIgniter\Controller
         return false;
     }
 
-	public function render(string $view, array $params = [])
+	protected function render(string $view, array $params = [])
 	{
         $viewPath = $this->viewPath;
 
@@ -106,6 +106,28 @@ abstract class BaseController extends \CodeIgniter\Controller
 		}
 
 		return $content;
+	}
+
+    protected function createAction(string $className, array $options = [])
+    {
+    	$options['controller'] = $this;
+
+    	$options['renderer'] = function(string $view, array $params = []) 
+    	{
+        	return $this->render($view, $params);
+        };
+
+     	return $className::factory($options);
+    }
+
+	protected function getProperty($name, $default = null)
+	{
+		if (property_exists($this, $name))
+		{
+			return $this->$name;
+		}
+
+		return $default;
 	}
 
 }

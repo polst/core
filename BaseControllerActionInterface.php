@@ -9,8 +9,8 @@ namespace BasicApp\Core;
 interface BaseControllerActionInterface
 {
 
-    public static function run(Controller $controller, array $params = []);
+    function run(array $params = []);
 
-    public static function render(Controller $controller, array $params = []) : string;
+    function render(string $view, array $params = []) : string;
 
 }

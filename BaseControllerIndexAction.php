@@ -9,15 +9,29 @@ namespace BasicApp\Core;
 abstract class BaseControllerIndexAction extends ControllerAction
 {
 
-    public static function run(Controller $controller, array $params = [])
-    {
-        $query = $controller->createQuery();
+    protected $modelClass;
 
-        $searchModelClass = $controller->getSearchModelClass(false);
+    protected $searchModelClass;
+
+    protected $parentField;
+
+    protected $parentFieldIndex = 'parentId';
+
+    protected $orderBy;
+
+    protected $perPage = 25;
+
+    protected $beforeFind;
+
+    public function run(array $params = [])
+    {
+        $query = $this->createModel($this->modelClass);
+
+        $searchModelClass = $this->searchModelClass;
 
         if ($searchModelClass)
         {
-            $searchModel = $searchModelClass::factory();
+            $searchModel = $this->createSearchModel($this->searchModelClass);
 
             $search = $searchModel->createEntity();
 
@@ -32,13 +46,13 @@ abstract class BaseControllerIndexAction extends ControllerAction
             $search = null;
         }
 
-        $parentField = $controller->getParentField();
+        $parentField = $this->parentField;
 
         $parentId = null;
 
         if ($parentField)
         {
-            $parentId = $controller->request->getGet(static::PARENT_ID_INDEX);
+            $parentId = $controller->request->getGet($this->parentFieldIndex);
 
             if (!$parentId)
             {
@@ -48,14 +62,14 @@ abstract class BaseControllerIndexAction extends ControllerAction
             $query->where($parentField, $parentId);
         }
 
-        if ($controller->getOrderBy())
+        if ($this->orderBy)
         {
-            $query->orderBy($controller->getOrderBy());
+            $query->orderBy($this->orderBy);
         }
 
-        $controller->beforeFind($query);
+        $this->trigger('beforeFind', ['query' => $query]);
 
-        $perPage = $controller->getPerPage();
+        $perPage = $this->perPage;
 
         if ($perPage)
         {
@@ -64,9 +78,9 @@ abstract class BaseControllerIndexAction extends ControllerAction
         else
         {
             $elements = $query->findAll();
-        } 
+        }
 
-        return static::render($controller, [
+        return $this->render($this->view, [
             'elements' => $elements,
             'pager' => $query->pager,
             'parentId' => $parentId,

@@ -285,76 +285,6 @@ trait CrudTrait
 	{
 	}
 
-	public function index()
-	{
-		$query = $this->createQuery();
-
-        $searchModelClass = $this->getSearchModelClass(false);
-
-        if ($searchModelClass)
-        {
-            $searchModel = $searchModelClass::factory();
-
-            $search = $searchModel->createEntity();
-
-            $search->fill($this->request->getGet());
-
-            $searchModel::applyToQuery($search, $query);
-        }
-        else
-        {
-            $searchModel = null;
-
-            $search = null;
-        }
-
-        $parentField = $this->getParentField();
-
-        $parentId = null;
-
-        if ($parentField)
-        {
-            $parentId = $this->request->getGet('parentId');
-
-            if (!$parentId)
-            {
-                throw new PageNotFoundException;
-            }
-
-            $query->where($parentField, $parentId);
-        }
-
-		if ($this->getOrderBy())
-		{
-			$query->orderBy($this->getOrderBy());
-		}
-
-		$this->beforeFind($query);
-
-		$perPage = $this->getPerPage();
-
-		if ($perPage)
-		{
-			$elements = $query->paginate($perPage);
-		}
-		else
-		{
-			$elements = $query->findAll();
-		} 
-
-		return $this->renderIndex([
-			'elements' => $elements,
-			'pager' => $query->pager,
-			'parentId' => $parentId,
-            'searchModel' => $searchModel,
-            'search' => $search
-		]);
-	}
-
-    protected function renderIndex(array $params = [])
-    {
-        return $this->render($this->getIndexView(), $params);
-    }
 
     protected function renderCreate(array $params = [])
     {
@@ -364,6 +294,36 @@ trait CrudTrait
     protected function renderUpdate(array $params = [])
     {
         return $this->render($this->getUpdateView(), $params);
-    }    
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+	protected function indexOptions(array $options = []) : array
+	{
+		return $options;
+	}
+
+	public function index()
+	{
+		$options = $this->indexOptions([
+			'view' => 'index',
+			'returnUrl' => $this->getProperty('returnUrl'),
+			'modelClass' => $this->getProperty('modelClass'),
+			'searchModelClass' => $this->getProperty('searchModelClass')
+		]);
+
+		$action = $this->createAction(ControllerIndexAction::class, $options);
+
+		return $action->run(func_get_args());
+	}
 
 }
