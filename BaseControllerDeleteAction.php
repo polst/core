@@ -9,7 +9,7 @@ abstract class BaseControllerDeleteAction extends ControllerAction
 
     public function run(array $options = [])
     {
-        $query = $this->createQuery();
+        $query = $this->createModel();
 
         $row = $this->findEntity();
 
