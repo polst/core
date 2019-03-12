@@ -97,6 +97,11 @@ abstract class BaseControllerAction implements ControllerActionInterface
 	{
         $className = $this->searchModelClass;
 
+        if (!$className)
+        {
+            return null;
+        }
+
 		$searchModel = $className::factory();
 
 		$this->trigger(static::EVENT_CREATE_SEARCH_MODEL, ['searchModel' => $searchModel]);
