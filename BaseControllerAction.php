@@ -161,7 +161,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
 
     protected function entityParentKey($row)
     {
-        $parentKey = $this->parentKeyField;
+        $parentKey = $this->parentKey;
 
         $model = $this->createModel();
 
@@ -182,9 +182,9 @@ abstract class BaseControllerAction implements ControllerActionInterface
     {
         $params = [];
 
-        $parentField = $this->parentField;
+        $parentKey = $this->parentKey;
 
-        if ($parentField)
+        if ($parentKey)
         {
             $parentId = $this->request->getGet($this->parentKeyIndex);
 
@@ -193,7 +193,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
                 throw new PageNotFoundException;
             }
 
-            $params[$parentField] = $parentId;
+            $params[$parentKey] = $parentId;
         }
 
         $modelClass = $this->modelClass;
