@@ -8,4 +8,32 @@ namespace BasicApp\Core;
 
 abstract class BaseControllerCreateAction extends ControllerAction
 {
+
+    public $view;
+
+    public function run(array $options = [])
+    {
+        $errors = [];
+
+        $row = $this->createEntity($options);
+        
+        $post = $this->request->getPost();
+
+        if ($post)
+        {
+            $this->fillEntity($row, $post);
+
+            if ($this->saveEntity($row, $errors))
+            {
+                return $this->redirectBack($this->returnUrl);
+            }
+        }
+
+        return $this->render($this->view, [
+            'model' => $row,
+            'errors' => $errors,
+            'parentId' => $this->entityParentKey($row)
+        ]);
+    }
+
 }

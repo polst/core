@@ -7,6 +7,7 @@
 namespace BasicApp\Core;
 
 use CodeIgniter\Security\Exceptions\SecurityException;
+use Config\Services;
 
 abstract class BaseController extends \CodeIgniter\Controller
 {
@@ -22,6 +23,8 @@ abstract class BaseController extends \CodeIgniter\Controller
 	protected $viewPath = '';
 
 	protected $layoutPath = '';
+
+    protected $returnUrlIndex = 'returnUrl';
 
 	public function __construct()
 	{
@@ -112,9 +115,14 @@ abstract class BaseController extends \CodeIgniter\Controller
     {
     	$options['controller'] = $this;
 
-    	$options['renderer'] = function(string $view, array $params = []) 
+    	$options['renderFunction'] = function(string $view, array $params = []) 
     	{
         	return $this->render($view, $params);
+        };
+
+        $options['redirectBackFunction'] = function($returnUrl)
+        {
+            return $this->redirectBack($returnUrl);
         };
 
      	return $className::factory($options);
@@ -129,5 +137,21 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 		return $default;
 	}
+
+    protected function redirectBack($defaultUrl)
+    {
+        $url = $this->request->getGet($this->returnUrlIndex);
+
+        if (!$url)
+        {
+            $url = $defaultUrl;
+        }
+
+        helper(['url']);
+
+        $returnUrl = site_url($url);
+
+        return Services::response()->redirect($returnUrl);
+    }
 
 }

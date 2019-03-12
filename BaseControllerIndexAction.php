@@ -13,10 +13,6 @@ abstract class BaseControllerIndexAction extends ControllerAction
 
     protected $searchModelClass;
 
-    protected $parentField;
-
-    protected $parentFieldIndex = 'parentId';
-
     protected $orderBy;
 
     protected $perPage = 25;

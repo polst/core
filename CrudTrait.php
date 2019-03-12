@@ -6,311 +6,28 @@
  */
 namespace BasicApp\Core;
 
-use Config\Services;
-use Exception;
-
 trait CrudTrait
 {
-
-	protected function _getProperty($name, $default = null)
-	{
-		if (property_exists($this, $name))
-		{
-			return $this->$name;
-		}
-
-		if ($default !== null)
-		{
-			return $default;
-		}
-
-		throw new Exception('Property "' . $name . '" not defined.');
-	}
-
-    protected function getSearchModelClass($default = null)
-    {
-        return $this->_getProperty('searchModelClass', $default);
-    }
-
-	protected function getModelClass()
-	{
-		return $this->_getProperty('modelClass');
-	}
-
-	protected function getParentField()
-	{
-		return $this->_getProperty('parentField', false);
-	}	
-
-	protected function getIndexView()
-	{
-		return $this->_getProperty('indexView', 'index');
-	}
-
-	protected function getCreateView()
-	{
-		return $this->_getProperty('createView', 'create');
-	}
-
-	protected function getUpdateView()
-	{
-		return $this->_getProperty('updateView', 'update');
-	}
-
-	protected function getPerPage()
-	{
-		return $this->_getProperty('perPage', false);
-	}
-
-	protected function getOrderBy()
-	{
-		return $this->_getProperty('orderBy', false);
-	}
-
-	protected function getReturnUrl()
-	{
-		return $this->_getProperty('returnUrl');
-	}
-
-	protected function redirectBack($returnUrl)
-	{
-		$url = $this->request->getGet('returnUrl');
-
-		if (!$url)
-		{
-			$url = $returnUrl;
-		}
-
-		helper(['url']);
-
-		$returnUrl = site_url($url);
-
-    	return Services::response()->redirect($returnUrl);
-	}
-
-	protected function fillEntity($entity, array $values)
-	{
-		if (is_array($entity))
-		{
-			foreach($values as $key => $value)
-			{
-				$entity[$key] = $value;
-			}
-		}
-		else
-		{
-			$entity->fill($values);
-		}
-
-		return $entity;
-	}
-
-	protected function save($model)
-	{
-		$query = $this->createQuery();
-
-		$query->save($model);
-
-		$errors = $query->errors();
-
-		return $errors;
-	}
-
-	public function update()
-	{
-		$errors = [];
-
-		$model = $this->find();
-
-		$post = $this->request->getPost();
-
-		if ($post)
-		{
-			$this->fillEntity($model, $post);
-
-			$errors = $this->save($model);
-
-			if (!$errors)
-			{
-				return $this->redirectBack($this->getReturnUrl());
-			}
-		}
-
-		$parentId = null;
-
-		$parentField = $this->getParentField();
-
-		if ($parentField)
-		{
-			$parentId = $model->{$parentField};
-		}
-
-		return $this->renderUpdate([
-			'errors' => $errors,
-			'model' => $model,
-			'parentId' => $parentId
-		]);
-	}
-
-	protected function createEntity($parentId = false)
-	{
-		$params = [];
-
-		$parentField = $this->getParentField();
-
-		if ($parentField && $parentId)
-		{
-			$params[$parentField] = $parentId;
-		}
-
-		$modelClass = $this->getModelClass();		
-
-		return $modelClass::createEntity($params);
-	}
-
-	public function create()
-	{
-		$errors = [];
-
-        $parentField = $this->getParentField();
-
-        $parentId = null;
-
-        if ($parentField)
-        {
-            $parentId = $this->request->getGet('parentId');
-
-            if (!$parentId)
-            {
-                throw new PageNotFoundException;
-            }
-        }
-		
-		$model = $this->createEntity($parentId);
-		
-		$post = $this->request->getPost();
-
-		if ($post)
-		{
-			$this->fillEntity($model, $post);
-
-			$errors = $this->save($model);
-
-			if (!$errors)
-			{
-				return $this->redirectBack($this->returnUrl);
-			}
-		}
-
-		return $this->renderCreate([
-			'model' => $model,
-			'errors' => $errors,
-			'parentId' => $parentId
-		]);
-	}
-
-	protected function entityPrimaryKey($entity)
-	{
-		if ($entity instanceof Entity)
-		{
-			return $entity->getPrimaryKey();
-		}
-
-		$query = $this->createQuery();
-
-		if (($query instanceof Model) && ($query->getReturnType() == 'array'))
-		{
-			$key = $query->getPrimaryKey();
-			
-			return $entity[$key];
-		}
-
-		throw new Exception('Unknown primary key.');
-	}
-
-	public function delete()
-	{
-		$query = $this->createQuery();
-
-		$model = $this->find();
-
-		if ($this->request->getPost())
-		{
-			$primaryKey = $this->entityPrimaryKey($model);
-
-			if (!$query->delete($primaryKey))
-			{
-				throw new Exception('Record is not deleted.');
-			}
-		}
-        else
-        {
-            throw new PageNotFoundException;
-        }
-
-		return $this->redirectBack($this->returnUrl);
-	}
-
-	protected function createQuery()
-	{
-		$modelClass = $this->getModelClass();
-
-		$query = new $modelClass;
-
-		return $query;
-	}
-
-	protected function find()
-	{
-        $id = $this->request->getGet('id');
-
-		if (!$id)
-		{
-            throw new PageNotFoundException;
-		}
-
-		$query = $this->createQuery();
-
-		$model = $query->find($id);
-
-		if (!$model)
-		{
-			throw new PageNotFoundException;
-		}
-
-		return $model;
-	}
-
-	protected function beforeFind($query)
-	{
-	}
-
-
-    protected function renderCreate(array $params = [])
-    {
-        return $this->render($this->getCreateView(), $params);
-    }
-
-    protected function renderUpdate(array $params = [])
-    {
-        return $this->render($this->getUpdateView(), $params);
-    }
-
-
-
-
-
-
-
-
-
-
-    
 
 	protected function indexOptions(array $options = []) : array
 	{
 		return $options;
 	}
+
+    protected function createOptions(array $options = []) : array
+    {
+        return $options;
+    }
+
+    protected function updateOptions(array $options = []) : array
+    {
+        return $options;
+    }        
+
+    protected function deleteOptions(array $options = []) : array
+    {
+        return $options;
+    }
 
 	public function index()
 	{
@@ -325,5 +42,45 @@ trait CrudTrait
 
 		return $action->run(func_get_args());
 	}
+
+    public function create()
+    {
+        $options = $this->indexOptions([
+            'view' => 'index',
+            'returnUrl' => $this->getProperty('returnUrl'),
+            'modelClass' => $this->getProperty('modelClass'),
+            'searchModelClass' => $this->getProperty('searchModelClass')
+        ]);
+
+        $action = $this->createAction(ControllerCreateAction::class, $options);
+
+        return $action->run(func_get_args());
+    }
+
+    public function update()
+    {
+        $options = $this->updateOptions([
+            'view' => 'index',
+            'modelClass' => $this->getProperty('modelClass'),
+            'searchModelClass' => $this->getProperty('searchModelClass')
+        ]);
+
+        $action = $this->createAction(ControllerUpdateAction::class, $options);
+
+        return $action->run(func_get_args());
+    }
+
+    public function delete()
+    {
+        $options = $this->deleteOptions([
+            'returnUrl' => $this->getProperty('returnUrl'),
+            'modelClass' => $this->getProperty('modelClass'),
+            'searchModelClass' => $this->getProperty('searchModelClass')
+        ]);
+
+        $action = $this->createAction(ControllerDeleteAction::class, $options);
+
+        return $action->run(func_get_args());
+    }
 
 }
