@@ -53,7 +53,7 @@ trait CrudTrait
     public function create()
     {
         $options = $this->indexOptions([
-            'view' => 'index',
+            'view' => 'create',
             'modelClass' => $this->getProperty('modelClass'),
             'searchModelClass' => $this->getProperty('searchModelClass'),
             'parentKey' => $this->getProperty('parentKey')
@@ -67,7 +67,7 @@ trait CrudTrait
     public function update()
     {
         $options = $this->updateOptions([
-            'view' => 'index',
+            'view' => 'update',
             'modelClass' => $this->getProperty('modelClass'),
             'searchModelClass' => $this->getProperty('searchModelClass'),
             'parentKey' => $this->getProperty('parentKey')
@@ -94,7 +94,7 @@ trait CrudTrait
     public function view()
     {
         $options = $this->viewOptions([
-            'view' => 'index',
+            'view' => 'view',
             'modelClass' => $this->getProperty('modelClass'),
             'searchModelClass' => $this->getProperty('searchModelClass'),
             'parentKey' => $this->getProperty('parentKey')
