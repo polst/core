@@ -55,7 +55,8 @@ trait CrudTrait
         $options = $this->indexOptions([
             'view' => 'index',
             'modelClass' => $this->getProperty('modelClass'),
-            'searchModelClass' => $this->getProperty('searchModelClass')
+            'searchModelClass' => $this->getProperty('searchModelClass'),
+            'parentKey' => $this->getProperty('parentKey')
         ]);
 
         $action = $this->createAction(ControllerCreateAction::class, $options);
@@ -68,7 +69,8 @@ trait CrudTrait
         $options = $this->updateOptions([
             'view' => 'index',
             'modelClass' => $this->getProperty('modelClass'),
-            'searchModelClass' => $this->getProperty('searchModelClass')
+            'searchModelClass' => $this->getProperty('searchModelClass'),
+            'parentKey' => $this->getProperty('parentKey')
         ]);
 
         $action = $this->createAction(ControllerUpdateAction::class, $options);
@@ -80,7 +82,8 @@ trait CrudTrait
     {
         $options = $this->deleteOptions([
             'modelClass' => $this->getProperty('modelClass'),
-            'searchModelClass' => $this->getProperty('searchModelClass')
+            'searchModelClass' => $this->getProperty('searchModelClass'),
+            'parentKey' => $this->getProperty('parentKey')
         ]);
 
         $action = $this->createAction(ControllerDeleteAction::class, $options);
@@ -93,7 +96,8 @@ trait CrudTrait
         $options = $this->viewOptions([
             'view' => 'index',
             'modelClass' => $this->getProperty('modelClass'),
-            'searchModelClass' => $this->getProperty('searchModelClass')
+            'searchModelClass' => $this->getProperty('searchModelClass'),
+            'parentKey' => $this->getProperty('parentKey')
         ]);
 
         $action = $this->createAction(ControllerViewAction::class, $options);
