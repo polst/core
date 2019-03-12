@@ -41,7 +41,8 @@ trait CrudTrait
 			'modelClass' => $this->getProperty('modelClass'),
 			'searchModelClass' => $this->getProperty('searchModelClass'),
             'perPage' => $this->getProperty('perPage'),
-            'orderBy' => $this->getProperty('orderBy')
+            'orderBy' => $this->getProperty('orderBy'),
+            'parentKey' => $this->getProperty('parentKey')
 		]);
 
 		$action = $this->createAction(ControllerIndexAction::class, $options);
