@@ -9,10 +9,6 @@ namespace BasicApp\Core;
 abstract class BaseControllerIndexAction extends ControllerAction
 {
 
-    protected $modelClass;
-
-    protected $searchModelClass;
-
     protected $orderBy;
 
     protected $perPage = 25;
@@ -21,41 +17,39 @@ abstract class BaseControllerIndexAction extends ControllerAction
 
     public function run(array $params = [])
     {
-        $query = $this->createModel($this->modelClass);
+        $query = $this->createModel();
 
-        $searchModelClass = $this->searchModelClass;
+        $searchModel = $this->createSearchModel();
 
-        if ($searchModelClass)
+        if ($searchModel)
         {
-            $searchModel = $this->createSearchModel($this->searchModelClass);
-
             $search = $searchModel->createEntity();
 
-            $search->fill($controller->request->getGet());
+            $search->fill($this->request->getGet());
 
             $searchModel::applyToQuery($search, $query);
         }
         else
         {
-            $searchModel = null;
-
             $search = null;
         }
 
-        $parentField = $this->parentField;
+        $parentKey = $this->parentKey;
 
-        $parentId = null;
-
-        if ($parentField)
+        if ($parentKey)
         {
-            $parentId = $controller->request->getGet($this->parentFieldIndex);
+            $parentId = $this->request->getGet($this->parentKeyIndex);
 
             if (!$parentId)
             {
                 throw new PageNotFoundException;
             }
 
-            $query->where($parentField, $parentId);
+            $query->where($parentKey, $parentId);
+        }
+        else
+        {
+            $parentId = null;
         }
 
         if ($this->orderBy)

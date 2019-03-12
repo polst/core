@@ -19,6 +19,10 @@ abstract class BaseControllerAction implements ControllerActionInterface
 
     public $db;
 
+    public $modelClass;
+
+    public $searchModelClass;
+
 	public $controller;
 
     public $returnUrl;
