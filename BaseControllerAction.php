@@ -35,7 +35,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
 
     public $redirectBackFunction;
 
-    public $parentKeyField;
+    public $parentKey;
 
     public $parentKeyIndex = 'parentId';
 
