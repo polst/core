@@ -15,7 +15,7 @@ abstract class BaseControllerIndexAction extends ControllerAction
 
     protected $beforeFind;
 
-    public function run(array $params = [])
+    public function run(array $options = [])
     {
         $query = $this->createModel();
 

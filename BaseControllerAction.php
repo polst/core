@@ -82,7 +82,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
 		return $data;
 	}
 
-	public function createModel(array $options = [])
+	public function createModel()
 	{
         $className = $this->modelClass;
 
@@ -93,7 +93,7 @@ abstract class BaseControllerAction implements ControllerActionInterface
 		return $model;
 	}
 
-	public function createSearchModel(array $options = [])
+	public function createSearchModel()
 	{
         $className = $this->searchModelClass;
 
