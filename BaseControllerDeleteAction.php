@@ -1,6 +1,6 @@
 <?php
 
-namespace BasicApp\Crud;
+namespace BasicApp\Core;
 
 use Exception;
 
