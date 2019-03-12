@@ -82,8 +82,10 @@ abstract class BaseControllerAction implements ControllerActionInterface
 		return $data;
 	}
 
-	public function createModel(string $className, array $options = [])
+	public function createModel(array $options = [])
 	{
+        $className = $this->modelClass;
+
 		$model = $className::factory($options);
 
 		$this->trigger(static::EVENT_CREATE_MODEL, ['model' => $model]);
@@ -91,8 +93,10 @@ abstract class BaseControllerAction implements ControllerActionInterface
 		return $model;
 	}
 
-	public function createSearchModel(string $className, array $options = [])
+	public function createSearchModel(array $options = [])
 	{
+        $className = $this->searchModelClass;
+
 		$searchModel = $className::factory($options);
 
 		$this->trigger(static::EVENT_CREATE_SEARCH_MODEL, ['searchModel' => $searchModel]);
