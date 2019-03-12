@@ -7,7 +7,7 @@ use Exception;
 abstract class BaseControllerDeleteAction extends ControllerAction
 {
 
-    public function delete()
+    public function run(array $options = [])
     {
         $query = $this->createQuery();
 

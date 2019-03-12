@@ -9,7 +9,7 @@ namespace BasicApp\Core;
 interface BaseControllerActionInterface
 {
 
-    function run(array $params = []);
+    function run(array $options = []);
 
     function render(string $view, array $params = []) : string;
 
