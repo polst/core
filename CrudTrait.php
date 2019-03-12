@@ -29,13 +29,19 @@ trait CrudTrait
         return $options;
     }
 
+    protected function viewOptions(array $options = []) : array
+    {
+        return $options;
+    }    
+
 	public function index()
 	{
 		$options = $this->indexOptions([
 			'view' => 'index',
-			'returnUrl' => $this->getProperty('returnUrl'),
 			'modelClass' => $this->getProperty('modelClass'),
-			'searchModelClass' => $this->getProperty('searchModelClass')
+			'searchModelClass' => $this->getProperty('searchModelClass'),
+            'perPage' => $this->getProperty('perPage'),
+            'orderBy' => $this->getProperty('orderBy')
 		]);
 
 		$action = $this->createAction(ControllerIndexAction::class, $options);
@@ -47,7 +53,6 @@ trait CrudTrait
     {
         $options = $this->indexOptions([
             'view' => 'index',
-            'returnUrl' => $this->getProperty('returnUrl'),
             'modelClass' => $this->getProperty('modelClass'),
             'searchModelClass' => $this->getProperty('searchModelClass')
         ]);
@@ -73,12 +78,24 @@ trait CrudTrait
     public function delete()
     {
         $options = $this->deleteOptions([
-            'returnUrl' => $this->getProperty('returnUrl'),
             'modelClass' => $this->getProperty('modelClass'),
             'searchModelClass' => $this->getProperty('searchModelClass')
         ]);
 
         $action = $this->createAction(ControllerDeleteAction::class, $options);
+
+        return $action->run(func_get_args());
+    }
+
+    public function view()
+    {
+        $options = $this->viewOptions([
+            'view' => 'index',
+            'modelClass' => $this->getProperty('modelClass'),
+            'searchModelClass' => $this->getProperty('searchModelClass')
+        ]);
+
+        $action = $this->createAction(ControllerViewAction::class, $options);
 
         return $action->run(func_get_args());
     }

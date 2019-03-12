@@ -8,4 +8,19 @@ namespace BasicApp\Core;
 
 abstract class BaseControllerViewAction extends ControllerAction
 {
+
+    public $view;
+
+    public function run(array $options = [])
+    {
+        $errors = [];
+
+        $row = $this->findEntity();
+
+        return $this->render($this->view, [
+            'model' => $row,
+            'parentId' => $this->entityParentKey($row)
+        ]);
+    }
+
 }

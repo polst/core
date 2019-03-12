@@ -15,7 +15,7 @@ abstract class BaseControllerCreateAction extends ControllerAction
     {
         $errors = [];
 
-        $row = $this->createEntity($options);
+        $row = $this->createEntity();
         
         $post = $this->request->getPost();
 

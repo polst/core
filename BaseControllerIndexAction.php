@@ -9,11 +9,13 @@ namespace BasicApp\Core;
 abstract class BaseControllerIndexAction extends ControllerAction
 {
 
+    const EVENT_BEFORE_FIND = 'onBeforeFind';
+
     protected $orderBy;
 
     protected $perPage = 25;
 
-    protected $beforeFind;
+    protected $onBeforeFind = [];
 
     public function run(array $options = [])
     {
@@ -57,7 +59,7 @@ abstract class BaseControllerIndexAction extends ControllerAction
             $query->orderBy($this->orderBy);
         }
 
-        $this->trigger('beforeFind', ['query' => $query]);
+        $this->trigger(static::EVENT_BEFORE_FIND, ['query' => $query]);
 
         $perPage = $this->perPage;
 

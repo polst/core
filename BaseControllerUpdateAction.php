@@ -11,17 +11,11 @@ abstract class BaseControllerUpdateAction extends ControllerAction
 
     public $view;
 
-    public $returnUrl;
-
-    public $modelClass;
-
-    public $parentFieldIndex = 'parentId';
-
     public function run(array $options = [])
     {
         $errors = [];
 
-        $row = $this->findEntity($options);
+        $row = $this->findEntity();
 
         $post = $this->request->getPost();
 

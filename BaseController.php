@@ -24,6 +24,8 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	protected $layoutPath = '';
 
+    protected $returnUrl;
+
     protected $returnUrlIndex = 'returnUrl';
 
 	public function __construct()
@@ -114,6 +116,8 @@ abstract class BaseController extends \CodeIgniter\Controller
     protected function createAction(string $className, array $options = [])
     {
     	$options['controller'] = $this;
+
+        $options['returnUrl'] = $this->returnUrl;
 
     	$options['renderFunction'] = function(string $view, array $params = []) 
     	{
