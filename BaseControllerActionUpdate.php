@@ -6,7 +6,7 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseControllerCreateAction extends ControllerAction
+abstract class BaseControllerActionUpdate extends ControllerAction
 {
 
     public $view;
@@ -15,8 +15,8 @@ abstract class BaseControllerCreateAction extends ControllerAction
     {
         $errors = [];
 
-        $row = $this->createEntity();
-        
+        $row = $this->findEntity();
+
         $post = $this->request->getPost();
 
         if ($post)
@@ -30,10 +30,10 @@ abstract class BaseControllerCreateAction extends ControllerAction
         }
 
         return $this->render($this->view, [
-            'model' => $row,
             'errors' => $errors,
+            'model' => $row,
             'parentId' => $this->entityParentKey($row)
-        ]);
+        ]);        
     }
 
 }

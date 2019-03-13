@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-class ControllerIndexAction extends BaseControllerIndexAction
+class ControllerActionIndex extends BaseControllerActionIndex
 {
 }

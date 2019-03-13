@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-class ControllerDeleteAction extends BaseControllerDeleteAction
+class ControllerActionDelete extends BaseControllerActionDelete
 {
 }

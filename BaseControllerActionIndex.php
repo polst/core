@@ -6,7 +6,7 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseControllerIndexAction extends ControllerAction
+abstract class BaseControllerActionIndex extends ControllerAction
 {
 
     const EVENT_BEFORE_FIND = 'onBeforeFind';

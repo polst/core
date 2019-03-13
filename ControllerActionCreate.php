@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-class ControllerViewAction extends BaseControllerViewAction
+class ControllerActionCreate extends BaseControllerActionCreate
 {
 }

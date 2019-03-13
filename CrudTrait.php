@@ -45,7 +45,7 @@ trait CrudTrait
             'parentKey' => $this->getProperty('parentKey')
 		]);
 
-		$action = $this->createAction(ControllerIndexAction::class, $options);
+		$action = $this->createAction(ControllerActionIndex::class, $options);
 
 		return $action->run(func_get_args());
 	}
@@ -59,7 +59,7 @@ trait CrudTrait
             'parentKey' => $this->getProperty('parentKey')
         ]);
 
-        $action = $this->createAction(ControllerCreateAction::class, $options);
+        $action = $this->createAction(ControllerActionCreate::class, $options);
 
         return $action->run(func_get_args());
     }
@@ -73,7 +73,7 @@ trait CrudTrait
             'parentKey' => $this->getProperty('parentKey')
         ]);
 
-        $action = $this->createAction(ControllerUpdateAction::class, $options);
+        $action = $this->createAction(ControllerActionUpdate::class, $options);
 
         return $action->run(func_get_args());
     }
@@ -86,7 +86,7 @@ trait CrudTrait
             'parentKey' => $this->getProperty('parentKey')
         ]);
 
-        $action = $this->createAction(ControllerDeleteAction::class, $options);
+        $action = $this->createAction(ControllerActionDelete::class, $options);
 
         return $action->run(func_get_args());
     }
@@ -100,7 +100,7 @@ trait CrudTrait
             'parentKey' => $this->getProperty('parentKey')
         ]);
 
-        $action = $this->createAction(ControllerViewAction::class, $options);
+        $action = $this->createAction(ControllerActionView::class, $options);
 
         return $action->run(func_get_args());
     }

@@ -6,7 +6,7 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseControllerViewAction extends ControllerAction
+abstract class BaseControllerActionView extends ControllerAction
 {
 
     public $view;

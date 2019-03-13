@@ -4,7 +4,7 @@ namespace BasicApp\Core;
 
 use Exception;
 
-abstract class BaseControllerDeleteAction extends ControllerAction
+abstract class BaseControllerActionDelete extends ControllerAction
 {
 
     public function run(array $options = [])
