@@ -6,10 +6,10 @@
  */
 namespace BasicApp\Core;
 
-interface BaseControllerActionInterface
+interface BaseActionInterface
 {
 
-    function run(array $options = []);
+    function run(array $params = []);
 
     function render(string $view, array $params = []) : string;
 

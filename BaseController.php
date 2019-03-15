@@ -12,7 +12,9 @@ use Config\Services;
 abstract class BaseController extends \CodeIgniter\Controller
 {
 
-    const LOGGED_ROLE = '*';
+    use BehaviorsTrait;
+
+    const ROLE_LOGGED = '*';
 
     protected static $authClass;
 
@@ -30,8 +32,25 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 	public function __construct()
 	{
-        $this->checkAccess(true);
+        static::checkAccess(true);
 	}
+
+    public function createBehavior(string $class, array $params = [])
+    {
+        $params['returnUrl'] = $this->returnUrl;
+
+        $params['renderFunction'] = function(string $view, array $params = [])
+        {
+            return $this->render($view, $params);
+        };
+
+        $params['redirectBackFunction'] = function($returnUrl)
+        {
+            return $this->redirectBack($returnUrl);
+        };
+
+        return $class::factory($params);
+    }    
 
     public static function getAuthClass()
     {
@@ -68,12 +87,12 @@ abstract class BaseController extends \CodeIgniter\Controller
 
         foreach($roles as $role)
         {
-            if ($role == static::LOGGED_ROLE)
+            if ($role == static::ROLE_LOGGED)
             {
                 return true;
             }
 
-            if ($authClass::userHasPermission($user, $role))
+            if ($authClass::userHasRole($user, $role))
             {
                 return true;
             }
@@ -111,35 +130,6 @@ abstract class BaseController extends \CodeIgniter\Controller
 		}
 
 		return $content;
-	}
-
-    protected function createAction(string $className, array $options = [])
-    {
-    	$options['controller'] = $this;
-
-        $options['returnUrl'] = $this->returnUrl;
-
-    	$options['renderFunction'] = function(string $view, array $params = []) 
-    	{
-        	return $this->render($view, $params);
-        };
-
-        $options['redirectBackFunction'] = function($returnUrl)
-        {
-            return $this->redirectBack($returnUrl);
-        };
-
-     	return $className::factory($options);
-    }
-
-	protected function getProperty($name, $default = null)
-	{
-		if (property_exists($this, $name))
-		{
-			return $this->$name;
-		}
-
-		return $default;
 	}
 
     protected function redirectBack($defaultUrl)

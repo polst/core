@@ -9,26 +9,26 @@ namespace BasicApp\Core;
 interface BaseModelBehaviorInterface
 {
 
-    static function beforeInsert(array $params) : array;
+    function beforeInsert(array $params) : array;
 
-    static function afterInsert(array $params);
+    function afterInsert(array $params);
 
-    static function beforeUpdate(array $params) : array;
+    function beforeUpdate(array $params) : array;
 
-    static function afterUpdate(array $params);
+    function afterUpdate(array $params);
 
-    static function afterFind(array $params) : array;
+    function afterFind(array $params) : array;
 
-    static function beforeDelete(array $params);
+    function beforeDelete(array $params);
 
-    static function afterDelete(array $params);
+    function afterDelete(array $params);
 
-    static function beforeSave(array $params) : array;
+    function beforeSave(array $params) : array;
 
-    static function afterSave(array $params) : array;
+    function afterSave(array $params) : array;
 
-    static function beforeValidate(array $params) : array;
+    function beforeValidate(array $params) : array;
 
-    static function afterValidate(array $params) : array;
+    function afterValidate(array $params) : array;
     
 }

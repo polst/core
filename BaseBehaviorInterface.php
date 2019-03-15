@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-interface ControllerActionInterface extends BaseControllerActionInterface
+interface BaseBehaviorInterface
 {
 }

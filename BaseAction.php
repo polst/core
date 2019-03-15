@@ -10,10 +10,8 @@ use CodeIgniter\Database\Exceptions\DataException;
 use Exception;
 use Config\Database;
 
-abstract class BaseControllerAction implements ControllerActionInterface
+abstract class BaseAction extends Behavior implements ActionInterface
 {
-
-	use FactoryTrait;
 
     public $request;
 

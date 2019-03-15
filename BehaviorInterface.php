@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-class ControllerActionDelete extends BaseControllerActionDelete
+interface BehaviorInterface extends BaseBehaviorInterface
 {
 }

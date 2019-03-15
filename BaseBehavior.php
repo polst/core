@@ -6,6 +6,11 @@
  */
 namespace BasicApp\Core;
 
-class NullModelBehavior extends BaseNullModelBehavior
+abstract class BaseBehavior implements BehaviorInterface
 {
+
+	use FactoryTrait;
+
+	protected $owner;
+
 }

@@ -6,56 +6,56 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseModelBehavior implements ModelBehaviorInterface
+abstract class BaseModelBehavior extends Behavior implements ModelBehaviorInterface
 {
 
-    public static function afterFind(array $params) : array
+    public function afterFind(array $params) : array
     {
         return $params;
     }
 
-    public static function beforeInsert(array $params) : array
+    public function beforeInsert(array $params) : array
     {
         return $params;
     }
 
-    public static function afterInsert(array $params)
+    public function afterInsert(array $params)
     {
     }
 
-    public static function beforeUpdate(array $params) : array
-    {
-        return $params;
-    }
-
-    public static function afterUpdate(array $params)
-    {
-    }
-
-    public static function beforeDelete(array $params)
-    {
-    }
-
-    public static function afterDelete(array $params)
-    {
-    }
-
-    public static function beforeValidate(array $params) : array
+    public function beforeUpdate(array $params) : array
     {
         return $params;
     }
 
-    public static function afterValidate(array $params) : array
+    public function afterUpdate(array $params)
+    {
+    }
+
+    public function beforeDelete(array $params)
+    {
+    }
+
+    public function afterDelete(array $params)
+    {
+    }
+
+    public function beforeValidate(array $params) : array
     {
         return $params;
     }
 
-    public static function beforeSave(array $params) : array
+    public function afterValidate(array $params) : array
     {
         return $params;
     }
 
-    public static function afterSave(array $params) : array
+    public function beforeSave(array $params) : array
+    {
+        return $params;
+    }
+
+    public function afterSave(array $params) : array
     {
         return $params;
     }
