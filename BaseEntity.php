@@ -6,34 +6,46 @@
  */
 namespace BasicApp\Core;
 
+use Exception;
+
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
     use FactoryTrait;
 
-    use EntityFieldLabelsTrait;
+    use GetDefaultPropertyTrait;
 
     protected $modelClass;
 
-    public function getModelClass()
+    public function __construct()
     {
-        return $this->modelClass;
+        parent::__construct();
+
+        if (!$this->modelClass)
+        {
+            throw new Exception('Property "modelClass" is not defined.');
+        }
     }
 
     public function getPrimaryKey()
     {
-        $modelClass = $this->getModelClass();
+        $modelClass = $this->modelClass;
 
-        $model = $modelClass::factory();
+        return $modelClass::entityPrimaryKey($this);
+    }
 
-        $primaryKey = $model->getPrimaryKey();        
+    public function label($field, $default = null)
+    {
+        $modelClass = $this->modelClass;
 
-        if (property_exists($this, $primaryKey))
-        {
-            return $this->$primaryKey;
-        }
+        return $modelClass::label($field, $default);
+    }
 
-        return null;
+    public function getLabels()
+    {
+        $modelClass = $this->modelClass;
+
+        return $model::getLabels();
     }
 
 }

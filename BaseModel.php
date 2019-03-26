@@ -11,13 +11,15 @@ use Exception;
 abstract class BaseModel extends \CodeIgniter\Model
 {
 
-    use BehaviorsTrait;
-
     use FactoryTrait;
+
+    use GetDefaultPropertyTrait;
+
+    use BehaviorsTrait;
 
     use ModelTranslationsTrait;
 
-    use ModelFieldLabelsTrait;
+    use ModelLabelsTrait;
 
     protected $afterFind = ['afterFind']; 
 
@@ -41,11 +43,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $afterValidate = ['afterValidate'];
 
-	protected static $fieldLabels = [];
+    protected $labels = [];
 
-    protected static $translateFieldLabels = false;
-
-    protected static $translationsCategory;
+    protected $translations = null;
 
 	public function getPrimaryKey()
 	{
@@ -63,7 +63,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 		if ($errors)
 		{
-			$labels = $this->getFieldLabels();
+			$labels = $this->getLabels();
 
 			foreach($errors as $key => $value)
 			{
@@ -73,6 +73,30 @@ abstract class BaseModel extends \CodeIgniter\Model
 		
 		return $errors;
 	}
+
+    public static function entityPrimaryKey($entity)
+    {
+        $primaryKey = static::getDefaultProperty('primaryKey');
+
+        $returnType = static::getDefaultProperty('returnType');
+
+        if ($returnType == 'array')
+        {
+            if (array_key_exists($primaryKey, $entity))
+            {
+                return $entity[$primaryKey];
+            }
+
+            return null;
+        }
+
+        if (property_exists($entity, $primaryKey))
+        {
+            return $entity->$primaryKey;
+        }
+
+        return null;
+    }
 
 	public static function createEntity(array $params = [])
 	{

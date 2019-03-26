@@ -9,21 +9,23 @@ namespace BasicApp\Core;
 trait ModelTranslationsTrait
 {
 
-    public static function getTranslationsCategory() : string
+    public static function t(string $value, array $params = [], bool $resetCache = false) : string
     {
-        $return = static::$translationsCategory;
-   
-        if (!$return)
+        static $translations = [];
+
+        $class = get_called_class();
+
+        if ($resetCache || !array_key_exists($class, $translations))
         {
-            $return = get_called_class();
+            $translations[$class] = $class::getDefaultProperty('translations', null);
         }
 
-        return $return;
-    }
+        if (!$translations[$class])
+        {
+            return strtr($value, $params);
+        }
 
-    public static function t(string $value, array $params = []) : string
-    {
-        return t(static::getTranslationsCategory(), $value, $params);
+        return t($translations[$class], $value, $params);
     }
 
 }
