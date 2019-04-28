@@ -300,7 +300,7 @@ abstract class BaseModel extends \CodeIgniter\Model
         return $params['result'];
     }
 
-    public function save($data)
+    public function save($data) : bool
     {
         $params = $this->trigger('beforeSave', ['data' => $data]);
 
