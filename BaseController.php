@@ -132,7 +132,12 @@ abstract class BaseController extends \CodeIgniter\Controller
 		return $content;
 	}
 
-    protected function redirectBack($defaultUrl)
+    protected function redirect(string $url)
+    {
+        return Services::response()->redirect($url);
+    }
+
+    protected function redirectBack(string $defaultUrl)
     {
         $url = $this->request->getGet($this->returnUrlIndex);
 
@@ -145,7 +150,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
         $returnUrl = site_url($url);
 
-        return Services::response()->redirect($returnUrl);
+        return $this->redirect($returnUrl);
     }
 
 }

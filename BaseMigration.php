@@ -13,7 +13,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     abstract public function down();    
 
-    public function addKey(string $table, array $keys, bool $primary = false, $unique = false)
+    public function tableAddKey(string $table, array $keys, bool $primary = false, $unique = false)
     {
         if ($unique)
         {
@@ -37,14 +37,14 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         $this->db->query($sql);
     }
 
-    public function dropKey(string $table, string $key)
+    public function tableDropKey(string $table, string $key)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' DROP INDEX ' . $this->db->escapeIdentifiers($key);
 
         $this->db->query($sql);
     }
 
-    public function createForeignKey(
+    public function tableAddForeignKey(
         string $table, 
         string $key, 
         string $column, 
@@ -63,7 +63,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         $this->db->query($sql);
     }
 
-    public function dropForeignKey(string $table, string $key)
+    public function tableDropForeignKey(string $table, string $key)
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' DROP FOREIGN KEY ' . $this->db->escapeIdentifiers($key);
 

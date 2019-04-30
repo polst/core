@@ -1,0 +1,47 @@
+<?php
+/**
+ * @package Basic App Core
+ * @license MIT License
+ * @link    http://basic-app.com
+ */
+namespace BasicApp\Core;
+
+use Config\Services;
+
+abstract class BaseLocaleHelper
+{
+
+    public static function addLocale($url, $locale = false)
+    {
+        $request = Services::request();
+
+        $appConfig = config('app');
+
+        if (!$locale)
+        {
+            $locale = $request->getLocale();
+        }
+
+        if ($locale != $appConfig->defaultLocale)
+        {
+            $url = $locale . '/' . $url;
+        }
+
+        return $url;
+    }
+
+    public static function langItems()
+    {
+        $appConfig = config('app');
+
+        $return  = [];
+
+        foreach($appConfig->supportedLocales as $lang)
+        {
+            $return[$lang] = strtoupper($lang);
+        }
+
+        return $return;
+    }
+
+}
