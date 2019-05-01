@@ -11,7 +11,7 @@ use Config\Services;
 abstract class BaseLocaleHelper
 {
 
-    public static function addLocale($url, $locale = false)
+    public static function addLocaleToUrl($url, $locale = false)
     {
         $request = Services::request();
 
@@ -30,7 +30,7 @@ abstract class BaseLocaleHelper
         return $url;
     }
 
-    public static function langItems()
+    public static function getLangItems()
     {
         $appConfig = config('app');
 
