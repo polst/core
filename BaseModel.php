@@ -21,6 +21,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use ModelLabelsTrait;
 
+    use ModelEntityTrait;
+
     protected $afterFind = ['afterFind']; 
 
     protected $beforeInsert = ['beforeInsert'];
@@ -47,6 +49,11 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $translations = null;
 
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
 	public function getPrimaryKey()
 	{
 		return $this->primaryKey;
@@ -72,97 +79,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 		}
 		
 		return $errors;
-	}
-
-    public static function entityPrimaryKey($entity)
-    {
-        $primaryKey = static::getDefaultProperty('primaryKey');
-
-        $returnType = static::getDefaultProperty('returnType');
-
-        if ($returnType == 'array')
-        {
-            if (array_key_exists($primaryKey, $entity))
-            {
-                return $entity[$primaryKey];
-            }
-
-            return null;
-        }
-
-        if (property_exists($entity, $primaryKey))
-        {
-            return $entity->$primaryKey;
-        }
-
-        return null;
-    }
-
-	public static function createEntity(array $params = [])
-	{
-        $model = static::factory();
-
-		if ($model->returnType === 'array')
-		{
-			return $params;
-		}
-
-        // create object
-
-		$returnType = $model->returnType;
-
-		$model = new $returnType;
-
-		foreach($params as $key => $value)
-		{
-			$model->$key = $value;
-		}
-
-		return $model;
-	}
-
-	public static function getEntity(array $where, bool $create = false, array $params = [])
-	{
-		$class = static::class;
-
-		$model = new $class;
-
-		$row = $model->where($where)->first();
-
-		if ($row)
-		{
-			return $row;
-		}
-
-		if (!$create)
-		{
-			return null;
-		}
-
-		foreach ($where as $key => $value)
-		{
-			$params[$key] = $value;
-		}
-
-		$model->protect(false);
-
-		$result = $model->insert($params);
-
-		$model->protect(true);
-
-		if (!$result)
-		{
-			// nothing to do
-		}
-
-		$row = $model->where($where)->first();
-
-		if (!$row)
-		{
-			throw new Exception('Entity not found.');
-		}
-
-		return $row;
 	}
 
     public function afterFind(array $params) : array
@@ -307,6 +223,11 @@ abstract class BaseModel extends \CodeIgniter\Model
         $data = $params['data'];
 
         $result = parent::save($data);
+
+        if ($result && $this->insertID)
+        {
+            $data = static::entitySetField($data, $this->primaryKey, $this->insertID);
+        }
 
         $params = $this->trigger('afterSave', ['data' => $data, 'result' => $result]);
 

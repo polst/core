@@ -35,7 +35,7 @@ abstract class BaseAction extends Behavior implements ActionInterface
 
     public $parentKey;
 
-    public $parentKeyIndex = 'parentId';
+    //public $parentKeyIndex = 'parentId';
 
     public $primaryKeyIndex = 'id';
 
@@ -121,21 +121,33 @@ abstract class BaseAction extends Behavior implements ActionInterface
         return $function($defaultUrl);
     }
 
-    protected function fillEntity($row, array $values)
+    protected function fillEntity($entity, array $values)
     {
-        if (is_array($row))
+        $modelClass = $this->modelClass;
+
+        $allowedFields = $modelClass::getDefaultProperty('allowedFields');
+
+        foreach($values as $key => $value)
+        {
+            if (array_search($key, $allowedFields) === false)
+            {
+                unset($values[$key]);
+            }
+        }
+
+        if (is_array($entity))
         {
             foreach($values as $key => $value)
             {
-                $row[$key] = $value;
+                $entity[$key] = $value;
             }
         }
         else
         {
-            $row->fill($values);
+            $entity->fill($values);
         }
 
-        return $row;
+        return $entity;
     }
 
     protected function entityPrimaryKey($row)
@@ -181,27 +193,15 @@ abstract class BaseAction extends Behavior implements ActionInterface
         return null;
     }
 
-    protected function createEntity(array $options = [])
+    protected function createEntity(array $params = [])
     {
-        $params = [];
-
-        $parentKey = $this->parentKey;
-
-        if ($parentKey)
-        {
-            $parentId = $this->request->getGet($this->parentKeyIndex);
-
-            if (!$parentId)
-            {
-                throw new PageNotFoundException;
-            }
-
-            $params[$parentKey] = $parentId;
-        }
-
         $modelClass = $this->modelClass;
 
-        return $modelClass::createEntity($params);
+        $return = $modelClass::createEntity();
+
+        $return = $this->fillEntity($return, $params);
+
+        return $return;
     }
 
     protected function saveEntity($row, &$errors)

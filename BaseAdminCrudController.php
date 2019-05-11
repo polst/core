@@ -2,11 +2,11 @@
 
 namespace BasicApp\Core;
 
-use BasicApp\Actions\IndexAction;
-use BasicApp\Actions\CreateAction;
-use BasicApp\Actions\UpdateAction;
-use BasicApp\Actions\DeleteAction;
-use BasicApp\Actions\ViewAction;
+use BasicApp\Core\Actions\IndexAction;
+use BasicApp\Core\Actions\CreateAction;
+use BasicApp\Core\Actions\UpdateAction;
+use BasicApp\Core\Actions\DeleteAction;
+use BasicApp\Core\Actions\ViewAction;
 
 class BaseAdminCrudController extends AdminController
 {

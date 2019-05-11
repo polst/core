@@ -12,9 +12,10 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
     use FactoryTrait;
-
     use GetDefaultPropertyTrait;
-
+    use EntityHasOneTrait;
+    use EntityHasManyTrait;
+    
     protected $modelClass;
 
     public function __construct()
@@ -46,6 +47,15 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         $modelClass = $this->modelClass;
 
         return $model::getLabels();
+    }
+
+    public function delete()
+    {
+        $modelClass = $this->modelClass;
+
+        $model = new $modelClass;
+
+        return $model->delete($this->getPrimaryKey());
     }
 
 }

@@ -7,8 +7,6 @@
         }
     },
     "require": {
-        "codeigniter4/framework": "*",
-        "basic-app/actions": "dev-master",
-        "basic-app/behaviors": "dev-master"
+        "codeigniter4/framework": "*"
     }
 }

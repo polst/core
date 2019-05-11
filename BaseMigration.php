@@ -9,9 +9,103 @@ namespace BasicApp\Core;
 abstract class BaseMigration extends \CodeIgniter\Database\Migration
 {
 
+    const RESTRICT = 'RESTRICT';
+
+    const CASCADE = 'CASCADE';
+
+    const SET_NULL = 'SET NULL';
+
     abstract public function up();
 
-    abstract public function down();    
+    abstract public function down();
+
+    public function langColumn(array $params = [])
+    {
+         $app = config('app');
+        
+        return array_merge([
+            'type' => 'CHAR',
+            'constraint' => 2,
+            'null' => false,
+            'default' => $app->defaultLocale
+        ], $params);
+    }
+    
+    public function textColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'TEXT',
+            'null' => true
+        ], $params);
+    }
+
+    public function primaryColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'INT',
+            'constraint' => 11,
+            'unsigned' => true,
+            'auto_increment' => true
+        ], $params);
+    }
+
+    public function createdColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+            'null' => true
+        ], $params);
+    }
+
+    public function updatedColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'TIMESTAMP NULL',
+            'default' => null
+        ], $params);
+    }
+
+    public function stringColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'VARCHAR',
+            'constraint' => 255,
+            'null' => true,
+            'default' => null
+        ], $params);
+    }
+
+    public function foreignColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'INT',
+            'constraint' => 11,
+            'unsigned' => true,
+            'null' => true,
+            'default' => null
+        ], $params);
+    }
+
+    public function booleanColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'TINYINT',
+            'constraint' => 1,
+            'unsigned' => true,
+            'null' => false,
+            'default' => 0
+        ], $params);
+    }
+
+    public function sortColumn(array $params = [])
+    {
+        return array_merge([
+            'type' => 'INT',
+            'constraint' => '11',
+            'unsigned' => true,
+            'null' => true
+        ], $params);
+    }
 
     public function tableAddKey(string $table, array $keys, bool $primary = false, $unique = false)
     {
@@ -58,7 +152,8 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
             . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($column) . ')' 
             . ' REFERENCES ' . $this->db->escapeIdentifiers($foreignTable) . '(' . $this->db->escapeIdentifiers($this->foreignTableKey) . ')' 
             . ' ON DELETE ' . $onDelete 
-            . ' ON UPDATE '. $onUpdate .';';
+            . ' ON UPDATE '. $onUpdate 
+            .';';
 
         $this->db->query($sql);
     }
