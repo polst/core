@@ -86,7 +86,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function booleanColumn(array $params = [])
+    public function boolColumn(array $params = [])
     {
         return array_merge([
             'type' => 'TINYINT',
