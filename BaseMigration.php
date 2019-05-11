@@ -116,7 +116,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
     {
         $keyName = $this->keyName($table, $keys);
 
-        $keys = $this->db->escapeIdentifiers($table . '_' . implode('_', $keys));
+        $keys = implode(', ', $this->db->escapeIdentifiers($keys));
 
         if ($unique)
         {
