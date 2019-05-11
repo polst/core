@@ -153,7 +153,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) 
             . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($key) 
             . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($column) . ')' 
-            . ' REFERENCES ' . $this->db->escapeIdentifiers($foreignTable) . '(' . $this->db->escapeIdentifiers($this->foreignTableKey) . ')' 
+            . ' REFERENCES ' . $this->db->escapeIdentifiers($foreignTable) . '(' . $this->db->escapeIdentifiers($foreignTableKey) . ')' 
             . ' ON DELETE ' . $onDelete 
             . ' ON UPDATE '. $onUpdate 
             .';';
