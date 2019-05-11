@@ -107,25 +107,28 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
+    public function keyName(string $table, array $keys)
+    {
+        return $this->db->escapeIdentifiers($table . '_' . implode('_', $keys));
+    }
+
     public function tableAddKey(string $table, array $keys, bool $primary = false, $unique = false)
     {
+        $keyName = $this->keyName($table, $keys);
+
+        $keys = $this->db->escapeIdentifiers($table . '_' . implode('_', $keys));
+
         if ($unique)
         {
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-              . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $keys))
-              . ' UNIQUE (' . implode(', ', $this->db->escapeIdentifiers($keys)) . ');';
+            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' UNIQUE (' . $keys  . ');';
         }
         elseif($primary)
         {
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table)
-              . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $keys))
-              . ' PRIMARY KEY (' . implode(', ', $this->db->escapeIdentifiers($keys)) . ');';
+            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' PRIMARY KEY (' . $keys . ');';
         }
         else
         {
-            $sql = 'CREATE INDEX ' . $this->db->escapeIdentifiers($table . '_' . implode('_', $keys))
-                . ' ON ' . $this->db->escapeIdentifiers($table)
-                . ' (' . implode(', ', $this->db->escapeIdentifiers($keys)) . ');';
+            $sql = 'CREATE INDEX ' . $keyName . ' ON ' . $this->db->escapeIdentifiers($table) . ' (' . $keys . ');';
         }
 
         $this->db->query($sql);
@@ -143,9 +146,9 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         string $key, 
         string $column, 
         string $foreignTable, 
-        string $foreignTableKey,
+        string $foreignTableKey, 
         string $onDelete = 'RESTRICT', 
-        string $onUpdate = 'RESTRICT' ) 
+        string $onUpdate = 'RESTRICT') 
     {
         $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) 
             . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($key) 
