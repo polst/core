@@ -75,15 +75,21 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function foreignColumn(array $params = [])
+    public function intColumn(array $params = [])
     {
         return array_merge([
             'type' => 'INT',
             'constraint' => 11,
-            'unsigned' => true,
             'null' => true,
             'default' => null
         ], $params);
+    }
+
+    public function foreignColumn(array $params = [])
+    {
+        return $this->intColumn(array_merge([
+            'unsigned' => true
+        ], $params));
     }
 
     public function boolColumn(array $params = [])

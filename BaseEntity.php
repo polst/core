@@ -7,12 +7,15 @@
 namespace BasicApp\Core;
 
 use Exception;
+use ReflectionObject;
+use ReflectionProperty;
 
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
     use FactoryTrait;
     use GetDefaultPropertyTrait;
+    use GetPublicPropertiesTrait;
     use EntityHasOneTrait;
     use EntityHasManyTrait;
     
@@ -56,6 +59,27 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         $model = new $modelClass;
 
         return $model->delete($this->getPrimaryKey());
+    }
+
+    public function save(bool $validate = true)
+    {
+        $modelClass = $this->modelClass;
+
+        $model = new $modelClass;
+
+        if (!$validate)
+        {
+            $model->protect(false);
+        }
+
+        $return = $model->save($this->getPublicProperties());
+
+        if (!$validate)
+        {
+            $model->protect(true);
+        }
+    
+        return $return;
     }
 
 }
