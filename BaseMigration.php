@@ -19,6 +19,30 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     abstract public function down();
 
+    // DEPRECATED
+
+    public function primaryColumn(array $params = [])
+    {
+        return $this->primaryKeyColumn($params);
+    }
+
+    // DEPRECATED
+
+    public function foreignColumn(array $params = [])
+    {
+        return $this->foreignKeyColumn($params);
+    }
+
+    public function intColumn(array $params = [])
+    {
+        return $this->integerColumn($params);
+    }
+
+    public function boolColumn(array $params = [])
+    {
+        return $this->booleanColumn($params);
+    }        
+
     public function langColumn(array $params = [])
     {
          $app = config('app');
@@ -39,7 +63,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function primaryColumn(array $params = [])
+    public function primaryKeyColumn(array $params = [])
     {
         return array_merge([
             'type' => 'INT',
@@ -75,7 +99,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function intColumn(array $params = [])
+    public function integerColumn(array $params = [])
     {
         return array_merge([
             'type' => 'INT',
@@ -85,14 +109,14 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function foreignColumn(array $params = [])
+    public function foreignKeyColumn(array $params = [])
     {
-        return $this->intColumn(array_merge([
+        return $this->integerColumn(array_merge([
             'unsigned' => true
         ], $params));
     }
 
-    public function boolColumn(array $params = [])
+    public function booleanColumn(array $params = [])
     {
         return array_merge([
             'type' => 'TINYINT',
