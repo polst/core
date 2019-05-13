@@ -84,11 +84,6 @@ trait ModelEntityTrait
         {
             if ($update)
             {
-                foreach($params as $key => $value)
-                {
-                    $row->$key = $value;
-                }
-
                 $id = $model->entityPrimaryKey($row);
 
                 if (!$id)
@@ -98,9 +93,14 @@ trait ModelEntityTrait
 
                 $model->protect(false);
 
-                $result = $model->update($id, $row);
+                $result = $model->update($id, $params);
 
                 $model->protect(true);
+
+                foreach($params as $key => $value)
+                {
+                    $row->$key = $value;
+                }
             }
 
             return $row;
