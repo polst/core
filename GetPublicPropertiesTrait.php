@@ -18,6 +18,11 @@ trait GetPublicPropertiesTrait
 
         foreach($reflectionProperties as $reflectionProperty)
         {
+            if ($reflectionProperty->isStatic())
+            {
+                continue;
+            }
+
             $key = $reflectionProperty->name;
 
             $return[$key] = $this->$key; 
