@@ -89,14 +89,14 @@ trait ModelEntityTrait
                     $row->$key = $value;
                 }
 
-                $model->protect(false);
-
                 $id = $model->entityPrimaryKey($row);
 
                 if (!$id)
                 {
                     throw new Exception('Primary key is not defined.');
                 }
+
+                $model->protect(false);
 
                 $result = $model->update($id, $row);
 
