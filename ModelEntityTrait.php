@@ -84,22 +84,32 @@ trait ModelEntityTrait
         {
             if ($update)
             {
-                $id = $model->entityPrimaryKey($row);
-
-                if (!$id)
-                {
-                    throw new Exception('Primary key is not defined.');
-                }
-
-                $model->protect(false);
-
-                $result = $model->update($id, $params);
-
-                $model->protect(true);
+                $updated = false;
 
                 foreach($params as $key => $value)
                 {
-                    $row->$key = $value;
+                    if ($row->$key != $value)
+                    {
+                        $row->$key = $value;
+                    
+                        $updated = true;
+                    }
+                }
+
+                if ($updated)
+                {
+                    $id = $model->entityPrimaryKey($row);
+
+                    if (!$id)
+                    {
+                        throw new Exception('Primary key is not defined.');
+                    }
+             
+                    $model->protect(false);
+
+                    $result = $model->update($id, $params);
+
+                    $model->protect(true);
                 }
             }
 
