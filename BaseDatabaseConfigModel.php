@@ -47,7 +47,20 @@ abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
         }
 
         return $return;
-    }        
+    }
+
+    public static function setValue(string $class, string $property, string $value)
+    {
+        $db = Database::connect();
+
+        $query = $db->table('configs');
+
+        return $query->replace([
+            'config_class' => $class,
+            'config_property' => $property,
+            'config_value' => $value
+        ]);
+    }
 
     public function insert($data = null, bool $returnID = true)
     {
