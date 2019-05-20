@@ -209,6 +209,13 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
+    public function priceColumn(array $params = [])
+    {
+        return $this->decimalColumn(array_replace([
+            static::UNSIGNED => true
+        ], $params));
+    }
+
     public function keyName(array $keys)
     {
         return DbHelper::keyName($this->table, $keys);
