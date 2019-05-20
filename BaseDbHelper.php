@@ -7,11 +7,158 @@
 namespace BasicApp\Core;
 
 use Config\Database;
+use Exception;
 
 abstract class BaseDbHelper
 {
 
-    public static function now()
+    public static function count(string $table, array $where = [])
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        if ($where)
+        {
+            $builder->where($where);
+        }
+
+        return $builder->countAllResults();
+    }
+
+    public static function findAll(string $table, array $where = [])
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $builder->where($where);
+
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
+
+    public static function findRow(string $table, array $where = [])
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $builder->where($where);
+
+        $query = $builder->get();
+
+        return $query->getRowArray();
+    }
+
+    public static function insertRow(string $table, array $columns = [])
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $return = $builder->insert($columns);
+    
+        if ($return)
+        {
+            return $db->insertID();
+        }
+
+        return $return;
+    }
+
+    public static function updateAll(string $table, array $columns)
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $return = $builder->update($columns);
+
+        return $return;        
+    }
+
+    public static function updateRow(string $table, array $where, array $columns)
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $builder->where($where);
+
+        $return = $builder->update($columns);
+
+        return $return;
+    }
+
+    public static function replaceRow(string $table, array $where, array $columns)
+    {
+        $db = Database::connect();
+
+        $builder = $db->table($table);
+
+        $builder->where($where);
+
+        $return = $builder->replace($columns);
+
+        return $return;
+    }
+
+    public static function createRow(string $table, array $where, bool $create = false, array $columns = [], bool $update = false)
+    {
+        $db = Database::connect();
+
+        $row = static::findRow($table, $where);
+
+        if ($row)
+        {
+            if ($update)
+            {
+                $updated = false;
+
+                foreach($columns as $key => $value)
+                {
+                    if ($row[$key] != $value)
+                    {
+                        $updated = true;
+                    }
+                }
+
+                if ($updated)
+                {
+                    $result = static::updateRow($table, $where, $columns);
+
+                    $row = static::findRow($table, $where);
+
+                    if (!$row)
+                    {
+                        throw new Exception('Row not found.');
+                    }
+                }
+            }
+
+            return $row;
+        }
+
+        if (!$create)
+        {
+            return null;
+        }
+
+        $id = DbHelper::insertRow($table, array_replace($columns, $where));
+
+        $row = static::findRow($table, $where);
+
+        if (!$row)
+        {
+            throw new Exception('Row not found.');
+        }
+
+        return $row;
+    }
+
+    public static function getNow()
     {
         $db = Database::connect();
 
