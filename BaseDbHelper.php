@@ -217,7 +217,7 @@ abstract class BaseDbHelper
         return $db->escapeIdentifiers($table . '_' . implode('_', $keys));
     }
 
-    public function addKey(string $table, array $keys, bool $primary = false, $unique = false, string $keyName = '')
+    public static function addKey(string $table, array $keys, bool $primary = false, $unique = false, string $keyName = '')
     {
         $db = Database::connect();
 
