@@ -51,7 +51,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     const ENGINE = 'ENGINE';
 
-    const INNODB = 'InnoDB';
+    const DEFAULT_ENGINE = 'InnoDb';
 
     abstract public function up();
 
