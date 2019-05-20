@@ -9,11 +9,15 @@ namespace BasicApp\Core;
 abstract class BaseMigration extends \CodeIgniter\Database\Migration
 {
 
+    public $table;
+
     const RESTRICT = 'RESTRICT';
 
     const CASCADE = 'CASCADE';
 
     const SET_NULL = 'SET NULL';
+
+    const CONSTRAINT = 'CONSTRAINT';
 
     abstract public function up();
 
@@ -47,7 +51,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
     {
          $app = config('app');
         
-        return array_merge([
+        return array_replace([
             'type' => 'CHAR',
             'constraint' => 2,
             'null' => false,
@@ -57,7 +61,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
     
     public function textColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'TEXT',
             'null' => true
         ], $params);
@@ -65,7 +69,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function primaryKeyColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'INT',
             'constraint' => 11,
             'unsigned' => true,
@@ -75,7 +79,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function createdColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'null' => true
         ], $params);
@@ -83,7 +87,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function updatedColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'TIMESTAMP NULL',
             'default' => null
         ], $params);
@@ -91,7 +95,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function stringColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'VARCHAR',
             'constraint' => 255,
             'null' => true,
@@ -111,14 +115,14 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function foreignKeyColumn(array $params = [])
     {
-        return $this->integerColumn(array_merge([
+        return $this->integerColumn(array_replace([
             'unsigned' => true
         ], $params));
     }
 
     public function booleanColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'TINYINT',
             'constraint' => 1,
             'unsigned' => true,
@@ -129,7 +133,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function sortColumn(array $params = [])
     {
-        return array_merge([
+        return array_replace([
             'type' => 'INT',
             'constraint' => '11',
             'unsigned' => true,
@@ -137,65 +141,65 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
+    public function dateColumn(array $params = [])
+    {    
+        return array_replace([
+            'type' => 'DATE',
+            'null' => true,
+            'default' => null
+        ], $params);
+    }
+
+    public function charColumn(array $params = [])
+    {    
+        return array_replace([
+            'type' => 'CHAR',
+            'constraint' => 2,
+            'null' => true,
+            'default' => null
+        ], $params);
+    }
+
+    public function currencyColumn(array $params = [])
+    {
+        return $this->charColumn(array_replace([
+            'constraint' => 3
+        ], $params));
+    }
+
+    public function decimalColumn(array $params = [])
+    {    
+        return array_replace([
+            'type' => 'DECIMAL',
+            'constraint' => '12,2',
+            'null' => true,
+            'default' => null
+        ], $params);
+    }
+
     public function keyName(string $table, array $keys)
     {
-        return $this->db->escapeIdentifiers($table . '_' . implode('_', $keys));
+        return DbHelper::keyName($table, $keys);
     }
 
-    public function tableAddKey(string $table, array $keys, bool $primary = false, $unique = false)
+    public function addKey(string $table, array $keys, bool $primary = false, $unique = false)
     {
-        $keyName = $this->keyName($table, $keys);
-
-        $keys = implode(', ', $this->db->escapeIdentifiers($keys));
-
-        if ($unique)
-        {
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' UNIQUE (' . $keys  . ');';
-        }
-        elseif($primary)
-        {
-            $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' PRIMARY KEY (' . $keys . ');';
-        }
-        else
-        {
-            $sql = 'CREATE INDEX ' . $keyName . ' ON ' . $this->db->escapeIdentifiers($table) . ' (' . $keys . ');';
-        }
-
-        $this->db->query($sql);
+        return DbHelper::addKey($table, $keys, $primary, $unique);
     }
 
-    public function tableDropKey(string $table, string $key)
+    public function dropKey(string $table, string $key)
     {
-        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' DROP INDEX ' . $this->db->escapeIdentifiers($key);
-
-        $this->db->query($sql);
+        return DbHelper::dropKey($table, $key);
     }
 
-    public function tableAddForeignKey(
-        string $table, 
-        string $key, 
-        string $column, 
-        string $foreignTable, 
-        string $foreignTableKey, 
-        string $onDelete = 'RESTRICT', 
-        string $onUpdate = 'RESTRICT') 
+    public function addForeignKey(string $table, string $key, string $column, string $foreignTable, string $foreignTableKey, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT') 
     {
-        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) 
-            . ' ADD CONSTRAINT ' . $this->db->escapeIdentifiers($key) 
-            . ' FOREIGN KEY(' . $this->db->escapeIdentifiers($column) . ')' 
-            . ' REFERENCES ' . $this->db->escapeIdentifiers($foreignTable) . '(' . $this->db->escapeIdentifiers($foreignTableKey) . ')' 
-            . ' ON DELETE ' . $onDelete 
-            . ' ON UPDATE '. $onUpdate 
-            .';';
-
-        $this->db->query($sql);
+        return DbHelper::addForeignKey($table, $key, $column, $foreignTable, $foreignTableKey, $onDelete, $onUpdate);
     }
 
-    public function tableDropForeignKey(string $table, string $key)
+    public function dropForeignKey(string $table, string $key)
     {
-        $sql = 'ALTER TABLE ' . $this->db->escapeIdentifiers($table) . ' DROP FOREIGN KEY ' . $this->db->escapeIdentifiers($key);
-
-        $this->db->query($sql);
+        return DbHelper::dropForeignKey($table, $key);
     }
 
 }
