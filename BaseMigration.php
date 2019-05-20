@@ -11,13 +11,47 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public $table;
 
+    const TYPE_VARCHAR = 'VARCHAR';
+
+    const TYPE_DATE = 'DATE';
+
+    const TYPE_DATETIME = 'DATETIME';
+
+    const TYPE_DECIMAL = 'DECIMAL';
+
+    const TYPE_TINYINT = 'TINYINT';
+
+    const TYPE_TIMESTAMP = 'TIMESTAMP';
+
+    const TYPE_INT = 'INT';
+
+    const TYPE_CHAR = 'CHAR';
+
+    const TYPE_TEXT = 'TEXT';
+
+    const TYPE_TINYINT = 'TINYINT';
+
     const RESTRICT = 'RESTRICT';
 
     const CASCADE = 'CASCADE';
 
     const SET_NULL = 'SET NULL';
 
-    const CONSTRAINT = 'CONSTRAINT';
+    const CONSTRAINT = 'constraint';
+
+    const DEFAULT = 'default';
+
+    const TYPE = 'type';
+
+    const NULL = 'null';
+
+    const UNSIGNED = 'unsigned';
+
+    const AUTO_INCREMENT = 'auto_increment';
+
+    const ENGINE = 'ENGINE';
+
+    const INNODB = 'InnoDB';
 
     abstract public function up();
 
@@ -52,128 +86,128 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
          $app = config('app');
         
         return array_replace([
-            'type' => 'CHAR',
-            'constraint' => 2,
-            'null' => false,
-            'default' => $app->defaultLocale
+            static::TYPE => static::TYPE_CHAR,
+            static::CONSTRAINT => 2,
+            static::NULL => false,
+            static::DEFAULT => $app->defaultLocale
         ], $params);
     }
     
     public function textColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'TEXT',
-            'null' => true
+            static::TYPE => static::TYPE_TEXT,
+            static::NULL => true
         ], $params);
     }
 
     public function primaryKeyColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'INT',
-            'constraint' => 11,
-            'unsigned' => true,
-            'auto_increment' => true
+            static::TYPE => static::TYPE_INT,
+            static::CONSTRAINT => 11,
+            static::UNSIGNED => true,
+            static::AUTO_INCREMENT => true
         ], $params);
     }
 
     public function createdColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-            'null' => true
+            static::TYPE => static::TYPE_TIMESTAMP . ' NULL DEFAULT CURRENT_TIMESTAMP'
         ], $params);
     }
 
     public function updatedColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'TIMESTAMP NULL',
-            'default' => null
+            static::TYPE => static::TYPE_TIMESTAMP,
+            static::DEFAULT => null,
+            static::NULL => true
         ], $params);
     }
 
     public function stringColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'VARCHAR',
-            'constraint' => 255,
-            'null' => true,
-            'default' => null
+            static::TYPE => static::TYPE_VARCHAR,
+            static::CONSTRAINT => 255,
+            static::NULL => true,
+            static::DEFAULT => null
         ], $params);
     }
 
     public function integerColumn(array $params = [])
     {
         return array_merge([
-            'type' => 'INT',
-            'constraint' => 11,
-            'null' => true,
-            'default' => null
+            static::TYPE => static::TYPE_INT,
+            static::CONSTRAINT => 11,
+            static::NULL => true,
+            static::DEFAULT => null
         ], $params);
     }
 
     public function foreignKeyColumn(array $params = [])
     {
         return $this->integerColumn(array_replace([
-            'unsigned' => true
+            static::UNSIGNED => true
         ], $params));
     }
 
     public function booleanColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'TINYINT',
-            'constraint' => 1,
-            'unsigned' => true,
-            'null' => false,
-            'default' => 0
+            static::TYPE => 'TINYINT',
+            static::CONSTRAINT => 1,
+            static::UNSIGNED => true,
+            static::NULL => false,
+            static::DEFAULT => 0
         ], $params);
     }
 
     public function sortColumn(array $params = [])
     {
         return array_replace([
-            'type' => 'INT',
-            'constraint' => '11',
-            'unsigned' => true,
-            'null' => true
+            static::TYPE => static::TYPE_INT,
+            static::CONSTRAINT => '11',
+            static::UNSIGNED => true,
+            static::NULL => true
         ], $params);
     }
 
     public function dateColumn(array $params = [])
     {    
         return array_replace([
-            'type' => 'DATE',
-            'null' => true,
-            'default' => null
+            static::TYPE => static::TYPE_DATE,
+            static::NULL => true,
+            static::DEFAULT => null
         ], $params);
     }
 
     public function charColumn(array $params = [])
     {    
         return array_replace([
-            'type' => 'CHAR',
-            'constraint' => 2,
-            'null' => true,
-            'default' => null
+            static::TYPE => static::TYPE_CHAR,
+            static::CONSTRAINT => 2,
+            static::NULL => true,
+            static::DEFAULT => null
         ], $params);
     }
 
     public function currencyColumn(array $params = [])
     {
         return $this->charColumn(array_replace([
-            'constraint' => 3
+            static::CONSTRAINT => 3
         ], $params));
     }
 
     public function decimalColumn(array $params = [])
     {    
         return array_replace([
-            'type' => 'DECIMAL',
-            'constraint' => '12,2',
-            'null' => true,
-            'default' => null
+            static::TYPE => static::TYPE_DECIMAL,
+            static::CONSTRAINT => '12,2',
+            static::NULL => true,
+            static::DEFAULT => null
         ], $params);
     }
 
