@@ -11,6 +11,8 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public $table;
 
+    // Types
+
     const TYPE_VARCHAR = 'VARCHAR';
 
     const TYPE_DATE = 'DATE';
@@ -29,11 +31,15 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     const TYPE_TEXT = 'TEXT';
 
+    // SQL
+
     const RESTRICT = 'RESTRICT';
 
     const CASCADE = 'CASCADE';
 
     const SET_NULL = 'SET NULL';
+
+    // Options
 
     const CONSTRAINT = 'constraint';
 
@@ -45,7 +51,11 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     const UNSIGNED = 'unsigned';
 
+    const UNIQUE = 'unique';
+
     const AUTO_INCREMENT = 'auto_increment';
+
+    // Db Settings
 
     const ENGINE = 'ENGINE';
 
