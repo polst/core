@@ -177,29 +177,29 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         ], $params);
     }
 
-    public function keyName(string $table, array $keys)
+    public function keyName(array $keys)
     {
-        return DbHelper::keyName($table, $keys);
+        return DbHelper::keyName($this->table, $keys);
     }
 
-    public function addKey(string $table, array $keys, bool $primary = false, $unique = false)
+    public function addKey(array $keys, bool $primary = false, $unique = false)
     {
-        return DbHelper::addKey($table, $keys, $primary, $unique);
+        return DbHelper::addKey($this->table, $keys, $primary, $unique);
     }
 
-    public function dropKey(string $table, string $key)
+    public function dropKey(string $key)
     {
-        return DbHelper::dropKey($table, $key);
+        return DbHelper::dropKey($this->table, $key);
     }
 
-    public function addForeignKey(string $table, string $key, string $column, string $foreignTable, string $foreignTableKey, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT') 
+    public function addForeignKey(string $key, string $column, string $foreignTable, string $foreignTableKey, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT') 
     {
-        return DbHelper::addForeignKey($table, $key, $column, $foreignTable, $foreignTableKey, $onDelete, $onUpdate);
+        return DbHelper::addForeignKey($this->table, $key, $column, $foreignTable, $foreignTableKey, $onDelete, $onUpdate);
     }
 
-    public function dropForeignKey(string $table, string $key)
+    public function dropForeignKey(string $key)
     {
-        return DbHelper::dropForeignKey($table, $key);
+        return DbHelper::dropForeignKey($this->table, $key);
     }
 
 }
