@@ -214,9 +214,9 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         return DbHelper::keyName($this->table, $keys);
     }
 
-    public function addKey(array $keys, bool $primary = false, $unique = false)
+    public function addKey(array $keys, bool $primary = false, bool $unique = false, string $keyName = '')
     {
-        return DbHelper::addKey($this->table, $keys, $primary, $unique);
+        return DbHelper::addKey($this->table, $keys, $primary, $unique, $keyName);
     }
 
     public function dropKey(string $key)
