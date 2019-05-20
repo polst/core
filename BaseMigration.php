@@ -29,8 +29,6 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     const TYPE_TEXT = 'TEXT';
 
-    const TYPE_TINYINT = 'TINYINT';
-
     const RESTRICT = 'RESTRICT';
 
     const CASCADE = 'CASCADE';
