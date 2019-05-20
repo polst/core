@@ -12,6 +12,13 @@ use Exception;
 abstract class BaseDbHelper
 {
 
+    public static function exists(string $table)
+    {
+        $db = Database::connect();
+        
+        return $db->tableExists($table);
+    }
+
     public static function count(string $table, array $where = [])
     {
         $db = Database::connect();
