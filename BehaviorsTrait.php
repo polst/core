@@ -47,10 +47,10 @@ trait BehaviorsTrait
 
 			$params['owner'] = $this;
 
-			$this->_behaviors = $this->createBehavior($class, $params);
+			$this->_behaviors[$name] = $this->createBehavior($class, $params);
 		}
 
-		return $this->_behaviors;
+		return $this->_behaviors[$name];
 	}
 
 }
