@@ -6,10 +6,14 @@
  */
 namespace BasicApp\Core;
 
+use Exception;
+
 abstract class BaseMigration extends \CodeIgniter\Database\Migration
 {
 
     public $table;
+
+    public $depends = [];
 
     // Types
 
@@ -64,6 +68,19 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
     abstract public function up();
 
     abstract public function down();
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        foreach($this->depends as $table)
+        {
+            if (!DbHelper::exists($table))
+            {
+                throw new Exception($table . ' table does not exist.');
+            }
+        }
+    }
 
     // DEPRECATED
 
