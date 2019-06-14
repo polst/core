@@ -6,22 +6,10 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseTheme
+abstract class BaseTheme extends Service
 {
 
-    protected $instance;
-
     public $baseUrl;
-
-    public function __construct(object $instance, array $params = [])
-    {
-        $this->instance = $instance;
-
-        foreach($params as $key => $value)
-        {
-            $this->$key = $value;
-        }
-    }
 
     public function widget(string $name, array $params = [])
     {
