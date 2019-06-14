@@ -146,7 +146,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
     public function updatedColumn(array $params = [])
     {
         return array_replace([
-            static::TYPE => static::TYPE_TIMESTAMP,
+            static::TYPE => static::TYPE_DATETIME,
             static::DEFAULT => null,
             static::NULL => true
         ], $params);
