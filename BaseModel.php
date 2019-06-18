@@ -218,6 +218,12 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function save($data) : bool
     {
+        //echo '<pre>';
+
+        //var_dump($data);
+
+        //die;
+
         $params = $this->trigger('beforeSave', ['data' => $data]);
 
         $data = $params['data'];
@@ -235,5 +241,14 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         return $result;
     }
+
+    /**
+     * Fix "You must use the "set" method to update an entry." error when you save model without changes.
+     * ToDo: Need to remove this later...    
+     */
+    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = false) : array
+    {
+        return parent::classToArray($data, $primaryKey, $dateFormat, $onlyChanged);
+    }    
 
 }
