@@ -23,7 +23,7 @@ abstract class BaseUrl
         return site_url($path, $scheme, $altConfig);
     }
 
-    public static function currentUriString($applyParams = [])
+    public static function currentUri($applyParams = [])
     {
         $return = uri_string();
 
@@ -40,6 +40,11 @@ abstract class BaseUrl
         }
 
         return $return;
+    }
+
+    public static function currentUriString($applyParams = [])
+    {
+        return static::currentUri($applyParams);
     }
 
     public static function currentUrl($params = [], string $scheme = null, App $altConfig = null)
