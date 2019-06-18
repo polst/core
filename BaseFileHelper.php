@@ -11,48 +11,92 @@ use Exception;
 abstract class BaseFileHelper
 {
 
-    public static function copyDirectories($directories, $permissions = 0755)
-    {
-        foreach($directories as $source => $target)
-        {
-            static::copyDirectory($source, $target, $permissions);
-        }
-    }
-
     /**
      * Copy a file, or recursively copy a folder and its contents
      * @author Aidan Lister <aidan@php.net>
-     * @version 1.0.1
+     * @author Basic App Dev Team <dev@basic-app.com>
      * @link http://aidanlister.com/2004/04/recursively-copying-directories-in-php/
      * @param string $source Source path
      * @param string $dest Destination path
      * @param int $permissions New folder creation permissions
      * @return bool Returns true on success, false on failure
      */
-    function copyDirectory($source, $dest, $permissions = 0755)
+    function copy($source, $dest = null, $permissions = 0755, $throwExceptions = true)
     {
+        if (is_array($source))
+        {
+            foreach($directories as $source => $target)
+            {
+                $return = static::copy($source, $target, $permissions);
+            
+                if (!$return)
+                {
+                    return $return;
+                }
+            }
+
+            return true;
+        }
+
         // Check for symlinks
         if (is_link($source))
         {
-            return symlink(readlink($source), $dest);
+            $return = symlink(readlink($source), $dest);
+       
+            if (!$return && $throwExceptions)
+            {
+                throw new Exception($source . ' to ' . $dest . ' symlink error.');
+            }
+
+            return $return;
         }
 
         // Simple copy for a file
         if (is_file($source))
         {
-            return copy($source, $dest);
+            $return = copy($source, $dest);
+
+            if (!$return && $throwExceptions)
+            {
+                throw new Exception($source . ' to ' . $dest . ' copy error.');
+            }
+
+            return $return;
         }
 
         // Make destination directory
         if (!is_dir($dest))
         {
-            mkdir($dest, $permissions);
+            $return = mkdir($dest, $permissions);
+            
+            if (!$return && $throwExceptions)
+            {
+                throw new Exception($dest . ' mkdir error.');
+            }
+
+            if (!$return)
+            {
+                return false;
+            }
         }
 
         // Loop through the folder
         $dir = dir($source);
+
+        if (!$dir)
+        {
+            if (!$return && $throwExceptions)
+            {
+                throw new Exception($source . ' dir error.');
+            }
+
+            if (!$return)
+            {
+                return false;
+            }
+        }
         
-        while (false !== $entry = $dir->read())
+        while(false !== ($entry = $dir->read()))
         {
             // Skip pointers
             if ($entry == '.' || $entry == '..')
@@ -61,7 +105,15 @@ abstract class BaseFileHelper
             }
 
             // Deep copy directories
-            static::copyDirectory("$source/$entry", "$dest/$entry", $permissions);
+            $result = static::copy("$source/$entry", "$dest/$entry", $permissions);
+        
+            if (!$result)
+            {
+                // Clean up
+                $dir->close();
+
+                return false;
+            }
         }
 
         // Clean up
@@ -70,20 +122,39 @@ abstract class BaseFileHelper
         return true;
     }
 
-    public static function setPermission($path, $permission)
+    public static function setPermission($files, $permission = null, $throwExceptions = true)
     {
-        if (is_file($path) || is_dir($path))
+        if (is_array($files))
         {
-            chmod($path, $permission);
-        }
-    }
+            foreach($files as $path => $permission)
+            {
+                $return = static::setPermission($path, $permission);
+           
+                if (!$return)
+                {
+                    return $return;
+                }                
+            }
 
-    public static function setPermissions(array $files)
-    {
-        foreach($files as $path => $permission)
-        {
-            static::setPermission($path, $permission);
+            return true;            
         }
+
+        if (is_file($files) || is_dir($files))
+        {
+            $result = chmod($files, octdec($permission));
+        
+            if (!$return && $throwExceptions)
+            {
+                throw new Exception($files . ' chmod ' . $permission . ' error.');
+            }
+
+            if (!$return)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

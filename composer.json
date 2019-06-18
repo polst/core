@@ -7,6 +7,7 @@
         }
     },
     "require": {
-        "codeigniter4/framework": "*"
+        "codeigniter4/framework": "*",
+        "composer-plugin-api": "^1.0"
     }
 }
