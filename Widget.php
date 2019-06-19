@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class Widget extends BaseWidget
+class Widget extends BaseWidget
 {
 }

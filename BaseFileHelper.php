@@ -21,7 +21,7 @@ abstract class BaseFileHelper
      * @param int $permissions New folder creation permissions
      * @return bool Returns true on success, false on failure
      */
-    function copy($source, $dest = null, $permissions = 0755, $throwExceptions = true)
+    public static function copy($source, $dest = null, $permissions = 0755, $throwExceptions = true)
     {
         // Check for symlinks
         if (is_link($source))
