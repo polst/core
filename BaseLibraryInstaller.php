@@ -59,7 +59,7 @@ abstract class BaseLibraryInstaller extends \Composer\Installer\LibraryInstaller
         static::runCommands($event, __METHOD__);
     }
 
-    protected static function copy($files)
+    protected static function copyFiles($files)
     {
         try
         {
