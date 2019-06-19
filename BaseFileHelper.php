@@ -23,21 +23,6 @@ abstract class BaseFileHelper
      */
     function copy($source, $dest = null, $permissions = 0755, $throwExceptions = true)
     {
-        if (is_array($source))
-        {
-            foreach($directories as $source => $target)
-            {
-                $return = static::copy($source, $target, $permissions);
-            
-                if (!$return)
-                {
-                    return $return;
-                }
-            }
-
-            return true;
-        }
-
         // Check for symlinks
         if (is_link($source))
         {
@@ -124,21 +109,6 @@ abstract class BaseFileHelper
 
     public static function setPermission($files, $permission = null, $throwExceptions = true)
     {
-        if (is_array($files))
-        {
-            foreach($files as $path => $permission)
-            {
-                $return = static::setPermission($path, $permission);
-           
-                if (!$return)
-                {
-                    return $return;
-                }                
-            }
-
-            return true;            
-        }
-
         if (is_file($files) || is_dir($files))
         {
             $result = chmod($files, octdec($permission));

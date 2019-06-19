@@ -65,7 +65,10 @@ abstract class BaseLibraryInstaller extends \Composer\Installer\LibraryInstaller
         {
             echo 'copy files...' . "\n";
 
-            FileHelper::copy($files);
+            foreach($files as $source => $target)
+            {
+                FileHelper::copy($source, $target);
+            }
         }
         catch(Exception $e)
         {
@@ -79,7 +82,11 @@ abstract class BaseLibraryInstaller extends \Composer\Installer\LibraryInstaller
         {
             echo 'set permissions...' . "\n";
 
-            FileHelper::setPermission($files);
+            foreach($files as $path => $permission)
+            {
+                FileHelper::setPermission($path, $permission);       
+            }
+        
         }
         catch(Exception $e)
         {
