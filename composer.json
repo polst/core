@@ -7,7 +7,6 @@
         }
     },
     "require": {
-        "codeigniter4/framework": "*",
-        "composer-plugin-api": "^1.0"
+        "codeigniter4/framework": "dev-master"
     }
 }
