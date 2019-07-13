@@ -19,6 +19,10 @@ abstract class BaseModelForm extends Form
 
     // error
 
+    public $errorOptions = ['class' => ['is-invalid']];
+
+    public $groupErrorOptions = [];
+
     public $errorTag = 'div';
 
     public $defaultErrorOptions = [
@@ -116,6 +120,11 @@ abstract class BaseModelForm extends Form
 
         $options = Html::mergeOptions($this->defaultGroupOptions, $options);
 
+        if ($this->hasError($attribute))
+        {
+            $options = Html::mergeOptions($options, $this->groupErrorOptions);
+        }
+
         if (array_key_exists('template', $options))
         {
             $template = $options['template'];
@@ -153,9 +162,21 @@ abstract class BaseModelForm extends Form
         return Html::tag('label', $label, $options);
     }
 
+    public function addErrorOptions($attribute, array $options)
+    {
+        if ($this->hasError($attribute))
+        {
+            $options = Html::mergeOptions($options, $this->errorOptions);
+        }
+
+        return $options;
+    }
+
     public function input($attribute, array $options = [], $groupOptions = [])
     {
         $options = Html::mergeOptions($this->defaultInputOptions, $options);
+
+        $options = $this->addErrorOptions($attribute, $options);
 
         $name = $this->attributeName($attribute, $options);
 
@@ -170,6 +191,8 @@ abstract class BaseModelForm extends Form
     {
         $options = Html::mergeOptions($this->defaultTextareaOptions, $options);
 
+        $options = $this->addErrorOptions($attribute, $options);
+
         $name = $this->attributeName($attribute, $options);
 
         $value = $this->attributeValue($attribute, $options);
@@ -183,6 +206,8 @@ abstract class BaseModelForm extends Form
     {
         $options = Html::mergeOptions($this->defaultPasswordOptions, $options);
 
+        $options = $this->addErrorOptions($attribute, $options);
+
         $name = $this->attributeName($attribute, $options);
 
         $return = $this->formPassword($name, '', $options);
@@ -193,6 +218,8 @@ abstract class BaseModelForm extends Form
     public function checkbox($attribute, array $options = [], $groupOptions = [])
     {
         $options = Html::mergeOptions($this->defaultCheckboxOptions, $options);
+
+        $options = $this->addErrorOptions($attribute, $options);
 
         $name = $this->attributeName($attribute, $options);
 
@@ -216,6 +243,8 @@ abstract class BaseModelForm extends Form
     {
         $options = Html::mergeOptions($this->defaultInputOptions, $options);
 
+        $options = $this->addErrorOptions($attribute, $options);
+
         $name = $this->attributeName($attribute, $options);
 
         $value = $this->attributeValue($attribute, $options);
@@ -229,6 +258,8 @@ abstract class BaseModelForm extends Form
     {
         $options = Html::mergeOptions($this->defaultInputOptions, $options);
 
+        $options = $this->addErrorOptions($attribute, $options);
+
         $name = $this->attributeName($attribute, $options);
 
         $value = $this->attributeValue($attribute, $options);
@@ -241,6 +272,8 @@ abstract class BaseModelForm extends Form
     public function upload($attribute, array $options = [], $groupOptions = [])
     {
         $options = Html::mergeOptions($this->defaultUploadOptions, $options);
+
+        $options = $this->addErrorOptions($attribute, $options);
 
         $name = $this->attributeName($attribute, $options);
 
@@ -295,6 +328,16 @@ abstract class BaseModelForm extends Form
         }
 
         return $return;
+    }
+
+    public function hasError($attribute)
+    {
+        if ($this->attributeError($attribute))
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }

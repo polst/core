@@ -11,7 +11,14 @@ use Config\App;
 abstract class BaseUrl
 {
 
-    public static function createUrl($path = '', array $params = [], string $scheme = null, App $altConfig = null) : string
+    public static function returnUrl($path, array $params = [], string $scheme = null, App $alt = null) : string
+    {
+        $params['returnUrl'] = static::currentUriString();
+
+        return static::createUrl($path, $params, $scheme, $alt);
+    }
+
+    public static function createUrl($path, array $params = [], string $scheme = null, App $alt = null) : string 
     {
         helper(['url']);
 
@@ -20,7 +27,7 @@ abstract class BaseUrl
             $path .= '?' . http_build_query($params);
         }
 
-        return site_url($path, $scheme, $altConfig);
+        return site_url($path, $scheme, $alt);
     }
 
     public static function currentUri($applyParams = [])

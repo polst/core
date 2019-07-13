@@ -36,7 +36,7 @@ abstract class BaseHtml
                 }
             }
 
-            return $class1;
+            return implode(' ', $class1);
         }
 
         return $class2;
