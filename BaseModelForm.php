@@ -282,7 +282,7 @@ abstract class BaseModelForm extends Form
     {
         $options = Html::mergeOptions($this->defaultErrorOptions, $options);
 
-        return Html::tag($this->errorTag, $options);
+        return Html::tag($this->errorTag, $error, $options);
     }
 
     public function errors($options = [])
