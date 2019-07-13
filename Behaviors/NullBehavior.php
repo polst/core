@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Basic App Behaviors
+ * @package Basic App Core
+ * @link http://basic-app.com
  * @license MIT License
- * @link    http://basic-app.com
  */
 namespace BasicApp\Core\Behaviors;
 

@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class Controller extends BaseController
+class CoreEvents extends BaseCoreEvents
 {
 }
