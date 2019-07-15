@@ -7,7 +7,7 @@
 namespace BasicApp\Core;
 
 use BasicApp\Traits\FactoryTrait;
-use BasicApp\Intefaces\BehaviorInterface;
+use BasicApp\Interfaces\BehaviorInterface;
 
 abstract class BaseBehavior implements BehaviorInterface
 {

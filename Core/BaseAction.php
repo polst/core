@@ -9,7 +9,7 @@ namespace BasicApp\Core;
 use CodeIgniter\Database\Exceptions\DataException;
 use Exception;
 use Config\Database;
-use BasicApp\Interfaces\ActiveInterface;
+use BasicApp\Interfaces\ActionInterface;
 
 abstract class BaseAction extends Behavior implements ActionInterface
 {
