@@ -32,7 +32,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
         if (!$this->modelClass)
         {
-            throw new Exception('Property "modelClass" is not defined.');
+            throw new Exception('Property "modelClass" not defined.');
         }
     }
 

@@ -7,9 +7,12 @@
 namespace BasicApp\Core;
 
 use CodeIgniter\Config\BaseConfig;
+use Exception;
 
 abstract class BaseDatabaseConfig extends BaseConfig
 {
+
+    protected $modelClass;
 
     public function __construct()
     {
@@ -24,6 +27,18 @@ abstract class BaseDatabaseConfig extends BaseConfig
                 $this->{$property} = $value;
             }
         }
+        
+        if (!$this->modelClass)
+        {
+            throw new Exception('Property "modelClass" not defined.');
+        }
     }
+
+    public function label($field, $default = null)
+    {
+        $modelClass = $this->modelClass;
+
+        return $modelClass::label($field, $default);
+    }    
 
 }
