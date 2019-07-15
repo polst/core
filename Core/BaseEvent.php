@@ -6,6 +6,11 @@
  */
 namespace BasicApp\Core;
 
-class ModelForm extends BaseModelForm
+abstract class BaseEvent
 {
+
+    public $return;
+
+    public $params = [];
+
 }

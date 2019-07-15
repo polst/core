@@ -225,12 +225,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function save($data) : bool
     {
-        //echo '<pre>';
-
-        //var_dump($data);
-
-        //die;
-
         $params = $this->trigger('beforeSave', ['data' => $data]);
 
         $data = $params['data'];

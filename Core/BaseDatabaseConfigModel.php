@@ -7,6 +7,7 @@
 namespace BasicApp\Core;
 
 use Config\Database;
+use BasicApp\Core\Form;
 
 abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
 {
@@ -15,7 +16,7 @@ abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
 
     protected $primaryKey = 'config_id';
 
-    abstract static function getFormFields($model);
+    abstract static function renderFields(Form $form);
 
     abstract static function getFormName();
 
@@ -64,6 +65,11 @@ abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
 
     public function insert($data = null, bool $returnID = true)
     {
+        if ($this->validate($data) === false)
+        {
+            return false;
+        }
+
         $properties = [];
 
         foreach ($data as $property => $value)
