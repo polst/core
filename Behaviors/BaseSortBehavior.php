@@ -4,11 +4,12 @@
  * @link http://basic-app.com
  * @license MIT License
  */
-namespace BasicApp\Core\Behaviors;
+namespace BasicApp\Behaviors;
 
 use Config\Database;
+use BasicApp\Core\ModelBehavior;
 
-class BaseSortBehavior extends \BasicApp\Core\ModelBehavior
+class BaseSortBehavior extends ModelBehavior
 {
 
     public $fields = [];

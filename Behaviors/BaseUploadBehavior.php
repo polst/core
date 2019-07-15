@@ -4,13 +4,13 @@
  * @link http://basic-app.com
  * @license MIT License
  */
-namespace BasicApp\Core\Behaviors;
+namespace BasicApp\Behaviors;
 
 use Exception;
 use Closure;
 use BasicApp\Core\ModelBehavior;
-use BasicApp\Core\ModelBehaviorInterface;
-use BasicApp\Core\ImageHelper;
+use BasicApp\Interfaces\ModelBehaviorInterface;
+use BasicApp\Helpers\ImageHelper;
 
 abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehaviorInterface
 {

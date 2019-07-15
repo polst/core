@@ -3,7 +3,11 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-			"BasicApp\\Core\\" : ""
+			"BasicApp\\Core\\" : "Core/",
+			"BasicApp\\Interfaces\\" : "Interfaces/",
+			"BasicApp\\Actions\\" : "Actions/",
+			"BasicApp\\Behaviors\\" : "Behaviors/",
+			"BasicApp\\Traits\\" : "Traits/"
         }
     },
     "require": {

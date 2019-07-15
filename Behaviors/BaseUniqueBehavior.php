@@ -4,10 +4,10 @@
  * @link http://basic-app.com
  * @license MIT License
  */
-namespace BasicApp\Core\Behaviors;
+namespace BasicApp\Behaviors;
 
 use BasicApp\Core\ModelBehavior;
-use BasicApp\Core\ModelBehaviorInterface;
+use BasicApp\Interfaces\ModelBehaviorInterface;
 
 abstract class BaseUniqueBehavior extends ModelBehavior implements ModelBehaviorInterface
 {

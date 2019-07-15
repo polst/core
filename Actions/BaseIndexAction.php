@@ -4,7 +4,7 @@
  * @link http://basic-app.com
  * @license MIT License
  */
-namespace BasicApp\Core\Actions;
+namespace BasicApp\Actions;
 
 abstract class BaseIndexAction extends \BasicApp\Core\Action
 {
