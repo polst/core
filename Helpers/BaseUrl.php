@@ -59,4 +59,9 @@ abstract class BaseUrl
         return site_url(static::currentUriString($params), $scheme, $altConfig);
     }
 
+    public static function redirect(string $uri, string $method = 'auto', int $code = null)
+    {
+        return service('response')->redirect($uri, $method, $code);;
+    }
+
 }
