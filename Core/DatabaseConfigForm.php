@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class DatabaseConfigModel extends BaseDatabaseConfigModel
+abstract class DatabaseConfigForm extends BaseDatabaseConfigForm
 {
 }

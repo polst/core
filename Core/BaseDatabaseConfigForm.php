@@ -9,7 +9,7 @@ namespace BasicApp\Core;
 use Config\Database;
 use BasicApp\Core\Form;
 
-abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
+abstract class BaseDatabaseConfigForm extends \BasicApp\Core\Model
 {
 
     protected $table = 'configs';
@@ -22,12 +22,12 @@ abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
 
     public static function getValue(string $class, string $propery, string $default = '')
     {
-        $model = static::get([
+        $params = [
             'config_class' => $class,
             'config_property' => $property
-        ], true, [
-            'config_value' => $default
-        ]);
+        ];
+
+        $model = static::get($params, true, ['config_value' => $default]);
 
         return $model->config_value;
     }
@@ -83,7 +83,7 @@ abstract class BaseDatabaseConfigModel extends \BasicApp\Core\Model
             $properties[] = $property;
         }
 
-        // delete old properties
+        // delete not used old properties
 
         $this->db->table($this->table)
             ->where('config_class', get_called_class())

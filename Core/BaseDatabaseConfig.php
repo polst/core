@@ -18,7 +18,9 @@ abstract class BaseDatabaseConfig extends BaseConfig
     {
         parent::__construct();
 
-        $values = DatabaseConfigModel::formValues(static::class);
+        $modelClass = $this->modelClass;
+
+        $values = $modelClass::formValues(static::class);
 
         foreach ($values as $property => $value)
         {
