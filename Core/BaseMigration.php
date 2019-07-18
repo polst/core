@@ -268,4 +268,81 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         return DbHelper::dropForeignKey($this->table, $key);
     }
 
+    // Database Forge
+
+    public function createDatabase(string $db_name): bool
+    {
+        return $this->forge->createDatabase($db_name);
+    }
+
+    public function dropDatabase(string $db_name): bool
+    {
+        return $this->forge->dropDatabase($db_name);
+    }
+
+    public function addKey($key, bool $primary = false, bool $unique = false)
+    {
+        return $this->forge->addKey($key, $primary, $unique);
+    }
+
+    public function addPrimaryKey($key)
+    {
+        return $this->forge->addPrimaryKey($key);
+    }
+
+    public function addUniqueKey($key)
+    {
+        return $this->forge->addUniqueKey($key);
+    }
+
+    public function addField($field)
+    {
+        return $this->forge->addField($field);
+    }
+
+    public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
+    {
+        return $this->forge->addForeignKey($fieldName, $tableName, $tableField, $onUpdate, $onDelete);
+    }
+
+    public function dropForeignKey(string $table, string $foreign_name)
+    {
+        return $this->forge->dropForeignKey($table, $foreign_name);
+    }
+
+    public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
+    {
+        return $this->forge->createTable($table, $if_not_exists, $attributes);
+    }
+
+    public function dropTable(string $table_name, bool $if_exists = false, bool $cascade = false)
+    {
+        return $this->forge->dropTable($table_name, $if_exists, $cascade);
+    }
+
+    public function renameTable(string $table_name, string $new_table_name)
+    {
+        return $this->forge->renameTable($table_name, $new_table_name);
+    }
+
+    public function addColumn(string $table, $field): bool
+    {
+        return $this->forge->addColumn($table, $field);
+    }
+
+    public function dropColumn(string $table, string $column_name)
+    {
+        return $this->forge->dropColumn($table, $column_name);
+    }
+
+    public function modifyColumn(string $table, $field): bool
+    {
+        return $this->forge->modifyColumn($table, $field);
+    }
+
+    public function reset()
+    {
+        $this->forge->reset();
+    }
+
 }
