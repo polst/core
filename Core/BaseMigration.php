@@ -7,6 +7,7 @@
 namespace BasicApp\Core;
 
 use Exception;
+use BasicApp\Helpers\DbHelper;
 
 abstract class BaseMigration extends \CodeIgniter\Database\Migration
 {
@@ -59,7 +60,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     const AUTO_INCREMENT = 'auto_increment';
 
-    // Db Settings
+    // Database Settings
 
     const ENGINE = 'ENGINE';
 
@@ -75,36 +76,132 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
         foreach($this->depends as $table)
         {
-            if (!DbHelper::exists($table))
+            if (!DbHelper::tableExists($table))
             {
                 throw new Exception($table . ' table does not exist.');
             }
         }
     }
 
-    // DEPRECATED
-
-    public function primaryColumn(array $params = [])
+    public function keyName($table, array $columns)
     {
-        return $this->primaryKeyColumn($params);
+        return DbHelper::keyName($table, $columns);
     }
 
-    // DEPRECATED
-
-    public function foreignColumn(array $params = [])
+    public function createIndex($table, array $keys, string $keyName = '')
     {
-        return $this->foreignKeyColumn($params);
+        return DbHelper::createIndex($table, $keys, $keyName);
     }
 
-    public function intColumn(array $params = [])
+    public function createPrimaryKey($table, array $keys, string $keyName = '')
     {
-        return $this->integerColumn($params);
+        return DbHelper::createPrimaryKey($table, $keys, $keyName);
     }
 
-    public function boolColumn(array $params = [])
+    public function createUniqueKey($table, array $keys, string $keyName = '')
     {
-        return $this->booleanColumn($params);
-    }        
+        return DbHelper::createUniqueKey($table, $keys, $keyName);
+    }
+
+    public function dropIndex($table, $key)
+    {
+        return DbHelper::dropIndex($table, $key);
+    }
+
+    public function dropUniqueKey($table, $key)
+    {
+        return DbHelper::dropUniqueKey($table, $key);
+    }
+
+    public function dropPrimaryKey($table, $key)
+    {
+        return DbHelper::dropPrimaryKey($table, $key);
+    }
+
+    public function createForeignKey(
+        string $table,
+        string $fieldName,
+        string $tableName, 
+        string $tableField, 
+        string $onDelete = 'RESTRICT', 
+        string $onUpdate = 'RESTRICT',
+        string $keyName = '')
+    {
+
+        return DbHelper::createForeignKey(
+            $table, 
+            $fieldName,
+            $tableName, 
+            $tableField, 
+            $onDelete, 
+            $onUpdate,
+            $keyName
+        );
+    }
+
+    public function foreignKeyName(string $table, string $field)
+    {
+        return DbHelper::foreignKeyName($table, $field);
+    }
+
+    public function createColumn(string $table, $field): bool
+    {
+        return $this->addColumn($table, $field);
+    }
+
+    // Database Forge
+
+    public function createDatabase(string $db_name): bool
+    {
+        return $this->forge->createDatabase($db_name);
+    }
+
+    public function dropDatabase(string $db_name): bool
+    {
+        return $this->forge->dropDatabase($db_name);
+    }
+
+    public function dropForeignKey(string $table, string $foreign_name)
+    {
+        return $this->forge->dropForeignKey($table, $foreign_name);
+    }
+
+    public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
+    {
+        return $this->forge->createTable($table, $if_not_exists, $attributes);
+    }
+
+    public function dropTable(string $table, bool $if_exists = false, bool $cascade = false)
+    {
+        return $this->forge->dropTable($table, $if_exists, $cascade);
+    }
+
+    public function renameTable(string $table, string $new_table_name)
+    {
+        return $this->forge->renameTable($table, $new_table_name);
+    }
+
+    public function addColumn(string $table, $field): bool
+    {
+        return $this->forge->addColumn($table, $field);
+    }
+
+    public function dropColumn(string $table, string $column_name)
+    {
+        return $this->forge->dropColumn($table, $column_name);
+    }
+
+    public function modifyColumn(string $table, $field): bool
+    {
+        return $this->forge->modifyColumn($table, $field);
+    }
+
+    public function reset()
+    {
+        $this->forge->reset();
+    }
+
+    // Columns
 
     public function langColumn(array $params = [])
     {
@@ -241,108 +338,6 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         return $this->decimalColumn(array_replace([
             static::UNSIGNED => true
         ], $params));
-    }
-
-    public function keyName(array $keys)
-    {
-        return DbHelper::keyName($this->table, $keys);
-    }
-
-    public function addKey(array $keys, bool $primary = false, bool $unique = false, string $keyName = '')
-    {
-        return DbHelper::addKey($this->table, $keys, $primary, $unique, $keyName);
-    }
-
-    public function dropKey(string $key)
-    {
-        return DbHelper::dropKey($this->table, $key);
-    }
-
-    public function addForeignKey(string $key, string $column, string $foreignTable, string $foreignTableKey, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT') 
-    {
-        return DbHelper::addForeignKey($this->table, $key, $column, $foreignTable, $foreignTableKey, $onDelete, $onUpdate);
-    }
-
-    public function dropForeignKey(string $key)
-    {
-        return DbHelper::dropForeignKey($this->table, $key);
-    }
-
-    // Database Forge
-
-    public function createDatabase(string $db_name): bool
-    {
-        return $this->forge->createDatabase($db_name);
-    }
-
-    public function dropDatabase(string $db_name): bool
-    {
-        return $this->forge->dropDatabase($db_name);
-    }
-
-    public function addKey($key, bool $primary = false, bool $unique = false)
-    {
-        return $this->forge->addKey($key, $primary, $unique);
-    }
-
-    public function addPrimaryKey($key)
-    {
-        return $this->forge->addPrimaryKey($key);
-    }
-
-    public function addUniqueKey($key)
-    {
-        return $this->forge->addUniqueKey($key);
-    }
-
-    public function addField($field)
-    {
-        return $this->forge->addField($field);
-    }
-
-    public function addForeignKey(string $fieldName = '', string $tableName = '', string $tableField = '', string $onUpdate = '', string $onDelete = '')
-    {
-        return $this->forge->addForeignKey($fieldName, $tableName, $tableField, $onUpdate, $onDelete);
-    }
-
-    public function dropForeignKey(string $table, string $foreign_name)
-    {
-        return $this->forge->dropForeignKey($table, $foreign_name);
-    }
-
-    public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
-    {
-        return $this->forge->createTable($table, $if_not_exists, $attributes);
-    }
-
-    public function dropTable(string $table_name, bool $if_exists = false, bool $cascade = false)
-    {
-        return $this->forge->dropTable($table_name, $if_exists, $cascade);
-    }
-
-    public function renameTable(string $table_name, string $new_table_name)
-    {
-        return $this->forge->renameTable($table_name, $new_table_name);
-    }
-
-    public function addColumn(string $table, $field): bool
-    {
-        return $this->forge->addColumn($table, $field);
-    }
-
-    public function dropColumn(string $table, string $column_name)
-    {
-        return $this->forge->dropColumn($table, $column_name);
-    }
-
-    public function modifyColumn(string $table, $field): bool
-    {
-        return $this->forge->modifyColumn($table, $field);
-    }
-
-    public function reset()
-    {
-        $this->forge->reset();
-    }
+    }    
 
 }

@@ -12,7 +12,7 @@ use Exception;
 abstract class BaseDbHelper
 {
 
-    public static function exists(string $table)
+    public static function tableExists(string $table)
     {
         $db = Database::connect();
         
@@ -112,7 +112,12 @@ abstract class BaseDbHelper
         return $return;
     }
 
-    public static function createRow(string $table, array $where, bool $create = false, array $columns = [], bool $update = false)
+    public static function createRow(
+        string $table, 
+        array $where, 
+        bool $create = false, 
+        array $columns = [], 
+        bool $update = false)
     {
         $db = Database::connect();
 
@@ -165,7 +170,7 @@ abstract class BaseDbHelper
         return $row;
     }
 
-    public static function getNow()
+    public static function now()
     {
         $db = Database::connect();
 
@@ -176,40 +181,47 @@ abstract class BaseDbHelper
         return $row->now;
     }
 
-    public static function dropForeignKey(string $table, string $key)
+    public static function foreignKeyName(string $table, $field)
     {
-        $db = Database::connect();
-
-        $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) . ' DROP FOREIGN KEY ' . $db->escapeIdentifiers($key);
-
-        return $db->query($sql);
+        return $table . '_' . $field . '_foreign';
     }
 
-    public static function addForeignKey(
+    public static function createForeignKey(
             string $table, 
-            string $key, 
-            string $column, 
+            string $field, 
             string $foreignTable, 
-            string $foreignTableKey, 
+            string $foreignTableField, 
             string $onDelete = 'RESTRICT', 
-            string $onUpdate = 'RESTRICT'
+            string $onUpdate = 'RESTRICT',
+            string $keyName = ''
         )
     {
         $db = Database::connect();
 
+        if (!$keyName)
+        {
+            $keyName =  static::foreignKeyName($table, $field);
+        }
+
         $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) 
-            . ' ADD CONSTRAINT ' . $db->escapeIdentifiers($key) 
-            . ' FOREIGN KEY(' . $db->escapeIdentifiers($column) . ')' 
-            . ' REFERENCES ' . $db->escapeIdentifiers($foreignTable) . '(' . $db->escapeIdentifiers($foreignTableKey) . ')' 
+            . ' ADD CONSTRAINT ' . $db->escapeIdentifiers($keyName) 
+            . ' FOREIGN KEY (' . $db->escapeIdentifiers($field) . ')' 
+            . ' REFERENCES ' . $db->escapeIdentifiers($foreignTable) 
+            . ' (' . $db->escapeIdentifiers($foreignTableField) . ')' 
             . ' ON DELETE ' . $onDelete 
             . ' ON UPDATE '. $onUpdate 
             .';';
 
-        return $this->db->query($sql);
+        return $db->query($sql);
     }
 
-    public static function dropKey(string $table, string $key)
+    public static function dropIndex(string $table, $key)
     {
+        if (is_array($key))
+        {
+            $key = static::keyName($table, $key);
+        }
+
         $db = Database::connect();
 
         $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) . ' DROP INDEX ' . $db->escapeIdentifiers($key);
@@ -217,36 +229,71 @@ abstract class BaseDbHelper
         return $db->query($sql);
     }
 
-    public static function keyName(string $table, array $keys)
+    public static function dropUniqueKey(string $table, $key)
     {
-        $db = Database::connect();
-
-        return $db->escapeIdentifiers($table . '_' . implode('_', $keys));
+        return static::dropIndex($table, $key);
     }
 
-    public static function addKey(string $table, array $keys, bool $primary = false, $unique = false, string $keyName = '')
+    public static function dropPrimaryKey(string $table, $key)
+    {
+        return static::dropPrimaryKey($table, $key);
+    }    
+
+    public static function keyName(string $table, array $columns)
     {
         $db = Database::connect();
 
+        return $db->escapeIdentifiers($table . '_' . implode('_', $columns));
+    }
+
+    public static function createUniqueKey(string $table, array $columns, string $keyName = '')
+    {
         if (!$keyName)
         {
-            $keyName = static::keyName($table, $keys);
+            $keyName = static::keyName($table, $columns);
         }
 
-        $keys = implode(', ', $db->escapeIdentifiers($keys));
+        $db = Database::connect();
 
-        if ($unique)
+        $keys = implode(', ', $db->escapeIdentifiers($columns));
+
+        $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) 
+            . ' ADD CONSTRAINT ' . $keyName 
+            . ' UNIQUE (' . $keys  . ');';
+
+        return $db->query($sql);
+    }
+
+    public static function createPrimaryKey(string $table, array $columns, string $keyName = '')
+    {
+        if (!$keyName)
         {
-            $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' UNIQUE (' . $keys  . ');';
+            $keyName = static::keyName($table, $columns);
         }
-        elseif($primary)
+
+        $db = Database::connect();
+
+        $keys = implode(', ', $db->escapeIdentifiers($columns));
+
+        $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) 
+            . ' ADD CONSTRAINT ' . $keyName 
+            . ' PRIMARY KEY (' . $keys . ');';
+
+        return $db->query($sql);
+    }
+
+    public static function createIndex(string $table, array $columns, string $keyName = '')
+    {
+        if (!$keyName)
         {
-            $sql = 'ALTER TABLE ' . $db->escapeIdentifiers($table) . ' ADD CONSTRAINT ' . $keyName . ' PRIMARY KEY (' . $keys . ');';
+            $keyName = static::keyName($table, $columns);
         }
-        else
-        {
-            $sql = 'CREATE INDEX ' . $keyName . ' ON ' . $db->escapeIdentifiers($table) . ' (' . $keys . ');';
-        }
+
+        $db = Database::connect();
+
+        $keys = implode(', ', $db->escapeIdentifiers($columns));
+
+        $sql = 'CREATE INDEX ' . $keyName . ' ON ' . $db->escapeIdentifiers($table) . ' (' . $keys . ');';
 
         return $db->query($sql);
     }
