@@ -9,7 +9,7 @@ namespace BasicApp\Core;
 abstract class BaseEvent
 {
 
-    public $return;
+    public $result;
 
     public $params = [];
 
