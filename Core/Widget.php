@@ -6,6 +6,9 @@
  */
 namespace BasicApp\Core;
 
-class Widget extends BaseWidget
+abstract class Widget extends BaseWidget
 {
+
+    abstract function run();
+
 }
