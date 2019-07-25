@@ -13,7 +13,7 @@ abstract class BaseWidget extends Component
 
 	abstract public function run();
 
-    public $viewNamespace = 'App';
+    public $viewPath = 'App';
 
 	public static function widget($params = [])
 	{
@@ -24,7 +24,7 @@ abstract class BaseWidget extends Component
 
     public function render($view, array $params = [], array $options = [])
     {
-        return ViewHelper::render($this->viewNamespace . '/' . $view, $params, $options);
+        return ViewHelper::render($this->viewPath . '/' . $view, $params, $options);
     }
 
 }
