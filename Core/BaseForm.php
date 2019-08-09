@@ -6,6 +6,8 @@
  */
 namespace BasicApp\Core;
 
+use BasicApp\Helpers\Url;
+
 abstract class BaseForm
 {
 
@@ -14,13 +16,23 @@ abstract class BaseForm
         helper(['form']);
     }
 
-    public function formOpen(string $action = '', $attributes = [], array $hidden = []): string
+    public function formOpen($action = null, $attributes = [], array $hidden = []): string
     {
+        if ($action === null)
+        {
+            $action = Url::currentUrl();
+        }
+
         return form_open($action, $attributes, $hidden);
     }
 
-    public function formOpenMultipart(string $action = '', $attributes = [], array $hidden = []): string
+    public function formOpenMultipart($action = null, $attributes = [], array $hidden = []): string
     {
+        if ($action === null)
+        {
+            $action = Url::currentUrl();
+        }
+
         return form_open_multipart($action, $attributes, $hidden);
     }
 

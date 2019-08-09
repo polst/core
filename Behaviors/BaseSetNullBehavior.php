@@ -9,7 +9,7 @@ namespace BasicApp\Behaviors;
 use BasicApp\Core\ModelBehavior;
 use BasicApp\Interfaces\ModelBehaviorInterface;
 
-abstract class BaseNullBehavior extends ModelBehavior implements ModelBehaviorInterface
+abstract class BaseSetNullBehavior extends ModelBehavior implements ModelBehaviorInterface
 {
 
 	public $fields = [];

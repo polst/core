@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Behaviors;
 
-class NullBehavior extends BaseNullBehavior
+class SetNullBehavior extends BaseSetNullBehavior
 {
 }

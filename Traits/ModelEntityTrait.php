@@ -41,12 +41,7 @@ trait ModelEntityTrait
             return null;
         }
 
-        if (property_exists($entity, $primaryKey))
-        {
-            return $entity->$primaryKey;
-        }
-
-        return null;
+        return $entity->$primaryKey;
     }
 
     public static function createEntity(array $params = [])

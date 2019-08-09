@@ -11,7 +11,6 @@ use ReflectionObject;
 use ReflectionProperty;
 use BasicApp\Traits\FactoryTrait;
 use BasicApp\Traits\GetDefaultPropertyTrait;
-use BasicApp\Traits\GetPublicPropertiesTrait;
 use BasicApp\Traits\EntityHasOneTrait;
 use BasicApp\Traits\EntityHasManyTrait;
 
@@ -20,7 +19,6 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
     use FactoryTrait;
     use GetDefaultPropertyTrait;
-    use GetPublicPropertiesTrait;
     use EntityHasOneTrait;
     use EntityHasManyTrait;
     
@@ -77,7 +75,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
             $model->protect(false);
         }
 
-        $return = $model->save($this->getPublicProperties());
+        $return = $model->save($this);
 
         if (!$validate)
         {
