@@ -85,7 +85,7 @@ abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehavior
         return $filename;
     }
 
-    public function beforeSave(array $params) : array
+    public function beforeInsert(array $params) : array
     {
         $path = $this->getPath();
 
@@ -131,7 +131,12 @@ abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehavior
         return $params;
     }
 
-    public function afterSave(array $params) : array
+    public function beforeUpdate(array $params) : array
+    {
+        return $this->beforeInsert($params);
+    }
+
+    public function afterInsert(array $params)
     {
         if ($params['result'])
         {
@@ -139,6 +144,11 @@ abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehavior
         }
 
         return $params;
+    }
+
+    public function afterUpdate(array $params)
+    {
+        $this->afterInsert($params);
     }
 
     public function deleteOldFile()
@@ -192,6 +202,13 @@ abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehavior
 
             unset($this->_deleted[$key]);
         }
+    }
+
+    public function beforeValidate(array $params) : array
+    {
+        $params['data'][$this->input] = service('request')->getFile($this->input); 
+    
+        return parent::beforeValidate($params);
     }
 
 }

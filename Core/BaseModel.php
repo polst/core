@@ -128,8 +128,6 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function afterUpdate(array $params)
     {
-        $this->afterSave($params);
-
         foreach(array_keys($this->behaviors()) as $behavior)
         {
             $this->as($behavior)->afterUpdate($params);
@@ -247,9 +245,10 @@ abstract class BaseModel extends \CodeIgniter\Model
      * Fix "You must use the "set" method to update an entry." error when you save model without changes.
      * ToDo: Need to remove this later...    
      */
-    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = false) : array
+    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = false) : array 
     {
+
         return parent::classToArray($data, $primaryKey, $dateFormat, $onlyChanged);
-    }    
+    }
 
 }
