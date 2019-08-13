@@ -11,6 +11,7 @@ use Closure;
 use BasicApp\Core\ModelBehavior;
 use BasicApp\Interfaces\ModelBehaviorInterface;
 use BasicApp\Helpers\ImageHelper;
+use BasicApp\Helpers\ArrayHelper;
 
 abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehaviorInterface
 {
@@ -97,26 +98,11 @@ abstract class BaseUploadBehavior extends ModelBehavior implements ModelBehavior
 
         if ($file)
         {
-            if (is_array($data))
-            {
-                $this->_old = $data[$field];
-            }
-            else
-            {
-                 $this->_old = $data->$field;
-            }
+            $this->_old = ArrayHelper::getValue($data, $field);
 
             $value = $file->getRandomName();
 
-            if (is_array($data))
-            {
-                $data[$field] = $value;
-            
-            }
-            else
-            {
-                $data->$field = $value;
-            }
+            $data = ArrayHelper::setValue($data, $field, $value);
 
             $filename = $this->moveUploadedFile($file, $path, $value);
 

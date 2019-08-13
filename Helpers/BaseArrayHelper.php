@@ -9,21 +9,37 @@ namespace BasicApp\Helpers;
 abstract class BaseArrayHelper
 {
 
-    public static function getValue($array, $value, $default = null)
+    public static function setValue($array, $key, $value)
     {
-        if (is_object($array))
+        if (is_array($array))
         {
-            if (property_exists($array, $value))
-            {
-                return $array->$value;
-            }
-
-            return $default;
+            $array[$key] = $value;
+        }
+        else
+        {
+            $array->$key = $value;
         }
 
-        if (array_key_exists($value, $array))
+        return $array;
+    }
+
+    public static function getValue($array, $value, $default = null)
+    {
+        if (is_array($array))
         {
-            return $array[$value];
+            if (array_key_exists($value, $array))
+            {
+                return $array[$value];
+            }            
+        }
+        else
+        {
+            $return = $array->$value;
+
+            if ($return !== null)
+            {
+                return $return;
+            }
         }
 
         return $default;
