@@ -43,6 +43,14 @@ abstract class BaseForm
 
     public function formInput($data = '', string $value = '', $extra = '', string $type = 'text'): string
     {
+        if (is_array($extra))
+        {
+            if (array_key_exists('type', $extra))
+            {
+                $type = $extra['type'];
+            }
+        }
+
         return form_input($data, $value, $extra, $type);
     }
 
