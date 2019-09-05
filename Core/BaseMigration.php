@@ -226,7 +226,7 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function langColumn(array $params = [])
     {
-         $app = config('app');
+         $app = config('App');
         
         return array_replace([
             static::TYPE => static::TYPE_CHAR,
