@@ -15,7 +15,7 @@ abstract class BaseLocaleHelper
     {
         $request = Services::request();
 
-        $appConfig = config('app');
+        $appConfig = config('App');
 
         if (!$locale)
         {
@@ -32,7 +32,7 @@ abstract class BaseLocaleHelper
 
     public static function getLangItems()
     {
-        $appConfig = config('app');
+        $appConfig = config('App');
 
         $return  = [];
 
