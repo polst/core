@@ -16,6 +16,14 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public $depends = [];
 
+    public $defaultTableAttributes = [
+        'MySQLi' => [
+            'ENGINE' => 'InnoDb',
+            'DEFAULT CHARACTER SET' => 'utf8',
+            'COLLATE' => 'utf8_general_ci'
+        ]
+    ];
+
     // Types
 
     const TYPE_VARCHAR = 'VARCHAR';
@@ -168,6 +176,19 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
 
     public function createTable(string $table, bool $if_not_exists = false, array $attributes = [])
     {
+        $driver = $this->forge->getConnection()->DBDriver;
+
+        if (array_key_exists($driver, $this->defaultTableAttributes))
+        {
+            foreach($this->defaultTableAttributes[$driver] as $key => $value)
+            {
+                if (!array_key_exists($key, $attributes))
+                {
+                    $attributes[$key] = $value;
+                }
+            }
+        }
+
         return $this->forge->createTable($table, $if_not_exists, $attributes);
     }
 
