@@ -14,9 +14,12 @@ use BasicApp\Traits\BehaviorsTrait;
 use BasicApp\Traits\ModelTranslationsTrait;
 use BasicApp\Traits\ModelLabelsTrait;
 use BasicApp\Traits\ModelEntityTrait;
+use denis303\codeigniter4\ModelHelperTrait;
 
 abstract class BaseModel extends \CodeIgniter\Model
 {
+
+    use ModelHelperTrait;
 
     use FactoryTrait;
 
@@ -27,8 +30,6 @@ abstract class BaseModel extends \CodeIgniter\Model
     use ModelTranslationsTrait;
 
     use ModelLabelsTrait;
-
-    use ModelEntityTrait;
 
     protected $afterFind = ['afterFind']; 
 

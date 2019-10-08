@@ -3,15 +3,16 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-			"BasicApp\\Core\\" : "Core/",
-			"BasicApp\\Interfaces\\" : "Interfaces/",
-			"BasicApp\\Actions\\" : "Actions/",
-			"BasicApp\\Behaviors\\" : "Behaviors/",
-			"BasicApp\\Traits\\" : "Traits/",
-			"BasicApp\\Helpers\\" : "Helpers/"
+            "BasicApp\\Core\\" : "Core/",
+            "BasicApp\\Interfaces\\" : "Interfaces/",
+            "BasicApp\\Actions\\" : "Actions/",
+            "BasicApp\\Behaviors\\" : "Behaviors/",
+            "BasicApp\\Traits\\" : "Traits/",
+            "BasicApp\\Helpers\\" : "Helpers/"
         }
     },
     "require": {
-        "codeigniter4/framework": "*"
+        "codeigniter4/framework": "*",
+        "denis303/codeigniter4-model-helper": "dev-master"
     }
 }
