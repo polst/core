@@ -359,6 +359,26 @@ abstract class BaseMigration extends \CodeIgniter\Database\Migration
         return $this->decimalColumn(array_replace([
             static::UNSIGNED => true
         ], $params));
-    }    
+    }
+
+    public function deleteMigration($class)
+    {
+        $builder = $this->db->table('migrations');
+
+        $builder->where(['class' => $class]);
+
+        $count = $builder->countAllResults();
+
+        if ($count > 0)
+        {
+            $builder = $this->db->table('migrations');
+
+            $builder->where(['class' => $class]);
+
+            $builder->delete();
+
+            return;
+        }
+    }
 
 }
