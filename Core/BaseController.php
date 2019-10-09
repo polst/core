@@ -154,4 +154,9 @@ abstract class BaseController extends \CodeIgniter\Controller
         return $this->redirect($returnUrl);
     }
 
+    protected function goHome()
+    {
+        return $this->redirect(base_url());
+    }
+
 }
