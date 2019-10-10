@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-class Event extends BaseEvent
+class MigrationColumn extends BaseMigrationColumn
 {
 }

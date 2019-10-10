@@ -13,6 +13,10 @@
     },
     "require": {
         "codeigniter4/framework": "*",
-        "denis303/codeigniter4-model-helper": "dev-master"
+        "denis303/codeigniter4-model-helper": "dev-master",
+        "denis303/codeigniter4-migration": "dev-master",
+        "denis303/php-file-helper": "dev-master",
+        "denis303/php-download-helper": "dev-master",
+        "denis303/php-zip-helper": "dev-master"
     }
 }

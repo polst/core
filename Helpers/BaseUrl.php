@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Basic App Core
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Helpers;
 

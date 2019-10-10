@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Helpers;
 
-class DbHelper extends BaseDbHelper
+abstract class BaseDownloadHelper extends \denis303\php\DownloadHelper
 {
-}
+}    

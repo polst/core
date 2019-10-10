@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Basic App Core
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Core;
 
@@ -61,6 +61,28 @@ abstract class BaseModel extends \CodeIgniter\Model
     {
         return $this->validation;
     }
+
+    /**
+     * When I save the model without changes i get an error: "You must use the "set" method to update an entry."
+     * To fix this I change the $onlyChanged default value from "true" to "false".
+     *
+     * ToDo: Remove this later...  
+     */
+    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = false) : array 
+    {
+        return parent::classToArray($data, $primaryKey, $dateFormat, $onlyChanged);
+    }
+
+    /**
+     * I do not know why the values ​​are not checked, if the user did not pass them to the server.
+     * Just turn it off here.
+     *
+     * ToDo: Remove this later...
+     */
+    protected function cleanValidationRules(array $rules, array $data = null): array
+    {
+        return $rules;
+    } 
 
 	public function getPrimaryKey()
 	{
@@ -189,7 +211,7 @@ abstract class BaseModel extends \CodeIgniter\Model
         }
 
         return $params;
-    }    
+    }
 
     public function validate($data) : bool
     {
@@ -205,9 +227,22 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         $data = $params['data'];
 
-        // validate
+        // Query Builder works with objects as well as arrays, but not with CodeIgniter\Entity objects...
+        //
+        // ToDo: Remove this later...
 
-        $result = parent::validate($data);
+        if (is_object($data) && method_exists($data, 'toArray'))
+        {
+            $values = $data->toArray();
+        }
+        else
+        {
+            $values = $data;
+        }
+
+        // 
+
+        $result = parent::validate($values);
 
         // call validate behavior
 
@@ -232,24 +267,12 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         if ($result && $this->insertID)
         {
-            $data = static::entitySetField($data, $this->primaryKey, $this->insertID);
+            static::setEntityField($data, $this->primaryKey, $this->insertID);
         }
 
         $params = $this->trigger('afterSave', ['data' => $data, 'result' => $result]);
 
-        $result = $params['result'];
-
-        return $result;
-    }
-
-    /**
-     * Fix "You must use the "set" method to update an entry." error when you save model without changes.
-     * ToDo: Need to remove this later...    
-     */
-    public static function classToArray($data, $primaryKey = null, string $dateFormat = 'datetime', bool $onlyChanged = false) : array 
-    {
-
-        return parent::classToArray($data, $primaryKey, $dateFormat, $onlyChanged);
+        return $params['result'];
     }
 
 }

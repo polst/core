@@ -4,8 +4,8 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace BasicApp\Core;
+namespace BasicApp\Helpers;
 
-class Event extends BaseEvent
+class CliHelper extends BaseCliHelper
 {
 }
