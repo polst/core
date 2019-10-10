@@ -17,7 +17,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
     const ROLE_LOGGED = '*';
 
-    protected static $authClass;
+    protected static $authService;
 
     protected static $roles = [];
 
@@ -53,9 +53,9 @@ abstract class BaseController extends \CodeIgniter\Controller
         return $class::factory($params);
     }    
 
-    public static function getAuthClass()
+    public static function getAuthService()
     {
-        return static::$authClass;
+        return service(static::$authService);
     }
 
     public static function getRoles()
@@ -72,9 +72,16 @@ abstract class BaseController extends \CodeIgniter\Controller
             return true; // Allowed for all
         }
 
-        $authClass = static::getAuthClass();
+        $authService = static::getAuthService();
 
-        $user = $authClass::getCurrentUser();
+        $user = $authService->getUser();
+
+
+        var_dump($user);
+
+        die;
+
+        $userModel = $authService->getModelClass();
 
         if (!$user)
         {
@@ -93,7 +100,7 @@ abstract class BaseController extends \CodeIgniter\Controller
                 return true;
             }
 
-            if ($authClass::userHasRole($user, $role))
+            if (UserModel::userHasRole($user, $role))
             {
                 return true;
             }
