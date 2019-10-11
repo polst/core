@@ -13,17 +13,19 @@ abstract class BaseUpdateAction extends \BasicApp\Core\Action
 
     public function run(array $options = [])
     {
+        $model = $this->createModel();
+
         $errors = [];
 
-        $row = $this->findEntity();
+        $data = $this->findEntity();
 
         $post = $this->request->getPost();
 
         if ($post)
         {
-            $row = $this->fillEntity($row, $post);
+            $data = $this->fillEntity($data, $post);
 
-            if ($this->saveEntity($row, $errors))
+            if ($this->saveEntity($data, $errors))
             {
                 return $this->redirectBack($this->returnUrl);
             }
@@ -31,8 +33,9 @@ abstract class BaseUpdateAction extends \BasicApp\Core\Action
 
         return $this->render($this->view, [
             'errors' => $errors,
-            'model' => $row,
-            'parentId' => $this->entityParentKey($row)
+            'data' => $data,
+            'model' => $model,
+            'parentId' => $this->entityParentKey($data)
         ]);
     }
 

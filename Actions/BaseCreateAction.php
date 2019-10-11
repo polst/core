@@ -13,28 +13,31 @@ abstract class BaseCreateAction extends \BasicApp\Core\Action
 
     public function run(array $options = [])
     {
+        $model = $this->createModel();
+
         $errors = [];
 
         $get = $this->request->getGet();
 
-        $row = $this->createEntity($get);
+        $data = $this->createEntity($get);
         
         $post = $this->request->getPost();
 
         if ($post)
         {
-            $row = $this->fillEntity($row, $post);
+            $data = $this->fillEntity($data, $post);
 
-            if ($this->saveEntity($row, $errors))
+            if ($this->saveEntity($data, $errors))
             {
                 return $this->redirectBack($this->returnUrl);
             }
         }
 
         return $this->render($this->view, [
-            'model' => $row,
+            'model' => $model,
+            'data' => $data,
             'errors' => $errors,
-            'parentId' => $this->entityParentKey($row)
+            'parentId' => $this->entityParentKey($data)
         ]);
     }
 

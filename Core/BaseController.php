@@ -76,11 +76,6 @@ abstract class BaseController extends \CodeIgniter\Controller
 
         $user = $authService->getUser();
 
-
-        var_dump($user);
-
-        die;
-
         $userModel = $authService->getModelClass();
 
         if (!$user)
@@ -100,7 +95,7 @@ abstract class BaseController extends \CodeIgniter\Controller
                 return true;
             }
 
-            if (UserModel::userHasRole($user, $role))
+            if ($userModel::userHasRole($user, $role))
             {
                 return true;
             }
