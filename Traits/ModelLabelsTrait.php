@@ -11,19 +11,64 @@ use Exception;
 trait ModelLabelsTrait
 {
 
-    public static function getLabels()
-    {
-        $return = static::getDefaultProperty('labels', []);
+    protected static $_labels;
 
-        foreach($return as $field => $label)
+    /*
+
+    public function getFieldLabel($field)
+    {
+        if (property_exists($this, 'fieldLabels'))
         {
-            $return[$field] = static::t($label);
+            if (array_key_exists($field, $this->labels))
+            {
+                return static::t($this->labels[$field]);
+            }
         }
 
-        return $return;
+        if (array_key_exists($field, $this->validationRules))
+        {
+            if (is_array($this->validationRules[$field]))
+            {
+                if (array_key_exists('label', $this->validationRules[$field]['label']))
+                {
+                    return static::t($this->validationRules['label']);
+                }
+            }
+        }
+
+        return $field;
     }
 
-    public static function label($field, $default = null)
+    */
+
+    public static function getLabels()
+    {
+        if (static::$_labels === null)
+        {
+            static::$_labels = [];
+
+            $labels = static::getDefaultProperty('labels', []);
+
+            foreach($labels as $field => $label)
+            {
+                static::$_labels[$field] = static::t($label);
+            }
+
+            $validationRules = static::getDefaultProperty('validationRules', []);
+
+            foreach($validationRules as $field => $rules)
+            {
+                if (is_array($rules) && array_key_exists('label', $rules))
+                {
+                    static::$_labels[$field] = static::t($rules['label']);
+                }
+            }
+        }
+
+        return static::$_labels;
+    }
+
+    public static function fieldLabel($field, $default = null)
     {
         $labels = static::getLabels();
 
@@ -38,6 +83,11 @@ trait ModelLabelsTrait
         }
 
         return $default;
+    }
+
+    public static function label($field, $default = null)
+    {
+        return static::fieldLabel($field, $default);
     }
 
 }
