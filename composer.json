@@ -5,7 +5,6 @@
         "psr-4": {
             "BasicApp\\Core\\" : "Core/",
             "BasicApp\\Interfaces\\" : "Interfaces/",
-            "BasicApp\\Actions\\" : "Actions/",
             "BasicApp\\Behaviors\\" : "Behaviors/",
             "BasicApp\\Traits\\" : "Traits/",
             "BasicApp\\Helpers\\" : "Helpers/"
@@ -13,6 +12,7 @@
     },
     "require": {
         "codeigniter4/framework": "*",
+        "denis303/codeigniter4-form": "dev-master",
         "denis303/codeigniter4-model-helper": "dev-master",
         "denis303/codeigniter4-migration": "dev-master",
         "denis303/php-file-helper": "dev-master",
