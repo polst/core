@@ -9,41 +9,33 @@ namespace BasicApp\Core;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
-use BasicApp\User\Models\UserModel;
 
 abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
 {
 
-	public static function getAuthModelClass()
-	{
-		return UserModel::class;
-	}
+    public $userService = 'user';
 
     public function before(RequestInterface $request)
     {
-    	$class = static::getAuthModelClass();
+        $userService = service($this->userService);
 
-    	$currentUrl = $request->uri->getPath();
+        $loginUrl = $userService->getLoginUrl();
 
-    	$loginUrl = $class::getLoginUrl();
-
-    	if ($currentUrl == $loginUrl)
-    	{
-    		return;
-    	}
-
-    	$user = $class::getCurrentUser();
-
-		if ($user)
-		{
+        $currentUrl = (string) $request->uri; //$request->uri->getPath();
+        
+        if ($currentUrl == $loginUrl)
+        {
             return;
-		}
+        }
 
-		helper(['url']);
+        $user = $userService->getUser();
 
-    	$url = site_url($loginUrl);
+        if ($user)
+        {
+            return;
+        }
 
-    	return Services::response()->redirect($url);
+        return Services::response()->redirect($loginUrl);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response)
