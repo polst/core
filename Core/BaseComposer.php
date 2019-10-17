@@ -4,7 +4,7 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace PhpTheme\Core;
+namespace BasicApp\Core;
 
 use Exception;
 use BasicApp\Helpers\CliHelper;
