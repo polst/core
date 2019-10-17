@@ -9,6 +9,7 @@ namespace BasicApp\Core;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Config\Services;
+use Exception;
 
 abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
 {
@@ -18,6 +19,11 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
     public function before(RequestInterface $request)
     {
         $userService = service($this->userService);
+
+        if (!$userService)
+        {
+            throw new Exception('Service not defined.');
+        }
 
         $loginUrl = $userService->getLoginUrl();
 
