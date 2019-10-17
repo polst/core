@@ -11,7 +11,7 @@ use Exception;
 trait ModelLabelsTrait
 {
 
-    protected static $_labels;
+    //protected static $_labels;
 
     /*
 
@@ -43,29 +43,26 @@ trait ModelLabelsTrait
 
     public static function getLabels()
     {
-        if (static::$_labels === null)
+        $labels = [];
+
+        $labels = static::getDefaultProperty('labels', []);
+
+        foreach($labels as $field => $label)
         {
-            static::$_labels = [];
-
-            $labels = static::getDefaultProperty('labels', []);
-
-            foreach($labels as $field => $label)
-            {
-                static::$_labels[$field] = static::t($label);
-            }
-
-            $validationRules = static::getDefaultProperty('validationRules', []);
-
-            foreach($validationRules as $field => $rules)
-            {
-                if (is_array($rules) && array_key_exists('label', $rules))
-                {
-                    static::$_labels[$field] = static::t($rules['label']);
-                }
-            }
+            $labels[$field] = static::t($label);
         }
 
-        return static::$_labels;
+        $validationRules = static::getDefaultProperty('validationRules', []);
+
+        foreach($validationRules as $field => $rules)
+        {
+            if (is_array($rules) && array_key_exists('label', $rules))
+            {
+                $labels[$field] = static::t($rules['label']);
+            }
+        }
+    
+        return $labels;
     }
 
     public static function fieldLabel($field, $default = null)
