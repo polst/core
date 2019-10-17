@@ -11,6 +11,7 @@
         }
     },
     "require": {
+        "composer-plugin-api": "^1.0",
         "codeigniter4/framework": "*",
         "denis303/codeigniter4-form": "dev-master",
         "denis303/codeigniter4-model-helper": "dev-master",

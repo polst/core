@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class BaseEvent
+abstract class Composer extends BaseComposer
 {
 }

@@ -46,4 +46,11 @@ abstract class BaseCliHelper
         return FileHelper::copy($source, $target);
     }
 
+    public static function setPermission($file, $permission)
+    {
+        static::message('set permission: "' . $permission . '" to "' . $file . '"');
+
+        return FileHelper::setPermission($file, $permission);
+    }    
+
 }
