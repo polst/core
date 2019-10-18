@@ -16,6 +16,10 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
 
     public $userService = 'user';
 
+    public function __construct()
+    {
+    }
+
     public function before(RequestInterface $request)
     {
         $userService = service($this->userService);
