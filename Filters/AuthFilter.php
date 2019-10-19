@@ -4,8 +4,8 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace BasicApp\Core;
+namespace BasicApp\Filters;
 
-class CoreEvents extends BaseCoreEvents
+class AuthFilter extends BaseAuthFilter
 {
 }

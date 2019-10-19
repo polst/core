@@ -4,7 +4,7 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace BasicApp\Core;
+namespace BasicApp\Exceptions;
 
 abstract class BaseForbiddenException extends \CodeIgniter\Exceptions\PageNotFoundException
 {

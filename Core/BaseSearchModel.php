@@ -9,8 +9,8 @@ namespace BasicApp\Core;
 use BasicApp\Interfaces\SearchModelInterface;
 use BasicApp\Traits\FactoryTrait;
 use BasicApp\Traits\ModelEntityTrait;
-use BasicApp\Traits\ModelLabelsTrait;
-use BasicApp\Traits\GetDefaultPropertyTrait;
+use BasicApp\Traits\FieldLabelsTrait;
+use BasicApp\Traits\DefaultPropertyTrait;
 
 abstract class BaseSearchModel extends \CodeIgniter\Model implements SearchModelInterface
 {
@@ -19,8 +19,8 @@ abstract class BaseSearchModel extends \CodeIgniter\Model implements SearchModel
 
     use ModelEntityTrait;
 
-    use ModelLabelsTrait;    
+    use FieldLabelsTrait;    
 
-    use GetDefaultPropertyTrait;
+    use DefaultPropertyTrait;
 
 }

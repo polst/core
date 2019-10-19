@@ -10,17 +10,17 @@ use Exception;
 use ReflectionObject;
 use ReflectionProperty;
 use BasicApp\Traits\FactoryTrait;
-use BasicApp\Traits\GetDefaultPropertyTrait;
-use BasicApp\Traits\EntityHasOneTrait;
-use BasicApp\Traits\EntityHasManyTrait;
+use BasicApp\Traits\DefaultPropertyTrait;
+use BasicApp\Traits\HasOneTrait;
+use BasicApp\Traits\HasManyTrait;
 
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
     use FactoryTrait;
-    use GetDefaultPropertyTrait;
-    use EntityHasOneTrait;
-    use EntityHasManyTrait;
+    use DefaultPropertyTrait;
+    use HasOneTrait;
+    use HasManyTrait;
     
     protected $modelClass;
 
@@ -30,7 +30,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
         if (!$this->modelClass)
         {
-            throw new Exception('Property "modelClass" not defined.');
+            throw new Exception('Property "modelClass" is required.');
         }
     }
 
@@ -41,18 +41,11 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         return $modelClass::entityPrimaryKey($this);
     }
 
-    public function label($field, $default = null)
+    public function getFieldlabel($field, $default = null)
     {
         $modelClass = $this->modelClass;
 
-        return $modelClass::label($field, $default);
-    }
-
-    public function getLabels()
-    {
-        $modelClass = $this->modelClass;
-
-        return $model::getLabels();
+        return $modelClass::fieldLabel($field, $default);
     }
 
     public function delete()

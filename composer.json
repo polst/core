@@ -7,7 +7,9 @@
             "BasicApp\\Interfaces\\" : "Interfaces/",
             "BasicApp\\Behaviors\\" : "Behaviors/",
             "BasicApp\\Traits\\" : "Traits/",
-            "BasicApp\\Helpers\\" : "Helpers/"
+            "BasicApp\\Helpers\\" : "Helpers/",
+            "BasicApp\\Exceptions\\" : "Exceptions/",
+            "BasicApp\\Filters\\" : "Filters/"
         }
     },
     "require": {

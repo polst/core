@@ -1,17 +1,17 @@
 <?php
 /**
- * @copyright Copyright (c) 2018-2019 Basic App Dev Team
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Traits;
 
 use Closure;
 
-trait EntityHasOneTrait
+trait HasManyTrait
 {
 
-    public function hasOne(string $modelClass, array $where, Closure $callback = null)
+    public function hasMany(string $modelClass, array $where, Closure $callback = null)
     {
         $query = new $modelClass;
 
@@ -22,9 +22,7 @@ trait EntityHasOneTrait
             $callback($query);
         }
 
-        $return = $query->first();
-
-        return $return;
+        return $query->findAll();
     }
 
 }

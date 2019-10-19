@@ -1,19 +1,19 @@
 <?php
 /**
- * @copyright Copyright (c) 2018-2019 Basic App Dev Team
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Traits;
 
 use ReflectionClass;
 
-trait ClassDirTrait
+trait GetClassDirTrait
 {
 
-    public function getClassDir() : string
+    public static function classDir() : string
     {
-        $className = get_class($this);
+        $className = get_called_class();
 
         $reflection = new ReflectionClass($className); 
 

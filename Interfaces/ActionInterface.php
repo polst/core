@@ -1,11 +1,16 @@
 <?php
 /**
- * @copyright Copyright (c) 2018-2019 Basic App Dev Team
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Interfaces;
 
-interface ActionInterface extends BaseActionInterface
+interface ActionInterface
 {
+
+    function run(array $params = []);
+
+    function render(string $view, array $params = []) : string;
+
 }

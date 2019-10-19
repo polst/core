@@ -1,17 +1,17 @@
 <?php
 /**
- * @copyright Copyright (c) 2018-2019 Basic App Dev Team
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Traits;
 
 use ReflectionClass;
 
-trait GetDefaultPropertyTrait
+trait DefaultPropertyTrait
 {
 
-	public static function getDefaultProperty($name, $default = null)
+	public static function defaultProperty($name, $default = null)
 	{
         static $_properties = [];
 

@@ -4,8 +4,8 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace BasicApp\Core;
+namespace BasicApp\Exceptions;
 
-abstract class Service extends BaseService
+class ForbiddenException extends ForbiddenException
 {
 }

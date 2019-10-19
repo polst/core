@@ -1,11 +1,17 @@
 <?php
 /**
- * @copyright Copyright (c) 2018-2019 Basic App Dev Team
+ * @author Basic App Dev Team
+ * @license MIT
  * @link http://basic-app.com
- * @license MIT License
  */
 namespace BasicApp\Interfaces;
 
-interface SearchModelInterface extends BaseSearchModelInterface
+use CodeIgniter\Model;
+use CodeIgniter\Entity;
+
+interface SearchModelInterface
 {
+
+    public static function applyToQuery(Entity $search, Model $query);
+
 }

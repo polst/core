@@ -9,10 +9,10 @@ namespace BasicApp\Core;
 use Exception;
 
 use BasicApp\Traits\FactoryTrait;
-use BasicApp\Traits\GetDefaultPropertyTrait;
+use BasicApp\Traits\DefaultPropertyTrait;
 use BasicApp\Traits\BehaviorsTrait;
-use BasicApp\Traits\ModelTranslationsTrait;
-use BasicApp\Traits\ModelLabelsTrait;
+use BasicApp\Traits\LangTrait;
+use BasicApp\Traits\FieldLabelsTrait;
 use BasicApp\Traits\ModelEntityTrait;
 use denis303\codeigniter4\ModelHelperTrait;
 
@@ -23,13 +23,13 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use FactoryTrait;
 
-    use GetDefaultPropertyTrait;
+    use DefaultPropertyTrait;
 
     use BehaviorsTrait;
 
-    use ModelTranslationsTrait;
+    use LangTrait;
 
-    use ModelLabelsTrait;
+    use FieldLabelsTrait;
 
     protected $afterFind = ['afterFind']; 
 
@@ -100,7 +100,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
 		if ($errors)
 		{
-			$labels = $this->getLabels();
+			$labels = $this->getFieldLabels();
 
 			foreach($errors as $key => $value)
 			{
