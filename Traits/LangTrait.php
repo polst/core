@@ -17,7 +17,7 @@ trait LangTrait
 
         if ($resetCache || !array_key_exists($class, $translations))
         {
-            $translations[$class] = $class::getDefaultProperty('langCategory', null);
+            $translations[$class] = $class::defaultProperty('langCategory', null);
         }
 
         if (!$translations[$class])

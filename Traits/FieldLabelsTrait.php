@@ -11,9 +11,29 @@ use Exception;
 trait FieldLabelsTrait
 {
 
+    public static function fieldLabels()
+    {
+        $return = [];
+
+        foreach(static::defaultProperty('validationRules', []) as $field => $rules)
+        {
+            if (is_array($rules) && array_key_exists('label', $rules))
+            {
+                $return[$field] = static::lang($rules['label']);
+            }
+        }
+
+        foreach(static::defaultProperty('fieldLabels', []) as $field => $label)
+        {
+            $return[$field] = static::lang($label);
+        }
+
+        return $return;
+    }    
+
     public static function fieldLabel($field)
     {
-        $validationRules = static::getDefaultProperty('validationRules', []);
+        $validationRules = static::defaultProperty('validationRules', []);
 
         if (array_key_exists($field, $validationRules))
         {
@@ -23,7 +43,7 @@ trait FieldLabelsTrait
             }
         }
 
-        $labels = static::getDefaultProperty('fieldLabels', []);
+        $labels = static::defaultProperty('fieldLabels', []);
 
         if (array_key_exists($field, $labels))
         {
@@ -56,6 +76,26 @@ trait FieldLabelsTrait
         }
 
         return $field;
+    }
+
+    public function getFieldLabels()
+    {
+        $return = [];
+
+        foreach($this->validationsRules as $field => $rules)
+        {
+            if (is_array($rules) && array_key_exists('label', $rules))
+            {
+                $return[$field] = static::lang($rules['label']);
+            }
+        }
+
+        foreach($this->fieldLabels as $field => $label)
+        {
+            $return[$field] = static::lang($label);
+        }
+
+        return $return;
     }
 
 }
