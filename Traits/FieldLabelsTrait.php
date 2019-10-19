@@ -37,7 +37,7 @@ trait FieldLabelsTrait
 
         if (array_key_exists($field, $validationRules))
         {
-            if (is_array($validationsRules[$field]) && array_key_exists('label', $validationRules[$field]))
+            if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
             {
                 return static::lang($validationRules[$field]['label']);
             }
@@ -59,7 +59,7 @@ trait FieldLabelsTrait
 
         if (array_key_exists($field, $validationRules))
         {
-            if (is_array($validationsRules[$field]) && array_key_exists('label', $validationRules[$field]))
+            if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
             {
                 return static::lang($validationRules[$field]['label']);
             }
