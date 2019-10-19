@@ -61,7 +61,7 @@ abstract class BaseUniqueBehavior extends ModelBehavior implements ModelBehavior
 
                 $owner = $this->owner;
 
-                $error = strtr($error, ['{field}' => $owner::label($field)]);
+                $error = strtr($error, ['{field}' => $owner::fieldLabel($field)]);
 
                 $this->owner->getValidation()->setError($field, $error);
             }
