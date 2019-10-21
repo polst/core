@@ -82,7 +82,7 @@ trait FieldLabelsTrait
     {
         $return = [];
 
-        foreach($this->validationsRules as $field => $rules)
+        foreach($this->validationRules as $field => $rules)
         {
             if (is_array($rules) && array_key_exists('label', $rules))
             {
