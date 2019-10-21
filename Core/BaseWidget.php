@@ -7,9 +7,12 @@
 namespace BasicApp\Core;
 
 use BasicApp\Helpers\ViewHelper;
+use BasicApp\Traits\FactoryTrait;
 
-abstract class BaseWidget extends Component
+abstract class BaseWidget
 {
+
+    use FactoryTrait;
 
 	abstract public function run();
 
