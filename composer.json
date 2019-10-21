@@ -15,11 +15,12 @@
     "require": {
         "composer-plugin-api": "^1.0",
         "codeigniter4/framework": "*",
-        "denis303/codeigniter4-form": "dev-master",
-        "denis303/codeigniter4-model-helper": "dev-master",
-        "denis303/codeigniter4-migration": "dev-master",
-        "denis303/php-file-helper": "dev-master",
-        "denis303/php-download-helper": "dev-master",
-        "denis303/php-zip-helper": "dev-master"
+        "denis303/codeigniter4-form": "*",
+        "denis303/codeigniter4-model-helper": "*",
+        "denis303/codeigniter4-migration": "*",
+        "denis303/php-file-helper": "*",
+        "denis303/php-download-helper": "*",
+        "denis303/php-zip-helper": "*",
+        "denis303/php-traits": "*"
     }
 }

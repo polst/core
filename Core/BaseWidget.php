@@ -7,7 +7,7 @@
 namespace BasicApp\Core;
 
 use BasicApp\Helpers\ViewHelper;
-use BasicApp\Traits\FactoryTrait;
+use denis303\traits\FactoryTrait;
 
 abstract class BaseWidget
 {

@@ -8,12 +8,11 @@ namespace BasicApp\Core;
 
 use Exception;
 
-use BasicApp\Traits\FactoryTrait;
-use BasicApp\Traits\DefaultPropertyTrait;
+use denis303\traits\FactoryTrait;
+use denis303\traits\DefaultPropertyTrait;
 use BasicApp\Traits\BehaviorsTrait;
 use BasicApp\Traits\LangTrait;
 use BasicApp\Traits\FieldLabelsTrait;
-use BasicApp\Traits\ModelEntityTrait;
 use denis303\codeigniter4\ModelHelperTrait;
 
 abstract class BaseModel extends \CodeIgniter\Model

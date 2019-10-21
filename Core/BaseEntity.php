@@ -9,8 +9,8 @@ namespace BasicApp\Core;
 use Exception;
 use ReflectionObject;
 use ReflectionProperty;
-use BasicApp\Traits\FactoryTrait;
-use BasicApp\Traits\DefaultPropertyTrait;
+use denis303\traits\FactoryTrait;
+use denis303\traits\DefaultPropertyTrait;
 use BasicApp\Traits\HasOneTrait;
 use BasicApp\Traits\HasManyTrait;
 

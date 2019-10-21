@@ -7,20 +7,14 @@
 namespace BasicApp\Core;
 
 use BasicApp\Interfaces\SearchModelInterface;
-use BasicApp\Traits\FactoryTrait;
-use BasicApp\Traits\ModelEntityTrait;
+use denis303\traits\FactoryTrait;
 use BasicApp\Traits\FieldLabelsTrait;
-use BasicApp\Traits\DefaultPropertyTrait;
 
 abstract class BaseSearchModel extends \CodeIgniter\Model implements SearchModelInterface
 {
 
     use FactoryTrait;
 
-    use ModelEntityTrait;
-
-    use FieldLabelsTrait;    
-
-    use DefaultPropertyTrait;
+    use FieldLabelsTrait;
 
 }

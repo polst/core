@@ -6,7 +6,7 @@
  */
 namespace BasicApp\Core;
 
-use BasicApp\Traits\FactoryTrait;
+use denis303\traits\FactoryTrait;
 use BasicApp\Interfaces\BehaviorInterface;
 
 abstract class BaseBehavior implements BehaviorInterface
