@@ -20,35 +20,35 @@ abstract class BaseCliHelper
 
     public static function downloadToFile($url, $filename)
     {
-        static::message('start download: "' . $url . '"');
+        static::message('download: ' . $url);
 
         return DownloadHelper::toFile($url, $filename);
     }
 
     public static function zipExtractTo($filename, $target)
     {
-        static::message('extract zip to: "' . $target . '"');
+        static::message('unzip: ' . $target);
 
         return ZipHelper::extractTo($filename, $target);
     }
 
     public static function delete($filename)
     {
-        static::message('delete: "' . $filename . '"');
+        static::message('delete: ' . $filename);
 
         return FileHelper::delete($filename);
     }
 
     public static function copy($source, $target)
     {
-        static::message('copy: "' . $source . '" to "' . $target . '"');
+        static::message('create: ' . $target);
 
         return FileHelper::copy($source, $target);
     }
 
     public static function setPermission($file, $permission)
     {
-        static::message('set permission: "' . $permission . '" to "' . $file . '"');
+        static::message('permission ' . $permission . ': ' . $file);
 
         return FileHelper::setPermission($file, $permission);
     }    
