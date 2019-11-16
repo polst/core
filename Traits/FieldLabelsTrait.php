@@ -90,9 +90,12 @@ trait FieldLabelsTrait
             }
         }
 
-        foreach($this->fieldLabels as $field => $label)
+        if (property_exists($this, 'fieldLabels'))
         {
-            $return[$field] = static::lang($label);
+            foreach($this->fieldLabels as $field => $label)
+            {
+                $return[$field] = static::lang($label);
+            }
         }
 
         return $return;
