@@ -9,7 +9,8 @@
             "BasicApp\\Traits\\" : "Traits/",
             "BasicApp\\Helpers\\" : "Helpers/",
             "BasicApp\\Exceptions\\" : "Exceptions/",
-            "BasicApp\\Filters\\" : "Filters/"
+            "BasicApp\\Filters\\" : "Filters/",
+            "BasicApp\\Validators\\" : "Validators/"
         }
     },
     "require": {
