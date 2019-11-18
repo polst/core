@@ -5,25 +5,26 @@ namespace BasicApp\Validators;
 class HtmlTagsValidator
 {
 
-    /*
-    public function even(string $str, string &$error = null): bool
-    {
-        if ((int)$str % 2 != 0)
-        {
-            $error = lang('myerrors.evenError');
-            return false;
-        }
-
-        return true;
-    }
-    */
-
-    public function html_tags($str, string $tags, array $data): bool
+    public function html_tags($str, & $tags = null, $data = null, string & $error = null) : bool
     {
         $new_string = strip_tags($str, $tags);
 
         if ($str != $new_string)
         {
+            if (!$tags)
+            {
+                $error = t('errors', 'HTML tags not allowed.');
+            }
+            else
+            {
+                $error = t('errors', 'HTML tags allowed: {tags}', ['{tags}' => esc($tags)]);
+            }
+
+            if ($data === null)
+            {
+                $tags = $error;
+            }
+
             return false;
         }
 
