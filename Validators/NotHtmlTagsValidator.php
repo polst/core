@@ -2,17 +2,17 @@
 
 namespace BasicApp\Validators;
 
-class HtmlTagsValidator
+class NotHtmlTagsValidator
 {
 
-    public function html_tags($str, $tags, $data, & $error = null) : bool
+    public function not_html_tags($str, string & $error = null) : bool
     {
         $new_string = strip_tags($str, $tags);
 
         if ($str != $new_string)
         {
-            $error = t('errors', 'HTML tags allowed: {tags}', ['{tags}' => esc($tags)]);
-
+            $error = t('errors', 'HTML tags is not allowed.');
+         
             return false;
         }
 
