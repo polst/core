@@ -14,6 +14,7 @@
         }
     },
     "require": {
+        "basic-app/crud": "*",
         "composer-plugin-api": "^1.0",
         "codeigniter4/framework": "*",
         "denis303/codeigniter4-form": "*",

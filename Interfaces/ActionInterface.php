@@ -6,11 +6,6 @@
  */
 namespace BasicApp\Interfaces;
 
-interface ActionInterface
+interface ActionInterface extends \BasicApp\Crud\ActionInterface
 {
-
-    function run(array $params = []);
-
-    function render(string $view, array $params = []) : string;
-
 }
