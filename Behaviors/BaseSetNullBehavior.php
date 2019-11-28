@@ -22,7 +22,7 @@ abstract class BaseSetNullBehavior extends ModelBehavior implements ModelBehavio
         {
         	if (is_array($data))
         	{
-        		if (!$data[$field])
+        		if (empty($data[$field]))
         		{
         			$data[$field] = null;
         		}
