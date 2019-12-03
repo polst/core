@@ -33,9 +33,9 @@ trait FieldLabelsTrait
 
     public static function fieldLabel($field)
     {
-        $validationRules = static::defaultProperty('validationRules', []);
+        $validationRules = static::defaultProperty('validationRules');
 
-        if (array_key_exists($field, $validationRules))
+        if ($validationRules && array_key_exists($field, $validationRules))
         {
             if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
             {
@@ -43,9 +43,9 @@ trait FieldLabelsTrait
             }
         }
 
-        $labels = static::defaultProperty('fieldLabels', []);
+        $labels = static::defaultProperty('fieldLabels');
 
-        if (array_key_exists($field, $labels))
+        if ($labels && array_key_exists($field, $labels))
         {
             return static::lang($labels[$field]);
         }
@@ -57,7 +57,7 @@ trait FieldLabelsTrait
     {
         $validationRules = $this->validationsRules;
 
-        if (array_key_exists($field, $validationRules))
+        if ($validationRules && array_key_exists($field, $validationRules))
         {
             if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
             {
@@ -69,7 +69,7 @@ trait FieldLabelsTrait
         {
             $fieldLabels = $this->fieldLabals;
 
-            if (array_key_exists($field, $fieldLabels))
+            if ($fieldLabels && array_key_exists($field, $fieldLabels))
             {
                 return static::lang($fieldLabels[$field]);
             }
