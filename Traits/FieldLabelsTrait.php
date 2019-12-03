@@ -67,10 +67,12 @@ trait FieldLabelsTrait
 
         if (property_exists($this, 'fieldLabels'))
         {
-            $fieldLabels = $this->fieldLabals;
+            $fieldLabels = $this->fieldLabels;
 
             if ($fieldLabels && array_key_exists($field, $fieldLabels))
             {
+                return $fieldLabels[$field];
+
                 return static::lang($fieldLabels[$field]);
             }
         }
