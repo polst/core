@@ -71,8 +71,6 @@ trait FieldLabelsTrait
 
             if ($fieldLabels && array_key_exists($field, $fieldLabels))
             {
-                return $fieldLabels[$field];
-
                 return static::lang($fieldLabels[$field]);
             }
         }
