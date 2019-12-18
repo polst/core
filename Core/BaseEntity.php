@@ -13,10 +13,14 @@ use denis303\traits\FactoryTrait;
 use denis303\traits\DefaultPropertyTrait;
 use BasicApp\Traits\HasOneTrait;
 use BasicApp\Traits\HasManyTrait;
+use BasicApp\Traits\BehaviorsTrait;
+use BasicApp\Events\EntityBeforeFillEvent;
+use BasicApp\Events\EntityAfterFillEvent;
 
 abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
+    use BehaviorsTrait;
     use FactoryTrait;
     use DefaultPropertyTrait;
     use HasOneTrait;
@@ -77,5 +81,30 @@ abstract class BaseEntity extends \CodeIgniter\Entity
     
         return $return;
     }
+
+    public function fill(array $data = null)
+    {
+        $event = new EntityBeforeFillEvent;
+
+        $event->data = $data;
+
+        foreach($this->getCurrentBehaviors() as $behavior)
+        {
+            $this->as($behavior)->onAfterFill($event);
+        }
+
+        $data = $event->data;
+
+        $return = parent::fill($data);
+
+        $event = new EntityAfterFillEvent;
+
+        foreach($this->getCurrentBehaviors() as $behavior)
+        {
+            $this->as($behavior)->onAfterFill($event);
+        }
+
+        return $return;
+    }    
 
 }

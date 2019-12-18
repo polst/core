@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Behaviors;
 
-class SetNullBehavior extends BaseSetNullBehavior
+class EntityOrderByBehavior extends BaseEntityOrderByBehavior
 {
 }

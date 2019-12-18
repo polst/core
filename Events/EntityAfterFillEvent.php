@@ -4,8 +4,8 @@
  * @license MIT
  * @link http://basic-app.com
  */
-namespace BasicApp\Behaviors;
+namespace BasicApp\Events;
 
-class SetNullBehavior extends BaseSetNullBehavior
+class EntityAfterFillEvent extends \BasicApp\Core\Event
 {
 }

@@ -53,4 +53,16 @@ trait BehaviorsTrait
 		return $this->_behaviors[$name];
 	}
 
+    public function getCurrentBehaviors()
+    {
+        $return = [];
+
+        foreach(array_keys($this->behaviors()) as $behavior)
+        {
+            $return[$behavior] = $this->as($behavior);
+        }
+
+        return $return;
+    }
+
 }

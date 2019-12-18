@@ -10,7 +10,8 @@
             "BasicApp\\Helpers\\" : "Helpers/",
             "BasicApp\\Exceptions\\" : "Exceptions/",
             "BasicApp\\Filters\\" : "Filters/",
-            "BasicApp\\Validators\\" : "Validators/"
+            "BasicApp\\Validators\\" : "Validators/",
+            "BasicApp\\Events\\" : "Events/"
         }
     },
     "require": {
