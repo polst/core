@@ -66,7 +66,7 @@ abstract class BaseEntityOrderByBehavior extends \BasicApp\Core\EntityBehavior
 
     public function getOrderBy()
     {
-        if ($this->orderByField)
+        if ($this->attribute)
         {
             $orderBy = $this->owner->{$this->attribute};
 
@@ -79,9 +79,9 @@ abstract class BaseEntityOrderByBehavior extends \BasicApp\Core\EntityBehavior
                         return $orderBy;
                     }
                 }
-
-                return $this->getDefaultOrderBy();
             }
+
+            return $this->getDefaultOrderBy();
         }
 
         return null;

@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class SearchModel extends BaseSearchModel
+abstract class EntityBehavior extends BaseEntityBehavior
 {
 }

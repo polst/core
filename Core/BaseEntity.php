@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Basic App Dev Team
+ * @author Basic App Dev Team <dev@basic-app.com>
  * @license MIT
  * @link http://basic-app.com
  */
@@ -90,7 +90,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
         foreach($this->getCurrentBehaviors() as $behavior)
         {
-            $this->as($behavior)->onAfterFill($event);
+            $behavior->onBeforeFill($event);
         }
 
         $data = $event->data;
@@ -101,7 +101,7 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
         foreach($this->getCurrentBehaviors() as $behavior)
         {
-            $this->as($behavior)->onAfterFill($event);
+            $behavior->onAfterFill($event);
         }
 
         return $return;
