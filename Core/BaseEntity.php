@@ -7,12 +7,8 @@
 namespace BasicApp\Core;
 
 use Exception;
-use ReflectionObject;
-use ReflectionProperty;
-use denis303\traits\FactoryTrait;
-use denis303\traits\DefaultPropertyTrait;
-use BasicApp\Traits\HasOneTrait;
-use BasicApp\Traits\HasManyTrait;
+use BasicApp\Traits\EntityHasOneTrait;
+use BasicApp\Traits\EntityHasManyTrait;
 use BasicApp\Traits\BehaviorsTrait;
 use BasicApp\Events\EntityBeforeFillEvent;
 use BasicApp\Events\EntityAfterFillEvent;
@@ -21,12 +17,14 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 {
 
     use BehaviorsTrait;
-    use FactoryTrait;
-    use DefaultPropertyTrait;
-    use HasOneTrait;
-    use HasManyTrait;
+
+    use EntityHasOneTrait;
+    
+    use EntityHasManyTrait;
     
     protected $modelClass;
+
+    protected $_model;
 
     public function __construct()
     {
@@ -38,48 +36,30 @@ abstract class BaseEntity extends \CodeIgniter\Entity
         }
     }
 
+    public function getModel()
+    {
+        if (!$this->_model)
+        {
+            $modelClass = $this->modelClass;
+        
+            $this->_model = new $modelClass;
+        }
+
+        return $this->_model;
+    }
+
     public function getPrimaryKey()
     {
         $modelClass = $this->modelClass;
+
+        // ToDo: remove static call 
 
         return $modelClass::entityPrimaryKey($this);
     }
 
     public function getFieldlabel($field, $default = null)
     {
-        $modelClass = $this->modelClass;
-
-        return $modelClass::fieldLabel($field, $default);
-    }
-
-    public function delete()
-    {
-        $modelClass = $this->modelClass;
-
-        $model = new $modelClass;
-
-        return $model->delete($this->getPrimaryKey());
-    }
-
-    public function save(bool $validate = true)
-    {
-        $modelClass = $this->modelClass;
-
-        $model = new $modelClass;
-
-        if (!$validate)
-        {
-            $model->protect(false);
-        }
-
-        $return = $model->save($this);
-
-        if (!$validate)
-        {
-            $model->protect(true);
-        }
-    
-        return $return;
+        return $this->getModel()->getFieldLabel($field, $default);
     }
 
     public function fill(array $data = null)

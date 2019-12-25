@@ -8,10 +8,10 @@ namespace BasicApp\Traits;
 
 use Closure;
 
-trait HasOneTrait
+trait EntityHasManyTrait
 {
 
-    public function hasOne(string $modelClass, array $where, Closure $callback = null)
+    public function hasMany(string $modelClass, array $where, Closure $callback = null)
     {
         $query = new $modelClass;
 
@@ -22,9 +22,7 @@ trait HasOneTrait
             $callback($query);
         }
 
-        $return = $query->first();
-
-        return $return;
+        return $query->findAll();
     }
 
 }
