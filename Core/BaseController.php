@@ -109,18 +109,30 @@ abstract class BaseController extends \CodeIgniter\Controller
         return false;
     }
 
+    protected function getViewPath()
+    {
+        return $this->viewPath;
+    }
+
+    protected function getLayoutPath()
+    {
+        return $this->layoutPath;
+    }
+
 	protected function render(string $view, array $params = [])
 	{
-        $viewPath = $this->viewPath;
+        $viewPath = $this->getViewPath();
 
         if ($viewPath)
         {
             $viewPath .= '/';
         }
 
+        $params['viewPath'] = $viewPath;
+
 		$content = app_view($viewPath . $view, $params, ['saveData' => true]);
 
-        $layoutPath = $this->layoutPath;
+        $layoutPath = $this->getLayoutPath();
 
         if ($layoutPath)
         {
@@ -129,7 +141,10 @@ abstract class BaseController extends \CodeIgniter\Controller
 
 		if ($this->layout)
 		{
-			return app_view($layoutPath . $this->layout, ['content' => $content]);
+			return app_view($layoutPath . $this->layout, [
+                'content' => $content,
+                'layoutPath' => $layoutPath
+            ]);
 		}
 
 		return $content;
