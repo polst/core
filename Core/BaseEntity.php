@@ -26,20 +26,15 @@ abstract class BaseEntity extends \CodeIgniter\Entity
 
     protected $_model;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        if (!$this->modelClass)
-        {
-            throw new Exception('Property "modelClass" is required.');
-        }
-    }
-
     public function getModel()
     {
         if (!$this->_model)
         {
+            if (!$this->modelClass)
+            {
+                throw new Exception('Property "modelClass" is required.');
+            }
+
             $modelClass = $this->modelClass;
         
             $this->_model = new $modelClass;
