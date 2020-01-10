@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Exceptions;
 
-class ForbiddenException extends ForbiddenException
+class ForbiddenException extends BaseForbiddenException
 {
 }
