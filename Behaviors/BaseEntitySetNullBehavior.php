@@ -12,15 +12,23 @@ use BasicApp\Events\EntityBeforeFillEvent;
 abstract class BaseEntitySetNullBehavior extends \BasicApp\Core\EntityBehavior
 {
 
-    public $attribute;
+    public $attributes = [];
 
     public function onBeforeFill(EntityBeforeFillEvent $event)
     {
-        if ($event->data && $this->attribute && array_key_exists($this->attribute, $event->data))
+        if (!$event->data)
         {
-            if (!$event->data[$this->attribute])
+            return;
+        }
+
+        foreach($this->attributes as $attribute)
+        {
+            if (array_key_exists($attribute, $event->data))
             {
-                $event->data[$this->attribute] = null;
+                if (!$event->data[$attribute])
+                {
+                    $event->data[$attribute] = null;
+                }
             }
         }
     }
