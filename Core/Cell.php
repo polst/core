@@ -6,9 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class Widget extends BaseWidget
+abstract class Cell extends BaseCell
 {
-
-    abstract function run();
-
 }
