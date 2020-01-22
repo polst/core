@@ -33,7 +33,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
     public function __construct()
     {
-        static::checkAccess(true);
+        //static::checkAccess(true);
     }
 
     public function createBehavior(string $class, array $params = [])
