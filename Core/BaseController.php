@@ -15,26 +15,26 @@ abstract class BaseController extends \CodeIgniter\Controller
 
     use BehaviorsTrait;
 
-    const ROLE_LOGGED = '*';
+    //const ROLE_LOGGED = '*';
 
-    protected static $authService;
+    //protected static $authService;
 
-    protected static $roles = [];
+    //protected static $roles = [];
 
-	protected $layout;
+    protected $layout;
 
-	protected $viewPath = '';
+    protected $viewPath = '';
 
-	protected $layoutPath = '';
+    protected $layoutPath = '';
 
     protected $returnUrl;
 
     protected $returnUrlIndex = 'returnUrl';
 
-	public function __construct()
-	{
+    public function __construct()
+    {
         static::checkAccess(true);
-	}
+    }
 
     public function createBehavior(string $class, array $params = [])
     {
@@ -51,7 +51,9 @@ abstract class BaseController extends \CodeIgniter\Controller
         };
 
         return $class::factory($params);
-    }    
+    }
+
+    /*   
 
     public static function getAuthService()
     {
@@ -63,6 +65,9 @@ abstract class BaseController extends \CodeIgniter\Controller
         return static::$roles;
     }
 
+    */
+
+    /*
     public static function checkAccess(bool $throwExceptions = false)
     {
         $roles = static::getRoles();
@@ -106,6 +111,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
         return false;
     }
+    */
 
     protected function getViewPath()
     {
@@ -117,8 +123,8 @@ abstract class BaseController extends \CodeIgniter\Controller
         return $this->layoutPath;
     }
 
-	protected function render(string $view, array $params = [])
-	{
+    protected function render(string $view, array $params = [])
+    {
         $viewPath = $this->getViewPath();
 
         if ($viewPath)
@@ -128,7 +134,7 @@ abstract class BaseController extends \CodeIgniter\Controller
 
         $params['viewPath'] = $viewPath;
 
-		$content = app_view($viewPath . $view, $params, ['saveData' => true]);
+        $content = app_view($viewPath . $view, $params, ['saveData' => true]);
 
         $layoutPath = $this->getLayoutPath();
 
@@ -137,16 +143,16 @@ abstract class BaseController extends \CodeIgniter\Controller
             $layoutPath .= '/';
         }
 
-		if ($this->layout)
-		{
-			return app_view($layoutPath . $this->layout, [
+        if ($this->layout)
+        {
+            return app_view($layoutPath . $this->layout, [
                 'content' => $content,
                 'layoutPath' => $layoutPath
             ]);
-		}
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 
     protected function redirect(string $url)
     {
