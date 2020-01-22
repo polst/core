@@ -18,6 +18,7 @@
         "basic-app/crud": "*",
         "composer-plugin-api": "^1.0",
         "codeigniter4/framework": "*",
+        "denis303/codeigniter4-nested-views": "*",
         "denis303/codeigniter4-form": "*",
         "denis303/codeigniter4-model-helper": "*",
         "denis303/codeigniter4-migration": "*",
