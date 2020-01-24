@@ -6,6 +6,6 @@
  */
 namespace BasicApp\Core;
 
-abstract class Entity extends BaseEntity
+class Entity extends BaseEntity
 {
 }
