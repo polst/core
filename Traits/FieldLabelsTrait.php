@@ -55,7 +55,7 @@ trait FieldLabelsTrait
 
     public function getFieldLabel($field)
     {
-        $validationRules = $this->validationsRules;
+        $validationRules = $this->validationRules;
 
         if ($validationRules && array_key_exists($field, $validationRules))
         {
