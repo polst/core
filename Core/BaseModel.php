@@ -52,9 +52,9 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $afterValidate = ['afterValidate'];
 
-    protected $labels = [];
+    protected $fieldLabels = [];
 
-    protected $translations = null;
+    protected $langCategory = null;
 
     public function getValidation()
     {
