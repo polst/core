@@ -1,100 +1,39 @@
 <?php
 /**
- * @author Basic App Dev Team
+ * @author Basic App Dev Team <dev@basic-app.con>
  * @license MIT
  * @link http://basic-app.com
  */
 namespace BasicApp\Traits;
 
 use Exception;
+use BasicApp\Helpers\ArrayHelper;
 
 trait FieldLabelsTrait
 {
 
-    public static function fieldLabels()
+    public function getFieldLabel(string $field) : string
     {
-        $return = [];
-
-        foreach(static::defaultProperty('validationRules', []) as $field => $rules)
-        {
-            if (is_array($rules) && array_key_exists('label', $rules))
-            {
-                $return[$field] = static::lang($rules['label']);
-            }
-        }
-
-        foreach(static::defaultProperty('fieldLabels', []) as $field => $label)
-        {
-            $return[$field] = static::lang($label);
-        }
-
-        return $return;
-    }    
-
-    public static function fieldLabel($field)
-    {
-        $validationRules = static::defaultProperty('validationRules');
-
-        if ($validationRules && array_key_exists($field, $validationRules))
-        {
-            if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
-            {
-                return static::lang($validationRules[$field]['label']);
-            }
-        }
-
-        $labels = static::defaultProperty('fieldLabels');
-
-        if ($labels && array_key_exists($field, $labels))
-        {
-            return static::lang($labels[$field]);
-        }
-
-        return $field;
+        return ArrayHelper::getValue($this->getFieldLabels(), $field, $field);
     }
 
-    public function getFieldLabel($field)
-    {
-        $validationRules = $this->validationRules;
-
-        if ($validationRules && array_key_exists($field, $validationRules))
-        {
-            if (is_array($validationRules[$field]) && array_key_exists('label', $validationRules[$field]))
-            {
-                return static::lang($validationRules[$field]['label']);
-            }
-        }
-
-        if (property_exists($this, 'fieldLabels'))
-        {
-            $fieldLabels = $this->fieldLabels;
-
-            if ($fieldLabels && array_key_exists($field, $fieldLabels))
-            {
-                return static::lang($fieldLabels[$field]);
-            }
-        }
-
-        return $field;
-    }
-
-    public function getFieldLabels()
+    public function getFieldLabels() : array
     {
         $return = [];
-
-        foreach($this->validationRules as $field => $rules)
-        {
-            if (is_array($rules) && array_key_exists('label', $rules))
-            {
-                $return[$field] = static::lang($rules['label']);
-            }
-        }
 
         if (property_exists($this, 'fieldLabels'))
         {
             foreach($this->fieldLabels as $field => $label)
             {
-                $return[$field] = static::lang($label);
+                $return[$field] = $this->getLanguageLine($label);
+            }
+        }        
+
+        foreach($this->validationRules as $field => $rules)
+        {
+            if (is_array($rules) && array_key_exists('label', $rules))
+            {
+                $return[$field] = $this->getLanguageLine($rules['label']);
             }
         }
 

@@ -11,7 +11,7 @@ use Exception;
 use denis303\traits\FactoryTrait;
 use denis303\traits\DefaultPropertyTrait;
 use BasicApp\Traits\BehaviorsTrait;
-use BasicApp\Traits\LangTrait;
+use BasicApp\Traits\LanguageTrait;
 use BasicApp\Traits\FieldLabelsTrait;
 use denis303\codeigniter4\ModelHelperTrait;
 
@@ -26,7 +26,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     use BehaviorsTrait;
 
-    use LangTrait;
+    use LanguageTrait;
 
     use FieldLabelsTrait;
 
@@ -54,7 +54,7 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     protected $fieldLabels = [];
 
-    protected $langCategory = null;
+    protected $languageCategory = false;
 
     public function getValidation()
     {

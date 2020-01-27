@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Basic App Dev Team
+ * @author Basic App Dev Team <dev@basic-app.con>
  * @license MIT
  * @link http://basic-app.com
  */

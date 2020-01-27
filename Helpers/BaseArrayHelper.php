@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Basic App Dev Team
+ * @author Basic App Dev Team <dev@basic-app.com>
  * @license MIT
  * @link http://basic-app.com
  */
@@ -9,37 +9,29 @@ namespace BasicApp\Helpers;
 abstract class BaseArrayHelper
 {
 
-    public static function setValue($array, $key, $value)
+    public static function setValue($data, $key, $value)
     {
-        if (is_array($array))
+        if (is_array($data))
         {
-            $array[$key] = $value;
+            $data[$key] = $value;
         }
         else
         {
-            $array->$key = $value;
+            $data->$key = $value;
         }
 
-        return $array;
+        return $data;
     }
 
-    public static function getValue($array, $value, $default = null)
+    public static function getValue($data, $value, $default = null)
     {
-        if (is_array($array))
+        if (is_array($data) && !empty($data[$value]) && ($data[$value] !== null))
         {
-            if (array_key_exists($value, $array))
-            {
-                return $array[$value];
-            }            
+            return $data[$value];
         }
-        else
+        elseif(!empty($data->$value) && ($data->$value !== null))
         {
-            $return = $array->$value;
-
-            if ($return !== null)
-            {
-                return $return;
-            }
+            return $data->$value;
         }
 
         return $default;
