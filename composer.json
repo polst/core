@@ -25,6 +25,7 @@
         "denis303/php-file-helper": "*",
         "denis303/php-download-helper": "*",
         "denis303/php-zip-helper": "*",
-        "denis303/php-traits": "*"
+        "denis303/php-traits": "*",
+        "phptheme/html-helper": "*"
     }
 }
