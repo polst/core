@@ -27,6 +27,20 @@ abstract class BaseUrl
             $path .= '?' . http_build_query($params);
         }
 
+        $config = config(App::class);
+
+        if ($config->defaultLocale)
+        {
+            $request = service('request');
+
+            $locale = $request->getLocale();
+
+            if ($locale && ($config->defaultLocale != $locale))
+            {
+                $path = $locale . '/' . $path;
+            }
+        }
+
         return site_url($path, $scheme, $alt);
     }
 
