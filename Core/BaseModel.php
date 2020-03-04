@@ -83,32 +83,32 @@ abstract class BaseModel extends \CodeIgniter\Model
         return $rules;
     } 
 
-	public function getPrimaryKey()
-	{
-		return $this->primaryKey;
-	}
+    public function getPrimaryKey()
+    {
+        return $this->primaryKey;
+    }
 
-	public function getReturnType()
-	{
-		return $this->returnType;
-	}
+    public function getReturnType()
+    {
+        return $this->returnType;
+    }
 
-	public function errors(bool $forceDB = false)
-	{
-		$errors = parent::errors($forceDB);
+    public function errors(bool $forceDB = false)
+    {
+        $errors = parent::errors($forceDB);
 
-		if ($errors)
-		{
-			$labels = $this->getFieldLabels();
+        if ($errors)
+        {
+            $labels = $this->getFieldLabels();
 
-			foreach($errors as $key => $value)
-			{
-				$errors[$key] = strtr($errors[$key], $labels);
-			}	
-		}
-		
-		return $errors;
-	}
+            foreach($errors as $key => $value)
+            {
+                $errors[$key] = strtr($errors[$key], $labels);
+            }   
+        }
+        
+        return $errors;
+    }
 
     public function afterFind(array $params) : array
     {

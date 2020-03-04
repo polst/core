@@ -12,8 +12,8 @@ use BasicApp\Interfaces\BehaviorInterface;
 abstract class BaseBehavior implements BehaviorInterface
 {
 
-	use FactoryTrait;
+    use FactoryTrait;
 
-	protected $owner;
+    protected $owner;
 
 }
