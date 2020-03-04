@@ -9,6 +9,7 @@ namespace BasicApp\Core;
 use CodeIgniter\Security\Exceptions\SecurityException;
 use Config\Services;
 use BasicApp\Traits\BehaviorsTrait;
+use BasicApp\Helpers\Url;
 
 abstract class BaseController extends \CodeIgniter\Controller
 {
@@ -175,7 +176,7 @@ abstract class BaseController extends \CodeIgniter\Controller
             $url = base_url();
         }
 
-        $returnUrl = site_url($url);
+        $returnUrl = Url::createUrl($url);
 
         return $this->redirect($returnUrl);
     }
