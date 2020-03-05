@@ -11,11 +11,9 @@ use Config\App;
 abstract class BaseUrl
 {
 
-    public static function returnUrl($path, array $params = [], string $scheme = null, App $alt = null) : string
+    public static function getCurrentLocale()
     {
-        $params['returnUrl'] = static::currentUriString();
-
-        return static::createUrl($path, $params, $scheme, $alt);
+        return service('request')->getLocale();
     }
 
     public static function createUrl($path, array $params = [], string $scheme = null, App $alt = null) : string 
@@ -31,10 +29,8 @@ abstract class BaseUrl
 
         if ($config->defaultLocale)
         {
-            $request = service('request');
-
-            $locale = $request->getLocale();
-
+            $locale = static::getCurrentLocale();
+          
             if ($locale && ($config->defaultLocale != $locale))
             {
                 $path = $locale . '/' . $path;
@@ -44,38 +40,66 @@ abstract class BaseUrl
         return site_url($path, $scheme, $alt);
     }
 
-    public static function currentUri($applyParams = [])
+    public static function applyGetParams(string $query, array $params = [])
+    {
+        $params_list = service('request')->getGet();
+
+        foreach($params as $key => $value)
+        {
+            $params_list[$key] = $value;
+        }
+
+        if ($params_list)
+        {
+            $query .= '?' . http_build_query($params_list);
+        }
+
+        return $query;
+    }
+
+    public static function getCurrentUri(bool $applyParams = false, array $params = [])
     {
         $return = uri_string();
 
-        $params = $_GET;
+        $segments = explode('/', $return);
 
-        foreach($applyParams as $key => $value)
+        if (count($segments) > 0)
         {
-            $params[$key] = $value;
+            if ($segments[0] = static::getCurrentLocale())
+            {
+                unset($segments[0]);
+
+                $return = implode('/', $segments);
+            }
         }
 
-        if ($params)
+        if ($applyParams)
         {
-            $return .= '?' . http_build_query($params);
+            $return = static::applyGetParams($return, $params);
         }
 
-        return $return;
+        return $return;        
+    }    
+
+    public static function returnUrl($path, array $params = [], string $scheme = null, App $alt = null) : string
+    {
+        $query = static::getCurrentUri(true);
+
+        $params['returnUrl'] = $query;
+
+        return static::createUrl($path, $params, $scheme, $alt);
     }
 
-    public static function currentUriString($applyParams = [])
+    public static function currentUrl($params = [], string $scheme = null, App $alt = null)
     {
-        return static::currentUri($applyParams);
+        $params = array_merge(service('request')->getGet(), $params);
+
+        return static::createUrl(static::getCurrentUri(), $params, $scheme, $alt);
     }
 
-    public static function currentUrl($params = [], string $scheme = null, App $altConfig = null)
+    public static function redirect(string $url, string $method = 'auto', int $code = null)
     {
-        return site_url(static::currentUriString($params), $scheme, $altConfig);
-    }
-
-    public static function redirect(string $uri, string $method = 'auto', int $code = null)
-    {
-        return service('response')->redirect($uri, $method, $code);;
+        return service('response')->redirect($url, $method, $code);;
     }
 
 }
