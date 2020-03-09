@@ -65,7 +65,9 @@ abstract class BaseUrl
 
         if (count($segments) > 0)
         {
-            if ($segments[0] = static::getCurrentLocale())
+            $locale = static::getCurrentLocale();
+
+            if ($segments[0] == $locale)
             {
                 unset($segments[0]);
 
