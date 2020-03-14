@@ -8,7 +8,7 @@ namespace BasicApp\Core;
 
 use BasicApp\Helpers\Url;
 
-abstract class BaseForm extends \denis303\codeigniter4\Form
+abstract class BaseForm extends \Denis303\CodeIgniter\Form
 {
 
     public function open($action = null, $attributes = [], array $hidden = []): string
