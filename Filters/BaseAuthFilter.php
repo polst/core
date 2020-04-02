@@ -43,8 +43,8 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
 
         $loginUrl = $userService->getLoginUrl();
 
-        $currentUrl = (string) $request->uri; //$request->uri->getPath();
-        
+        $currentUrl = current_url();
+
         if ($currentUrl == $loginUrl)
         {
             return;
