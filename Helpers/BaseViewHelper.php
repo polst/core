@@ -21,4 +21,9 @@ abstract class BaseViewHelper
         return view($name, $data, $options);
     }
 
+    public static function setVar($key, $value)
+    {
+        view('BasicApp\Views\data', ['data' => [$key => $value]], ['saveData' => false]);
+    }
+
 }

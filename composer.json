@@ -11,7 +11,8 @@
             "BasicApp\\Exceptions\\" : "Exceptions/",
             "BasicApp\\Filters\\" : "Filters/",
             "BasicApp\\Validators\\" : "Validators/",
-            "BasicApp\\Events\\" : "Events/"
+            "BasicApp\\Events\\" : "Events/",
+            "BasicApp\\Views\\" : "Views/"
         }
     },
     "require": {
