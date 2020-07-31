@@ -7,7 +7,7 @@
 namespace BasicApp\Core;
 
 use Psr\Log\LoggerInterface;
-use CodeIgniter\CLI\CommandRunner;
+use CodeIgniter\CLI\Commands;
 
 abstract class BaseCommand extends \CodeIgniter\CLI\BaseCommand
 {
@@ -20,7 +20,7 @@ abstract class BaseCommand extends \CodeIgniter\CLI\BaseCommand
      * @param \Psr\Log\LoggerInterface       $logger
      * @param \CodeIgniter\CLI\CommandRunner $commands
      */
-    public function __construct(LoggerInterface $logger, CommandRunner $commands)
+    public function __construct(LoggerInterface $logger, Commands $commands)
     {
         parent::__construct($logger, $commands);
 

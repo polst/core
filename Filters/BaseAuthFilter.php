@@ -32,7 +32,7 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
         return $this->_service;
     }
 
-    public function before(RequestInterface $request)
+    public function before(RequestInterface $request, $arguments = null)
     {
         $userService = $this->getUserService();
 
@@ -60,7 +60,7 @@ abstract class BaseAuthFilter implements \CodeIgniter\Filters\FilterInterface
         return Services::response()->redirect($loginUrl);
     }
 
-    public function after(RequestInterface $request, ResponseInterface $response)
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // Do something here
     }
