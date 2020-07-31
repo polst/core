@@ -97,6 +97,11 @@ abstract class BaseModel extends \CodeIgniter\Model
     {
         $errors = parent::errors($forceDB);
 
+        if (!$errors)
+        {
+            $errors = null;
+        }
+
         if ($errors)
         {
             $labels = $this->getFieldLabels();
