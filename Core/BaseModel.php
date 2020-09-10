@@ -95,6 +95,8 @@ abstract class BaseModel extends \CodeIgniter\Model
 
     public function errors(bool $forceDB = false)
     {
+        $this->db->initialize(); // Bug in CI? parent::errors() function throw an error if database is not initialized.
+
         $errors = parent::errors($forceDB);
 
         if (!$errors)
