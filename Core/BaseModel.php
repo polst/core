@@ -78,10 +78,10 @@ abstract class BaseModel extends \CodeIgniter\Model
      *
      * ToDo: Remove this later...
      */
-    protected function cleanValidationRules(array $rules, array $data = null): array
-    {
-        return $rules;
-    } 
+    // protected function cleanValidationRules(array $rules, array $data = null): array
+    // {
+    //     return $rules;
+    // } 
 
     public function getPrimaryKey()
     {
