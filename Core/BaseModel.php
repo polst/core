@@ -269,7 +269,12 @@ abstract class BaseModel extends \CodeIgniter\Model
 
         $data = $params['data'];
 
-        $result = parent::save($data);
+        $result = false;
+        try {
+            $result = parent::save($data);
+        } catch (DataException $e) {
+            var_dump($e->getCode());
+        }
 
         if ($result && $this->insertID)
         {
